@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link as LinkR} from "react-router-dom";
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, useTheme } from 'styled-components';
+import { DiCssdeck } from "react-icons/di";
+import { FaBars } from "react-icons/fa";
 
 const Nav =styled.div`
   background-color:${({ theme }) => theme.card_light};
@@ -115,24 +117,138 @@ const GitHubButton = styled.button`
     font-size:0.8rem;
   }
 `;
+
+const Span= styled.span`
+  padding:0 4px;
+  font-weight:bold;
+  font-size:18px;
+`;
+
+const MobileMenu =styled.div`
+  display:flex;
+  justify-content:center;
+  flex-direction:column;
+  gap:16px;
+  position:absolute;
+  top:80;
+  right:0;
+  width:100%;
+  padding:12px 40px 24px 40px;
+  background-color:${({theme}) => theme.card_light+99};
+  transition: all 0.3s ease-in-out;
+  transform: ${({open}) => open?'translateX(0)':'translateX(100)'};
+  border-radius:0 0 20px 20px;
+  box-shadow:0 5px10px rgba(0,0,0,0.3);
+  opacity:${({open})=>open ? '1':'0'};
+  z-index:${({open})=>open ? '1':'-1'};
+`;
+
+const MobileMenuLinks = styled(LinkR)`
+  color:${({theme})=>theme.text_primary};
+  font-weight:500;
+  cursor:pointer:
+  text-decoration:none;
+  transition:all 0.2s ease-in-out;
+  :hover{
+    color:${({theme})=>theme.primary};
+  }
+`;
+
 const Navbar = () => {
+  const [open,setOpen] = React.useState(false);
+  const theme = useTheme()
   return (
     <Nav>
       <NavContainer>
-        <NavLogo>Logo</NavLogo>
-        <MobileIcon></MobileIcon>
+        <NavLogo to='/'>
+          <a style={{
+            display:"flex",
+            alignItems:"center",
+            color:"white",
+            marginBottom:"20",
+            cursor:"pointer",
+          }}>
+            <DiCssdeck size="3rem"/><Span>Abhijit</Span>
+          </a>
+        </NavLogo>
+        <MobileIcon>
+          <FaBars
+            onClick ={()=>{
+              setOpen(!open);
+            }}
+          />
+        </MobileIcon>
         <NavItems>
           <NavLink href="#about">About</NavLink>
           <NavLink href="#skills">Skills</NavLink>
           <NavLink href="#experience">Experience</NavLink>
           <NavLink href="#project">Project</NavLink>
-          <NavLink href="">Education</NavLink>
-          <NavLink href="">Contact</NavLink>
+          <NavLink href="#education">Education</NavLink>
+          <NavLink href="#contact">Contact</NavLink>
         </NavItems>
         <ButtonContainer>
           <GitHubButton>Github Profile</GitHubButton>
         </ButtonContainer>
       </NavContainer>
+      {
+        open && 
+          <MobileMenu open={open}>
+            <MobileMenuLinks
+              href='#about'
+              onClick={()=>{
+                setOpen(!open);
+              }}
+            >About
+            </MobileMenuLinks>
+            <MobileMenuLinks
+              href='#skils'
+              onClick={()=>{
+                setOpen(!open);
+              }}
+            >Skils
+            </MobileMenuLinks>
+            <MobileMenuLinks
+              href='#experience'
+              onClick={()=>{
+                setOpen(!open);
+              }}
+            >Experience
+            </MobileMenuLinks>
+            <MobileMenuLinks
+              href='#project'
+              onClick={()=>{
+                setOpen(!open);
+              }}
+            >Project
+            </MobileMenuLinks>
+            <MobileMenuLinks
+              href='#education'
+              onClick={()=>{
+                setOpen(!open);
+              }}
+            >Education
+            </MobileMenuLinks>
+            <MobileMenuLinks
+              href='#contact'
+              onClick={()=>{
+                setOpen(!open);
+              }}
+            >
+            </MobileMenuLinks>"
+            <GitHubButton 
+              style={{
+                padding:"10px 16px",
+                background:'$(theme.primary)',
+                color:"white",
+                width:"max-content"
+              }}
+              href='/'
+              target="_blank"
+            >
+              GitHub Profile
+            </GitHubButton>
+          </MobileMenu>
+      }
     </Nav>
   )
 }
