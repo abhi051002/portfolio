@@ -1,4 +1,4 @@
-constants.js
+import diw from '../Image/diw.jpeg'
 export const Bio = {
   name: "Abhijit Nanda",
   roles: [
@@ -10,7 +10,7 @@ export const Bio = {
     "I am a motivated and versatile individual, always eager to take on new challenges. With a passion for learning I am dedicated to delivering high-quality results. With a positive attitude and a growth mindset, I am ready to make a meaningful contribution and achieve great things.",
   github: "https://github.com/abhi051002",
   resume:
-    "https://drive.google.com/file/d/1ffZrcMcn8UatXGIaautbbqpV7ADNaETA/view?usp=sharing",
+    "https://drive.google.com/file/d/19xHMEdMziwM6-9jvqi6Qkou_CZ9s9IkY/view?usp=drivesdk",
   linkedin: "https://www.linkedin.com/in/rishav-chanda-b89a791b3/",
   twitter: "https://twitter.com/RishavChanda",
   insta: "https://www.instagram.com/rishav_chanda/",
@@ -45,11 +45,26 @@ export const skills = [
         image:
           "https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png",
       },
+      {
+        name: "FilamentPhp",
+        image:
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFaUlEQVR4Ab2XY5QlSRCFa8e2pzFmu8c227ZtjG3btj3z2tbatm20Rq/uVsSZPKfmab0/vs6ujBtxb2a9PyU5xaczcm5wa1QtjlZ4WqFGAf8ui+pRueB55f9kFMa1F74Sm+dHdEPlolMkUlb8x9xTuIzKhRbkTSdvgYoFJxTwP3OZbkJCxfxQhXoF/GmqFuhiSmdsDnkmSyjPLFLAH0FNckUmvtck47ljEbi9JYAp3RuEN89E4tfcFKqTltevbiWy7tWT4agvTOV+3Zn0m5BQlvGdAkxBYhpydpUXPGaOxghHO9jaWDP2drYYNdweaUFTOARpKdjsSSNIx7W1CXOon2o6s9NqJfqjAFNQ89bUuWw4ePAQWFkNVcN7FEBbkoZPr8aSuVpHIeiWDM7mAChNhTFIlL/DD8JcMHDQILEyF1e7A1Xp/EpEKMFIBysRQG++hJLkGgXoItNamoz6/EREeYxFv/79wWYDB/DANTHTcHaFG3ZnzEGK/wS8ey4MqEijd0511guovzongefRXAEUJLkkqUYBAvDKUAMNVg/kACeXOIPrZazB3fwEPChKpF5a+TaCnUYSHPSDC+Gsox5dJLk4oUYuToQaCBQDzWYPNu7Tpw8zaaQ1vrgawWYQOp1eGlyfF0fQHmlpNYgkF8XVyEXxeIzCONTlRPOATfFTYWlpSea8Bs52xE+3o7guUPfez+deXlEcR3sm4QBkKIyp6YXDvvCdaQ/PaXYYZjOAjQUOVv1pn3GfYovFIePIkPuqNVH0zL0vHfEDSnimmK0Qw6uAniW5MLqW/hGgOAZH5s9Ajx49GTMzMz1ErWu37kj2GiH68PPtcL6hPpbmOJA+9VEwmmscDoCCaAjk/Age2qlzFzbRhUzVkBGZUO+3VwJwbulMTHDsy0Fpzg/Xg6lmFEkxrFGA4H5OGA9dEDASLuMHoVvXrsKMTxbn5sA1wRtHvYDCSGZv8ng2tjDrAauBlpg9ZhA+OuvPNZ6vj34AAgUR3LQ8dBTdBIeglU5GJ6K6QN1DYfymWbE+bI4NP2vzwrluPEBeaA3ywqBLnSYEHhP6o337DmxOKw2lGzKkp+tPdLflkBSA9JtjRlMwqhuFA8i5oVCDvBB8ds4H9gPNeFDHju3Rrl07HkhNhvQUgF4Z6alvTdgIvLjfmWqkMYok5wQpAYKhhpoqd8xBz26d2JigELdWT+OaIf0HJz34N2DVtwtr6TZ+u+4r9EbhAMgJghpqOpo+Dm3atBagj1lnvHXEiWt6+twgLA9yYB2ZUwh6fV9f8KIaaYwiydl+NXJ2AHRJcbdC8+bNeSit46y64ccr3txkSE/X7TS6N+vDZg7Eu8dcRM0UIoA/1NDVTXc0Q5OmzdicVhr6UOMHXS1y/fHhcWc+MZ28VYvm3LM3YQTVSGMSSdb41MhZvhAgx5cHDjBr91iAbVH2PJA0uvpPT7mIwByCtPy6ckhjGg6gAAE15a6ZyCdp3LgxQ//THtW0ikZAehry0p6ZWBVkDbPOrThw7Jz+qL7mzjUxV2sESXvHs0Z7xwsCZHvzCRo0aEDmvNLgdw7P4ppaK9/xxN2bHnAfYy50fHMBkyzxy2VXMiadSSjAN49t3nZH2LReNFDAP0AaSIZqLTSe+OT4bPTp1op5autkfHfOiU5P9T+EDi9pb7nkkangwU03lG+cgIvzhwv4WXvLTWgEHIgMry0aiYI147gXdzx4nzV/zFOSMthPCVFNBgJo3HURNT3k20JPA1n3J3GpU9YY/jRTHvY/2vwfcT1FH8T8cUrfaBSCb+KmM/5L6OTKeoI+iMXXMcM3cdPJj38TN5y+U6j5i9Sa3ueZxYpHCJ1c+P4OcBC5mQx7K4EAAAAASUVORK5CYII="
+      },
+      {
+        name:"TailwindCss",
+        image:
+        "https://yt3.googleusercontent.com/ikv41jMTr1uHGdILrJhvbfVJcDt4oqhwApKX37TjAleF_cRPbF2W-waj7uMnS5JySvnlvAlTCg=s900-c-k-c0x00ffffff-no-rj"
+      }
+      
     ],
   },
   {
     title: "Backend",
     skills: [
+      {
+          name: "Php Laravel",
+          image: "https://laravel.com/img/logomark.min.svg",
+      },
       {
         name: "Python",
         image:
@@ -66,7 +81,6 @@ export const skills = [
       },
     ],
   },
-  
   {
     title: "Others",
     skills: [
@@ -107,8 +121,8 @@ export const skills = [
 export const experiences = [
   {
     id: 0,
-    img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fhyscaler.com%2Fcareers%2F&psig=AOvVaw3L_vnPQUH7xXAPI0svZUnG&ust=1700624756652000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCcrIaX1IIDFQAAAAAdAAAAABAD",
-    role: "Full-stack Developer Intern",
+    img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
+    role: "Full-stack Trainee Intern",
     company: "Hyscaler",
     date: "Aug 2023 - Present",
     desc: "Working on the full stack of the web application using PHP, Laravel,Filament, Mysql, PostgreSql .",
@@ -121,12 +135,12 @@ export const experiences = [
       "CSS",
       "JavaScript",
     ],
-    doc: "https://firebasestorage.googleapis.com/v0/b/buckoid-917cf.appspot.com/o/Screenshot%20from%202023-05-28%2023-20-46.png?alt=media&token=5570f995-e8f4-4f12-bb2f-73bcf4b20730",
+    doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
   },
   {
     id: 1,
-    img: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2Fdigitalitweb%2F&psig=AOvVaw26XqKge6f2VOLeemje6AEd&ust=1700624639555000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCPjbms2X1IIDFQAAAAAdAAAAABAD",
-    role: "Fullstack Internship",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYOSnVFC2VDDJ9FUKAB2FBdZaAohgEgjiTPfce0S-C&s",
+    role: "Full-stack Internship",
     company: "Digital It Web",
     date: "Feb 2023 - July 2023",
     desc: "Built an Hospital management full stack web app . I was the top performer in the program.",
@@ -139,6 +153,7 @@ export const experiences = [
       "Docker",
       "React Js",
     ],
+    doc:"https://drive.google.com/file/d/1PSn0Ix6Ncop_Ky6m2WE-2J22kqejeVU-/view?usp=drivesdk",
   },
 ];
 
