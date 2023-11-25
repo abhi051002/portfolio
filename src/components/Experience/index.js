@@ -16,7 +16,11 @@ justify-content: center;
 position: relative;
 z-index: 1;
 align-items: center;
-padding:50px 20px;
+padding: 60px 0 80px 0px;
+
+@media (max-width:960px){
+    padding:0;
+}
 `;
 
 const Wrapper = styled.div`

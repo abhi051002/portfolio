@@ -10,7 +10,7 @@ export const HeroContainer = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  padding: 130px 50px;
+  padding: 100px 50px;
   @media (max-width: 960px) {
     padding: 66px 16px;
   }
