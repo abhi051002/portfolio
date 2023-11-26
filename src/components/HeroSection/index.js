@@ -121,6 +121,7 @@ export const TextLoop = styled.div`
   line-height: 68px;
   @media (max-width: 960px) {
     text-align: center;
+    display:block;
   }
   @media (max-width: 640px) {
     font-size: 22px;

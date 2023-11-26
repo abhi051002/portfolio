@@ -76,6 +76,29 @@ const SocialMediaIcon = styled.a`
     color: ${({ theme }) => theme.primary};
   }
 `;
+const ContactInfo = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  @media(max-width:960px){
+    display:block;
+    text-align:center;
+  }
+`;
+
+const ContactInfos = styled.a`
+  display: inline-block;
+  margin: 0 1rem;
+  font-size: 1.0rem;
+  color: ${({ theme }) => theme.text_primary};
+  text-decoration:none;
+  transition: color 0.2s ease-in-out;
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+  @media(max-width:960px){
+    margin-bottom:20px;
+  }
+`;
 
 const Copyright = styled.p`
   margin-top: 1.5rem;
@@ -97,6 +120,10 @@ function Footer() {
           <NavLink href="#education">Education</NavLink>
           <NavLink href="#contact">Contact</NavLink>
         </Nav>
+        <ContactInfo>
+            Emails:<ContactInfos href="mailto:abhijitnanda8249@gmail.com">abhijitnanda8249@gmail.com</ContactInfos>
+            Number:<ContactInfos href="tel:+918249001710"> +91 8249001710</ContactInfos>
+        </ContactInfo>
         <SocialMediaIcons>
           <SocialMediaIcon href={Bio.facebook} target="display"><FacebookIcon /></SocialMediaIcon>
           <SocialMediaIcon href={Bio.twitter} target="display"><TwitterIcon /></SocialMediaIcon>
