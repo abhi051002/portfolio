@@ -148,11 +148,11 @@ const Contact = () => {
         <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
         <ContactForm ref={form} onSubmit={handleSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" />
-          <ContactInput placeholder="Your Name" name="from_name" />
-          <ContactInput placeholder="Subject" name="subject" />
-          <ContactInputMessage placeholder="Message" rows="4" name="message" />
-          <ContactButton type="submit" value="Send" />
+          <ContactInput placeholder="Your Email" name="from_email" required/>
+          <ContactInput placeholder="Your Name" name="from_name" required/>
+          <ContactInput placeholder="Subject" name="subject" required/>
+          <ContactInputMessage placeholder="Message" rows="4" name="message" required/>
+          <ContactButton type="submit" value="Send"/>
         </ContactForm>
         <Snackbar
           open={open}
