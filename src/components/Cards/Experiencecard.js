@@ -106,6 +106,14 @@ const Duration = styled.div`
         font-size: 10px;
     }
 `;
+const ExperieneYear = styled.div`
+    font-size: 12px;
+    font-weight: 800;
+    color: ${({ theme }) => theme.text_secondary + 80};
+    @media only screen and (max-width: 768px){
+        font-size: 10px;
+    }
+`;
 
 const Description = styled.div`
     width: 100%;
@@ -149,6 +157,7 @@ const Experiencecard = ({experience}) => {
                 <Role>{experience.role}</Role>
                 <Company>{experience.company}</Company>
                 <Duration>{experience.date}</Duration>
+                <ExperieneYear>{experience.experiencesInYear}</ExperieneYear>
             </Body>
         </Top>
         <Description>{experience.desc}</Description>
@@ -164,10 +173,10 @@ const Experiencecard = ({experience}) => {
                 </ItemWrapper>
             </Skills>
         </>}
-        {experience.doc &&
+        {/* {experience.doc &&
         <a href={experience.doc} target='new'>
             <Document src={experience.doc} />
-        </a>}
+        </a>} */}
     </Card>
   )
 }

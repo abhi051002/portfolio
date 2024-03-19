@@ -87,7 +87,7 @@ export const skills = [
       {
         name: "Git",
         image:
-          "https://camo.githubusercontent.com/fbfcb9e3dc648adc93bef37c718db16c52f617ad055a26de6dc3c21865c3321d/68747470733a2f2f7777772e766563746f726c6f676f2e7a6f6e652f6c6f676f732f6769742d73636d2f6769742d73636d2d69636f6e2e737667",
+          "https://avatars.githubusercontent.com/u/18133?s=280&v=4",
       },
       {
         name: "GitHub",
@@ -107,12 +107,12 @@ export const skills = [
       {
         name: "Postman",
         image:
-          "https://camo.githubusercontent.com/93b32389bf746009ca2370de7fe06c3b5146f4c99d99df65994f9ced0ba41685/68747470733a2f2f7777772e766563746f726c6f676f2e7a6f6e652f6c6f676f732f676574706f73746d616e2f676574706f73746d616e2d69636f6e2e737667",
+          "https://yt3.googleusercontent.com/X-rhKMndFm9hT9wIaJns1StBfGbFdLTkAROwm4UZ3n9ucrBky5CFIeeZhSszFXBgQjItzCD0SA=s900-c-k-c0x00ffffff-no-rj",
       },
       {
         name: "Figma",
         image:
-          "https://camo.githubusercontent.com/ed93c2b000a76ceaad1503e7eb9356591b885227e82a36a005b9d3498b303ba5/68747470733a2f2f7777772e766563746f726c6f676f2e7a6f6e652f6c6f676f732f6669676d612f6669676d612d69636f6e2e737667",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGS2AgRLgYbCiPFfpcI0QkIem5iCWSVYADnZ9mrgJOhg&s",
       },
     ],
   },
@@ -122,9 +122,29 @@ export const experiences = [
   {
     id: 0,
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
+    role: "Junior Software Developer",
+    company: "Hyscaler",
+    date: "March 2024 - Present",
+    experiencesInYear: "",
+    desc: "Working on the full stack of the web application using PHP, Laravel,Filament, Mysql, PostgreSql .",
+    skills: [
+      "PHP",
+      "Laravel",
+      "Filament",
+      "Mysql",
+      "HTML",
+      "CSS",
+      "JavaScript",
+    ],
+    doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
+  },
+  {
+    id: 1,
+    img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "Full-stack Trainee Intern",
     company: "Hyscaler",
-    date: "Aug 2023 - Present",
+    date: "Aug 2023 - March 2024",
+    experiencesInYear: "Experience of 6 Month",
     desc: "Working on the full stack of the web application using PHP, Laravel,Filament, Mysql, PostgreSql .",
     skills: [
       "PHP",
@@ -143,6 +163,7 @@ export const experiences = [
     role: "Full-stack Internship",
     company: "Digital It Web",
     date: "Feb 2023 - July 2023",
+    experiencesInYear: "Experience of 6 Month",
     desc: "Built an Hospital management full stack web app . I was the top performer in the program.",
     skills: [
       "Html",
@@ -163,8 +184,9 @@ export const education = [
     img: require('../Image/trident.png'),
     school: "Trident Academy of Technology",
     date: "Aug 2019 - July 2023",
-    grade: "8 .71 CGPA",
-    desc: "I have doen my graduation on Bachelor's degree in Computer Science and Engineering at Trident Academy of Technology, Bhubaneswar. I have completed 8 semesters and have a CGPA of 8.71. I have taken courses in Data Structures, Algorithms, Object-Oriented Programming, Database Management Systems, and Operating Systems among others. I am also a member of the Cisco Developers Student Club (CiscoDSC) at TAT, where I am learning and working on exciting projects with a team of talented developers.",
+    grade: "8.02 CGPA",
+    percentage: "80.2%",
+    desc: "I have doen my graduation on Bachelor's degree in Computer Science and Engineering at Trident Academy of Technology, Bhubaneswar. I have completed 8 semesters and have a CGPA of 8.02 which is 80.2%. I have taken courses in Object-Oriented Programming, Database Management Systems, and Operating Systems, Javascript, PHP among others. I am also a member of the Cisco Developers Student Club (CiscoDSC) at TAT, where I am learning and working on exciting projects with a team of talented developers.",
     degree: "Bachelor of Technology - BTech, Computer Science and Engineering",
   },
   {
@@ -172,8 +194,9 @@ export const education = [
     img: require('../Image/rcst.jpeg'),
     school: "Royal College of Science and Technology, Bhubaneswar",
     date: "Apr 2017 - Apr 2019",
-    grade: "69.0%",
-    desc: "I completed my class 12 high school education at Royal College of Science and Technology, Bhubaneswar, where I studied Science with Computer Science.",
+    grade: "A",
+    percentage: "69.0%",
+    desc: "I've completed my 12th at Royal College of Science and Technology, Bhubaneswar, I've developed a strong foundation in academics and beyond. With a commitment to excellence, I've honed my skills in various subjects and cultivated a passion for learning. My time at Royal College of Science and Technology has equipped me with valuable knowledge, critical thinking abilities, and a drive for success, setting a solid platform for my future endeavors.",
     degree: "CHSE(XII), Science with Computer",
   },
   {
@@ -181,15 +204,33 @@ export const education = [
     img: require("../Image/ssvm.jpeg"),
     school: "SaraSwati Shisu Vidya Mandir,Jajpur",
     date: "Apr 2016 - Apr 2017",
-    grade: "77.0%",
-    desc: "I completed my class 10 education at SaraSwati Shisu Vidya Mandir,Jajpur.",
+    grade: "A",
+    percentage: "77.0%",
+    desc: "I've completed my 10th grade at SaraSwati Shisu Vidya Mandir,Jajpur, I've developed a strong foundation in academics and cultivated valuable skills in various subjects. My time at SSVM has equipped me with critical thinking abilities, effective communication skills, and a dedication to excellence. I look forward to leveraging these qualities as I pursue my academic and career goals.",
     degree: "BSE(X)",
   },
 ];
 
 export const projects = [
   {
-    id: 9,
+    id: 2,
+    title: "Tic Tac Toe",
+    date: "Sept 2023 - Oct 2023",
+    description:
+      "Tic-Tac-toe is just a simple game we used to play in ou childhood i just make it in digital form using Html Css and  Js that allows two users to play and enjoy the free time , user can reset the game at any point of time it will show the winner after the completion of game and it will show if the match was draw",
+    image:
+      require('../Image/spotify-clone.jpg'),
+    tags: [
+      "Html",
+      "CSS",
+      "JavaScript",
+    ],
+    category: "web app",
+    github: "https://github.com/abhi051002/spotify-clone",
+    webapp: "https://abhi051002.github.io/spotify-clone/",
+  },
+  {
+    id: 1,
     title: "Spotify CLone",
     date: "Jun 2023 - Jul 2023",
     description:

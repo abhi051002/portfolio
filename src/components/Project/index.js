@@ -9,12 +9,12 @@ background: linear-gradient(
     rgba(132,59,206,0.06) 5.71%,
     rgba(132,59,206,0) 64.83%,
 )
-display: flex;
 flex-direction: column;
+display: flex;
 justify-content: center;
+align-items: center;
 position: relative;
 z-index: 1;
-align-items: center;
 padding:50px 20px;
 clip-path: polygon(0 0,100% 0,100% 100%, 100% 98%,0 100%);
 `;
