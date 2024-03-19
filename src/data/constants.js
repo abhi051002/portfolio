@@ -213,7 +213,7 @@ export const education = [
 
 export const projects = [
   {
-    id: 2,
+    id: 3,
     title: "Tic Tac Toe",
     date: "Sept 2023 - Oct 2023",
     description:
@@ -227,6 +227,23 @@ export const projects = [
     ],
     category: "web app",
     github: "https://github.com/abhi051002/spotify-clone",
+    webapp: "https://abhi051002.github.io/spotify-clone/",
+  },
+  {
+    id: 2,
+    title: "Dark Mode",
+    date: "Sept 2023 - Oct 2023",
+    description:
+      "Dark Mode is just made of Html and CSS which is basically ca use for makeing reliable for switching dark mode on and off",
+    image:
+      require('../Image/Dark-Mode.png'),
+    tags: [
+      "Html",
+      "CSS",
+      "Scss"
+    ],
+    category: "web app",
+    github: "https://github.com/abhi051002/dark-mode",
     webapp: "https://abhi051002.github.io/spotify-clone/",
   },
   {
