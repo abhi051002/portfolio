@@ -213,24 +213,24 @@ export const education = [
 
 export const projects = [
   {
-    id: 3,
+    id: 0,
     title: "Tic Tac Toe",
     date: "Sept 2023 - Oct 2023",
     description:
       "Tic-Tac-toe is just a simple game we used to play in ou childhood i just make it in digital form using Html Css and  Js that allows two users to play and enjoy the free time , user can reset the game at any point of time it will show the winner after the completion of game and it will show if the match was draw",
     image:
-      require('../Image/spotify-clone.jpg'),
+      require('../Image/Tic-Tac-Toe.png'),
     tags: [
       "Html",
       "CSS",
       "JavaScript",
     ],
     category: "web app",
-    github: "https://github.com/abhi051002/spotify-clone",
-    webapp: "https://abhi051002.github.io/spotify-clone/",
+    github: "https://github.com/abhi051002/tic-tac-toe-js",
+    webapp: "",
   },
   {
-    id: 2,
+    id: 1,
     title: "Dark Mode",
     date: "Sept 2023 - Oct 2023",
     description:
@@ -244,10 +244,10 @@ export const projects = [
     ],
     category: "web app",
     github: "https://github.com/abhi051002/dark-mode",
-    webapp: "https://abhi051002.github.io/spotify-clone/",
+    webapp: "",
   },
   {
-    id: 1,
+    id: 2,
     title: "Spotify CLone",
     date: "Jun 2023 - Jul 2023",
     description:
@@ -265,7 +265,7 @@ export const projects = [
     webapp: "https://abhi051002.github.io/spotify-clone/",
   },
   {
-    id: 0,
+    id: 3,
     title: "Hospital Management System",
     date: "July 2023 - Sept 2023",
     description:
@@ -275,7 +275,7 @@ export const projects = [
     tags: ["Html", "Css", "JavaScript", "Php", "Mysql",'Tailwind Css'],
     category: "web app",
     github: "https://github.com/abhi051002/Hospital-Management-System",
-    webapp: "https://abhi051002.github.io/spotify-clone/",
+    webapp: "",
   },
 ];
 
