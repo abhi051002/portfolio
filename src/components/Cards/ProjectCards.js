@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-scroll";
 import styled from "styled-components";
 
 const Button = styled.a`
-  display: none;
+  opacity: 0;
   width: 100%;
   padding: 10px;
   background-color: ${({ theme }) => theme.white};
@@ -13,13 +12,14 @@ const Button = styled.a`
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.8s ease-in-out;
+  transition: opacity 0.5s ease-in-out; /* Smooth transition */
   text-align: center;
   text-decoration: none;
 `;
+
 const Card = styled.div`
   width: 330px;
-  height: 490px;
+  height: 520px;
   background-color: ${({ theme }) => theme.card};
   cursor: pointer;
   border-radius: 10px;
@@ -36,7 +36,7 @@ const Card = styled.div`
     filter: brightness(1.1);
   }
   &:hover ${Button} {
-    display: block;
+    opacity: 1; /* Show button on hover */
   }
 `;
 
@@ -109,20 +109,20 @@ const Description = styled.div`
   text-overflow: ellipsis;
 `;
 
-const Members = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-`;
-const Avatar = styled.img`
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  margin-left: -10px;
-  background-color: ${({ theme }) => theme.white};
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border: 3px solid ${({ theme }) => theme.card};
-`;
+// const Members = styled.div`
+//   display: flex;
+//   align-items: center;
+//   padding-left: 10px;
+// `;
+// const Avatar = styled.img`
+//   width: 38px;
+//   height: 38px;
+//   border-radius: 50%;
+//   margin-left: -10px;
+//   background-color: ${({ theme }) => theme.white};
+//   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+//   border: 3px solid ${({ theme }) => theme.card};
+// `;
 
 const ProjectCards = ({ project, setOpenModal }) => {
   return (
@@ -138,7 +138,17 @@ const ProjectCards = ({ project, setOpenModal }) => {
         <Date>{project.date}</Date>
         <Description>{project.description}</Description>
       </Details>
-      <Button href={project.github}>View Project</Button>
+      {project.webapp !== "" ? (
+        <Button
+          href={project.webapp !== "" ? project.webapp : project.github}
+          target="_blank"
+        >
+          View Project
+        </Button>
+      ) : null}
+      <Button href={project.github} target="_blank">
+        View Git Repository
+      </Button>
     </Card>
   );
 };

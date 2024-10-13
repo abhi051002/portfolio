@@ -79,7 +79,7 @@ const Education = () => {
             <TimelineSection>
                 <Timeline>
                     {education.map((education,index)=>(
-                        <TimelineItem>
+                        <TimelineItem key={index}>
                             <TimelineSeparator>
                                 <TimelineDot variant='outlined' color='secondary'/>
                                 {index!==education.length && <TimelineConnector />}

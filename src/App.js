@@ -1,7 +1,6 @@
 import './App.css';
 import styled, { ThemeProvider } from 'styled-components';
-import { useState, useEffect } from "react";
-import { darkTheme, lightTheme } from './Utils/Themes';
+import { darkTheme } from './Utils/Themes';
 import Navbar from './components/Navbar';
 import Hero from './components/HeroSection';
 import Skills from './components/Skills';
@@ -11,7 +10,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Project from './components/Project';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import ProjectDetails from './components/ProjectDetails/index.js';
 
 const Body= styled.div`
   background-color:${({ theme }) => theme.bg};
