@@ -223,26 +223,42 @@ export const projects = [
   {
     id: 0,
     title: "Fullstack Ecommerce Site",
-    date: "Sept 2024 - Oct 2024",
-    description:
-      "Developed a full-stack e-commerce site that allows customers to register/login, add products to their cart and purchase products with various payment methods like COD,Stripe,Razorpay and can track their products. Admin Can Login and Add/Delete Products and can manage customers Orders .",
+    date: "June 2023 - Aug 2023",
+    description: `Designed and developed intuitive front-end modules using React and Tailwind, with Express handling the backend to manage user
+data. Implemented MongoDB for efficient data storage, along with JWT-based user login and registration for secure authentication.
+Integrated Stripe and Razorpay payment gateways to ensure secure transactions and provide a seamless user experience across
+platforms. Enabled users to add products to their carts, place orders, and choose from multiple payment options, including Cash on
+Delivery (COD). Developed an admin panel allowing administrators to add, delete, and manage products, as well as oversee order
+processing and shipping statuses.`,
     image: require("../Image/e-commerce.png"),
-    tags: ["React", "MangoDB", "Express", "Tailwind Css", "Stripe", "Razorpay"],
+    tags: [
+      "React",
+      "MangoDB",
+      "Express",
+      "Tailwind Css",
+      "Stripe",
+      "Razorpay",
+      "JWT",
+    ],
     category: "web app",
     github: "https://github.com/abhi051002/Forever-Ecommerce-FullStack",
     webapp: "https://forever-frontend-wine.vercel.app/",
   },
   {
     id: 1,
-    title: "Hospital Management System",
-    date: "July 2023 - Sept 2023",
-    description:
-      "Developed a full-stack web application that allows users to search for doctors who are available and book an appointment. This is a fully responsive wbesite for the patients and admin,patients and doctor all can use this web application.",
-    image: require("../Image/hms.jpg"),
-    tags: ["Html", "Css", "JavaScript", "Php", "Mysql", "Tailwind Css"],
+    title: "Hospital Management Site",
+    date: "March 2023 - April 2023",
+    description: `Designed and developed dynamic front-end modules using React and Tailwind, with Express managing the backend for user data
+processing. Leveraged MongoDB for efficient data storage and implemented JWT-based user login and registration for robust
+authentication. Patients can easily log in, search for doctors by specialty, and book appointments based on preferred times and dates.
+The system includes a powerful admin panel where doctors can log in, adjust their fees, and manage upcoming appointments.
+Administrators can add or remove doctors, view, and modify all upcoming appointments. Stripe integration ensures secure payments
+for booking appointments, ensuring a smooth and reliable user experience.`,
+    image: require("../Image/home1.png"),
+    tags: ["React", "MangoDB", "Express", "Tailwind Css", "Razorpay", "JWT"],
     category: "web app",
-    github: "https://github.com/abhi051002/Hospital-Management-System",
-    webapp: "",
+    github: "https://github.com/abhi051002/hms-fullstack",
+    webapp: " https://hms-frontend-kappa.vercel.app/",
   },
 ];
 

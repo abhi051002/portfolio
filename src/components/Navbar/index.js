@@ -35,8 +35,11 @@ const Navbar = () => {
             }}
             href="/"
           >
-            <DiCssdeck size="3rem" />
-            <Span>Abhijit</Span>
+            <div className="logos">{"<"}</div>
+            <span className="abhijit">Abhijit</span>
+            <div className="slash">{"/"}</div>
+            <span className="abhijit">Nanda</span>
+            <div className="logos">{">"}</div>
           </a>
         </NavLogo>
         <MobileIcon>
