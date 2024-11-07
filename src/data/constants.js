@@ -258,7 +258,7 @@ for booking appointments, ensuring a smooth and reliable user experience.`,
     tags: ["React", "MangoDB", "Express", "Tailwind Css", "Razorpay", "JWT"],
     category: "web app",
     github: "https://github.com/abhi051002/hms-fullstack",
-    webapp: " https://hms-frontend-kappa.vercel.app/",
+    webapp: "https://hms-frontend-umber.vercel.app",
   },
 ];
 
