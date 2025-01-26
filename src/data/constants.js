@@ -8,7 +8,7 @@ to writing clean, efficient code and continuously expanding technical expertise 
 development`,
   github: "https://github.com/abhi051002",
   resume:
-    "https://res.cloudinary.com/dzncl0gbm/image/upload/v1737552840/h32nx4zhb07f4mlnsm0c.pdf",
+    "https://res.cloudinary.com/dzncl0gbm/image/upload/Abhijit_Nanda_1_w0rblj.pdf",
   linkedin: "https://www.linkedin.com/in/abhijit-nanda",
   twitter: "https://twitter.com/AbhijitNanda20",
   insta: "https://instagram.com/abhijit.nanda.969",
