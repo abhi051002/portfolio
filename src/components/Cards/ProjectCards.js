@@ -24,8 +24,8 @@ const Card = styled.div`
   cursor: pointer;
   border-radius: 10px;
   box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
   padding: 26px 20px;
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -124,9 +124,92 @@ const Description = styled.div`
 //   border: 3px solid ${({ theme }) => theme.card};
 // `;
 
+const ComingSoonBookmark = styled.div`
+  position: absolute;
+  top: 0px;
+  right: -5px;
+  z-index: 10;
+`;
+
+const BookmarkInner = styled.div`
+  position: relative;
+`;
+
+const BookmarkContent = styled.div`
+  background-color: ${({ theme }) => theme.primary || "#eab308"};
+  position: relative;
+  color: white;
+  padding: 10px 30px;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  // border-radius: 12px;
+
+  &:before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: 0;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid ${({ theme }) => theme.primary || "#eab308"};
+    border-top: 20px solid ${({ theme }) => theme.primary || "#eab308"};
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    // border-left: 5px solid ${({ theme }) =>
+      theme.primary || "#754d0e"}; // darker shade for fold
+    border-bottom: 10px solid transparent;
+  }
+`;
+
+const BookmarkTriangle = styled.div`
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  &::after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 8px solid ${({ theme }) => theme.primary || "#eab308"};
+  }
+`;
+
+const BookmarkShadowRight = styled.div`
+  position: absolute;
+  top: 0;
+  right: -4px;
+  width: 4px;
+  height: 100%;
+`;
+
+const BookmarkShadowLeft = styled.div`
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 4px;
+  height: 100%;
+`;
+
 const ProjectCards = ({ project, setOpenModal }) => {
   return (
     <Card>
+      {!project.isDone && (
+        <ComingSoonBookmark>
+          <BookmarkInner>
+            <BookmarkContent>Coming Soon</BookmarkContent>
+            <BookmarkTriangle />
+            <BookmarkShadowRight />
+            <BookmarkShadowLeft />
+          </BookmarkInner>
+        </ComingSoonBookmark>
+      )}
       <Image src={project.image} />
       <Tags>
         {project.tags?.map((tag, index) => (
@@ -146,9 +229,13 @@ const ProjectCards = ({ project, setOpenModal }) => {
           View Project
         </Button>
       ) : null}
-      <Button href={project.github} target="_blank">
-        View Git Repository
-      </Button>
+      {project.github === "" ? (
+        ""
+      ) : (
+        <Button href={project.github} target="_blank">
+          View Git Repository
+        </Button>
+      )}
     </Card>
   );
 };

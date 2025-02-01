@@ -17,7 +17,31 @@ development`,
 
 export const skills = [
   {
-    title: "Frontend",
+    title: "Programming Language",
+    skills: [
+      {
+        name: "HTML5",
+        image: "https://www.w3.org/html/logo/badge/html5-badge-h-solo.png",
+      },
+      {
+        name: "CSS",
+        image:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png",
+      },
+      {
+        name: "JavaScript",
+        image:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/800px-JavaScript-logo.png",
+      },
+      {
+        name: "PHP",
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJO6dYQFqGX2TEJxyB-6mIfkoK0LdGLVy6ew&s",
+      },
+    ],
+  },
+  {
+    title: "Frameworks & Libraries",
     skills: [
       {
         name: "React Js",
@@ -30,18 +54,18 @@ export const skills = [
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5KhCojo9MAD9u7-vbHjYYFzD69By9d-PWcw&s",
       },
       {
-        name: "HTML",
-        image: "https://www.w3.org/html/logo/badge/html5-badge-h-solo.png",
+        name: "Laravel",
+        image: "https://laravel.com/img/logomark.min.svg",
       },
       {
-        name: "CSS",
+        name: "Express",
         image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png",
+          "https://external-preview.redd.it/learn-express-js-a-beginner-friendly-step-by-step-guide-v0-hE7Pn4a6ZRCe82cUQnRhXPmvzcp12NG5m8qnWsOpsGI.jpg?auto=webp&s=ac7405a8046d97bae600b10cf191279e612984e7",
       },
       {
-        name: "JavaScript",
+        name: "Node Js",
         image:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/JavaScript-logo.png/800px-JavaScript-logo.png",
+          "https://w7.pngwing.com/pngs/558/166/png-transparent-node-js-javascript-react-express-js-linux-foundation-mongodb-icons-angle-text-rectangle-thumbnail.png",
       },
       {
         name: "Bootstrap",
@@ -56,26 +80,7 @@ export const skills = [
       {
         name: "TailwindCss",
         image:
-          "https://yt3.googleusercontent.com/ikv41jMTr1uHGdILrJhvbfVJcDt4oqhwApKX37TjAleF_cRPbF2W-waj7uMnS5JySvnlvAlTCg=s900-c-k-c0x00ffffff-no-rj",
-      },
-    ],
-  },
-  {
-    title: "Backend",
-    skills: [
-      {
-        name: "Laravel",
-        image: "https://laravel.com/img/logomark.min.svg",
-      },
-      {
-        name: "Express",
-        image:
-          "https://w7.pngwing.com/pngs/558/166/png-transparent-node-js-javascript-react-express-js-linux-foundation-mongodb-icons-angle-text-rectangle-thumbnail.png",
-      },
-      {
-        name: "Node Js",
-        image:
-          "https://w7.pngwing.com/pngs/558/166/png-transparent-node-js-javascript-react-express-js-linux-foundation-mongodb-icons-angle-text-rectangle-thumbnail.png",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNhoXisDruJMDAq3Ltd-wuaMW2lGxck9wAKw&s",
       },
     ],
   },
@@ -123,7 +128,7 @@ export const skills = [
       {
         name: "Postman",
         image:
-          "https://yt3.googleusercontent.com/X-rhKMndFm9hT9wIaJns1StBfGbFdLTkAROwm4UZ3n9ucrBky5CFIeeZhSszFXBgQjItzCD0SA=s900-c-k-c0x00ffffff-no-rj",
+          "https://kinlane-productions2.s3.amazonaws.com/postman/logo-glyph.png",
       },
       {
         name: "Figma",
@@ -243,6 +248,7 @@ processing and shipping statuses.`,
     category: "web app",
     github: "https://github.com/abhi051002/Forever-Ecommerce-FullStack",
     webapp: "https://forever-frontend-wine.vercel.app/",
+    isDone: true,
   },
   {
     id: 1,
@@ -259,6 +265,24 @@ for booking appointments, ensuring a smooth and reliable user experience.`,
     category: "web app",
     github: "https://github.com/abhi051002/hms-fullstack",
     webapp: "https://hms-frontend-umber.vercel.app",
+    isDone: true,
+  },
+  {
+    id: 2,
+    title: "Job Portal",
+    date: "Nov 2024 - Working",
+    description: `Designed and developed dynamic front-end modules using React and Tailwind, with Express managing the backend for user data
+processing. Leveraged MongoDB for efficient data storage and implemented JWT-based user login and registration for robust
+authentication. Patients can easily log in, search for doctors by specialty, and book appointments based on preferred times and dates.
+The system includes a powerful admin panel where doctors can log in, adjust their fees, and manage upcoming appointments.
+Administrators can add or remove doctors, view, and modify all upcoming appointments. Stripe integration ensures secure payments
+for booking appointments, ensuring a smooth and reliable user experience.`,
+    image: require("../Image/jobportal.png"),
+    tags: ["React", "MangoDB", "Express", "Tailwind Css", "JWT"],
+    category: "web app",
+    github: "",
+    webapp: "",
+    isDone: false,
   },
 ];
 
