@@ -271,18 +271,13 @@ for booking appointments, ensuring a smooth and reliable user experience.`,
     id: 2,
     title: "Job Portal",
     date: "Nov 2024 - Working",
-    description: `Designed and developed dynamic front-end modules using React and Tailwind, with Express managing the backend for user data
-processing. Leveraged MongoDB for efficient data storage and implemented JWT-based user login and registration for robust
-authentication. Patients can easily log in, search for doctors by specialty, and book appointments based on preferred times and dates.
-The system includes a powerful admin panel where doctors can log in, adjust their fees, and manage upcoming appointments.
-Administrators can add or remove doctors, view, and modify all upcoming appointments. Stripe integration ensures secure payments
-for booking appointments, ensuring a smooth and reliable user experience.`,
+    description: `JobPortal is a MERN stack application enabling seamless job searching and recruiting. Recruiters can post jobs and manage applications, while job seekers can create profiles, search positions, and track application status. Features secure authentication, real-time updates, and an intuitive interface for both user types.`,
     image: require("../Image/jobportal.png"),
     tags: ["React", "MangoDB", "Express", "Tailwind Css", "JWT"],
     category: "web app",
-    github: "",
-    webapp: "",
-    isDone: false,
+    github: "https://github.com/abhi051002/JobPortal",
+    webapp: "https://job-portal-frontend-ochre-delta.vercel.app/",
+    isDone: true,
   },
 ];
 
