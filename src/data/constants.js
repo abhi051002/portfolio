@@ -1,14 +1,13 @@
 export const Bio = {
   name: "Abhijit Nanda",
-  roles: ["Full Stack Web Developer", "Laravel Developer", "Programmer"],
-  description: `Junior software developer with 1 year of experience, specializing in full-stack web development. Proficient in HTML, CSS,
-JavaScript, React, PHP, Laravel, and FilamentPHP. Demonstrated ability to deliver responsive and efficient web
-applications, collaborate effectively in team environments, and solve complex problems under tight deadlines. Committed
-to writing clean, efficient code and continuously expanding technical expertise to drive innovation in software
-development`,
+  roles: ["Full Stack Web Developer", "Laravel Developer", "Problem Solver"],
+  description: `SDE-I with 2+ year of professional experience specializing in full-stack web development. 
+  Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
+  Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
+  Known for solving complex problems under tight deadlines and writing clean, maintainable code.
+  Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
   github: "https://github.com/abhi051002",
-  resume:
-    "https://res.cloudinary.com/dzncl0gbm/image/upload/Abhijit_Nanda_1_w0rblj.pdf",
+  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/Abhijit_Nanda_1_w0rblj.pdf",
   linkedin: "https://www.linkedin.com/in/abhijit-nanda",
   twitter: "https://twitter.com/AbhijitNanda20",
   insta: "https://instagram.com/abhijit.nanda.969",
@@ -17,14 +16,14 @@ development`,
 
 export const skills = [
   {
-    title: "Programming Language",
+    title: "Programming Languages",
     skills: [
       {
         name: "HTML5",
         image: "https://www.w3.org/html/logo/badge/html5-badge-h-solo.png",
       },
       {
-        name: "CSS",
+        name: "CSS3",
         image:
           "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1452px-CSS3_logo_and_wordmark.svg.png",
       },
@@ -38,18 +37,23 @@ export const skills = [
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJO6dYQFqGX2TEJxyB-6mIfkoK0LdGLVy6ew&s",
       },
+      {
+        name: "Python",
+        image:
+          "https://www.citypng.com/public/uploads/preview/hd-python-logo-symbol-transparent-png-735811696257415dbkifcuokn.png",
+      },
     ],
   },
   {
     title: "Frameworks & Libraries",
     skills: [
       {
-        name: "React Js",
+        name: "React",
         image:
           "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",
       },
       {
-        name: "Astro Js",
+        name: "Astro",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5KhCojo9MAD9u7-vbHjYYFzD69By9d-PWcw&s",
       },
@@ -58,12 +62,16 @@ export const skills = [
         image: "https://laravel.com/img/logomark.min.svg",
       },
       {
+        name: "Django",
+        image: "https://avatars.githubusercontent.com/u/27804?s=280&v=4",
+      },
+      {
         name: "Express",
         image:
           "https://external-preview.redd.it/learn-express-js-a-beginner-friendly-step-by-step-guide-v0-hE7Pn4a6ZRCe82cUQnRhXPmvzcp12NG5m8qnWsOpsGI.jpg?auto=webp&s=ac7405a8046d97bae600b10cf191279e612984e7",
       },
       {
-        name: "Node Js",
+        name: "Node.js",
         image:
           "https://w7.pngwing.com/pngs/558/166/png-transparent-node-js-javascript-react-express-js-linux-foundation-mongodb-icons-angle-text-rectangle-thumbnail.png",
       },
@@ -73,22 +81,22 @@ export const skills = [
           "https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo-shadow.png",
       },
       {
-        name: "FilamentPhp",
+        name: "FilamentPHP",
         image:
-          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFaUlEQVR4Ab2XY5QlSRCFa8e2pzFmu8c227ZtjG3btj3z2tbatm20Rq/uVsSZPKfmab0/vs6ujBtxb2a9PyU5xaczcm5wa1QtjlZ4WqFGAf8ui+pRueB55f9kFMa1F74Sm+dHdEPlolMkUlb8x9xTuIzKhRbkTSdvgYoFJxTwP3OZbkJCxfxQhXoF/GmqFuhiSmdsDnkmSyjPLFLAH0FNckUmvtck47ljEbi9JYAp3RuEN89E4tfcFKqTltevbiWy7tWT4agvTOV+3Zn0m5BQlvGdAkxBYhpydpUXPGaOxghHO9jaWDP2drYYNdweaUFTOARpKdjsSSNIx7W1CXOon2o6s9NqJfqjAFNQ89bUuWw4ePAQWFkNVcN7FEBbkoZPr8aSuVpHIeiWDM7mAChNhTFIlL/DD8JcMHDQILEyF1e7A1Xp/EpEKMFIBysRQG++hJLkGgXoItNamoz6/EREeYxFv/79wWYDB/DANTHTcHaFG3ZnzEGK/wS8ey4MqEijd0511guovzongefRXAEUJLkkqUYBAvDKUAMNVg/kACeXOIPrZazB3fwEPChKpF5a+TaCnUYSHPSDC+Gsox5dJLk4oUYuToQaCBQDzWYPNu7Tpw8zaaQ1vrgawWYQOp1eGlyfF0fQHmlpNYgkF8XVyEXxeIzCONTlRPOATfFTYWlpSea8Bs52xE+3o7guUPfez+deXlEcR3sm4QBkKIyp6YXDvvCdaQ/PaXYYZjOAjQUOVv1pn3GfYovFIePIkPuqNVH0zL0vHfEDSnimmK0Qw6uAniW5MLqW/hGgOAZH5s9Ajx49GTMzMz1ErWu37kj2GiH68PPtcL6hPpbmOJA+9VEwmmscDoCCaAjk/Age2qlzFzbRhUzVkBGZUO+3VwJwbulMTHDsy0Fpzg/Xg6lmFEkxrFGA4H5OGA9dEDASLuMHoVvXrsKMTxbn5sA1wRtHvYDCSGZv8ng2tjDrAauBlpg9ZhA+OuvPNZ6vj34AAgUR3LQ8dBTdBIeglU5GJ6K6QN1DYfymWbE+bI4NP2vzwrluPEBeaA3ywqBLnSYEHhP6o337DmxOKw2lGzKkp+tPdLflkBSA9JtjRlMwqhuFA8i5oVCDvBB8ds4H9gPNeFDHju3Rrl07HkhNhvQUgF4Z6alvTdgIvLjfmWqkMYok5wQpAYKhhpoqd8xBz26d2JigELdWT+OaIf0HJz34N2DVtwtr6TZ+u+4r9EbhAMgJghpqOpo+Dm3atBagj1lnvHXEiWt6+twgLA9yYB2ZUwh6fV9f8KIaaYwiydl+NXJ2AHRJcbdC8+bNeSit46y64ccr3txkSE/X7TS6N+vDZg7Eu8dcRM0UIoA/1NDVTXc0Q5OmzdicVhr6UOMHXS1y/fHhcWc+MZ28VYvm3LM3YQTVSGMSSdb41MhZvhAgx5cHDjBr91iAbVH2PJA0uvpPT7mIwByCtPy6ckhjGg6gAAE15a6ZyCdp3LgxQ//THtW0ikZAehry0p6ZWBVkDbPOrThw7Jz+qL7mzjUxV2sESXvHs0Z7xwsCZHvzCRo0aEDmvNLgdw7P4ppaK9/xxN2bHnAfYy50fHMBkyzxy2VXMiadSSjAN49t3nZH2LReNFDAP0AaSIZqLTSe+OT4bPTp1op5autkfHfOiU5P9T+EDi9pb7nkkangwU03lG+cgIvzhwv4WXvLTWgEHIgMry0aiYI147gXdzx4nzV/zFOSMthPCVFNBgJo3HURNT3k20JPA1n3J3GpU9YY/jRTHvY/2vwfcT1FH8T8cUrfaBSCb+KmM/5L6OTKeoI+iMXXMcM3cdPJj38TN5y+U6j5i9Sa3ueZxYpHCJ1c+P4OcBC5mQx7K4EAAAAASUVORK5CYII=",
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFaUlEQVR4Ab2XY5QlSRCFa8e2pzFmu8c227ZtjG3btj3z2tbatm20Rq/uVsSZPKfmab0/vs6ujBtxb2a9PyU5xaczcm5wa1QtjlZ4WqFGAf8ui+pRueB55f9kFMa1F74Sm+dHdEPlolMkUlb8x9xTuIzKhRbkTSdvgYoFJxTwP3OZbkJCxfxQhXoF/GmqFuhiSmdsDnkmSyjPLFLAH0FNckUmvtck47ljEbi9JYAp3RuEN89E4tfcFKqTltevbiWy7tWT4agvTOV+3Zn0m5BQlvGdAkxBYhpydpUXPGaOxghHO9jaWDP2drYYNdweaUFTOARpKdjsSSNIx7W1CXOon2o6s9NqJfqjAFNQ89bUuWw4ePAQWFkNVcN7FEBbkoZPr8aSuVpHIeiWDM7mAChNhTFIlL/DD8JcMHDQILEyF1e7A1Xp/EpEKMFIBysRQG++hJLkGgXoItNamoz6/EREeYxFv/79wWYDB/DANTHTcHaFG3ZnzEGK/wS8ey4MqEind0511guovzongefRXAEUJLkkqUYBAvDKUAMNVg/kACeXOIPrZazB3fwEPChKpF5a+TaCnUYSHPSDC+Gsox5dJLk4oUYuToQaCBQDzWYPNu7Tpw8zaaQ1vrgawWYQOp1eGlyfF0fQHmlpNYgkF8XVyEXxeIzCONTlRPOATfFTYWlpSea8Bs52xE+3o7guUPfez+deXlEcR3sm4QBkKIyp6YXDvvCdaQ/PaXYYZjOAjQUOVv1pn3GfYovFIePIkPuqNVH0zL0vHfEDSnimmK0Qw6uAniW5MLqW/hGgOAZH5s9Ajx49GTMzMz1ErWu37kj2GiH68PPtcL6hPpbmOJA+9VEwmmscDoCCaAjk/Age2qlzFzbRhUzVkBGZUO+3VwJwbulMTHDsy0Fpzg/Xg6lmFEkxrFGA4H5OGA9dEDASLuMHoVvXrsKMTxbn5sA1wRtHvYDCSGZv8ng2tjDrAauBlpg9ZhA+OuvPNZ6vj34AAgUR3LQ8dBTdBIeglU5GJ6K6QN1DYfymWbE+bI4NP2vzwrluPEBeaA3ywqBLnSYEHhP6o337DmxOKw2lGzKkp+tPdLflkBSA9JtjRlMwqhuFA8i5oVCDvBB8ds4H9gPNeFDHju3Rrl07HkhNhvQUgF4Z6alvTdgIvLjfmWqkMYok5wQpAYKhhpoqd8xBz26d2JigELdWT+OaIf0HJz34N2DVtwtr6TZ+u+4r9EbhAMgJghpqOpo+Dm3atBagj1lnvHXEiWt6+twgLA9yYB2ZUwh6fV9f8KIaaYwiydl+NXJ2AHRJcbdC8+bNeSit46y64ccr3txkSE/X7TS6N+vDZg7Eu8dcRM0UIoA/1NDVTXc0Q5OmzdicVhr6UOMHXS1y/fHhcWc+MZ28VYvm3LM3YQTVSGMSSdb41MhZvhAgx5cHDjBr91iAbVH2PJA0uvpPT7mIwByCtPy6ckhjGg6gAAE15a6ZyCdp3LgxQ//THtW0ikZAehry0p6ZWBVkDbPOrThw7Jz+qL7mzjUxV2sESXvHs0Z7xwsCZHvzCRo0aEDmvNLgdw7P4ppaK9/xxN2bHnAfYy50fHMBkyzxy2VXMiadSSjAN49t3nZH2LReNFDAP0AaSIZqLTSe+OT4bPTp1op5autkfHfOiU5P9T+EDi9pb7nkkangwU03lG+cgIvzhwv4WXvLTWgEHIgMry0aiYI147gXdzx4nzV/zFOSMthPCVFNBgJo3HURNT3k20JPA1n3J3GpU9YY/jRTHvY/2vwfcT1FH8T8cUrfaBSCb+KmM/5L6OTKeoI+iMXXMcM3cdPJj38TN5y+U6j5i9Sa3ueZxYpHCJ1c+P4OcBC5mQx7K4EAAAAASUVORK5CYII=",
       },
       {
-        name: "TailwindCss",
+        name: "TailwindCSS",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNhoXisDruJMDAq3Ltd-wuaMW2lGxck9wAKw&s",
       },
     ],
   },
   {
-    title: "Database",
+    title: "Databases",
     skills: [
       {
-        name: "MangoDB",
+        name: "MongoDB",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9BVeiXAMU-SsGkVehbpBV1pOlUClyxhC2bg&s",
       },
@@ -98,13 +106,13 @@ export const skills = [
           "https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg",
       },
       {
-        name: "Postgresql",
+        name: "PostgreSQL",
         image: "https://www.postgresql.org/media/img/about/press/elephant.png",
       },
     ],
   },
   {
-    title: "Others",
+    title: "Tools & Technologies",
     skills: [
       {
         name: "Git",
@@ -143,16 +151,18 @@ export const experiences = [
   {
     id: 0,
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
-    role: "Junior Software Developer",
+    role: "SDE-I",
     company: "Hyscaler",
-    date: "March 2024 - Present",
-    experiencesInYear: "",
-    desc: "Working on the full stack of the web application using PHP, Laravel,Filament, Mysql, PostgreSql .",
+    date: "March 2025 - Present",
+    experiencesInYear: "1+ month",
+    desc: "Recently promoted to SDE-I after demonstrating strong technical skills and consistent delivery of high-quality work. Currently developing and maintaining full-stack web applications using PHP, Laravel, Filament, MySQL, and PostgreSQL. Working directly with clients to implement new features and solve complex technical challenges.",
     skills: [
       "PHP",
       "Laravel",
       "Filament",
-      "Mysql",
+      "Nextjs",
+      "MySQL",
+      "PostgreSQL",
       "HTML",
       "CSS",
       "JavaScript",
@@ -162,16 +172,37 @@ export const experiences = [
   {
     id: 1,
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
-    role: "Full-stack Trainee Intern",
+    role: "Junior Software Developer",
     company: "Hyscaler",
-    date: "Aug 2023 - March 2024",
-    experiencesInYear: "Experience of 6 Month",
-    desc: "Working on the full stack of the web application using PHP, Laravel,Filament, Mysql, PostgreSql .",
+    date: "March 2024 - Feb 2025",
+    experiencesInYear: "1 year",
+    desc: "Developed and maintained client web applications using PHP Laravel framework and FilamentPHP admin panel builder. Built RESTful APIs for various client projects to ensure seamless integration between front-end and back-end systems. Collaborated with senior developers to implement best practices for code quality and application security. Participated in agile development cycles including daily standups and sprint planning sessions.",
     skills: [
       "PHP",
       "Laravel",
       "Filament",
-      "Mysql",
+      "MySQL",
+      "PostgreSQL",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "REST APIs",
+    ],
+    doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
+  },
+  {
+    id: 2,
+    img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
+    role: "Full-stack Trainee Intern",
+    company: "Hyscaler",
+    date: "Sept 2023 - March 2024",
+    experiencesInYear: "6 months",
+    desc: "Gained hands-on experience with modern full-stack development technologies while working on real client projects. Assisted senior developers in building and maintaining web applications using PHP, Laravel, and FilamentPHP. Developed and optimized database schemas and queries for MySQL and PostgreSQL databases. Participated in code reviews to improve coding skills and understand industry best practices.",
+    skills: [
+      "PHP",
+      "Laravel",
+      "Filament",
+      "MySQL",
       "HTML",
       "CSS",
       "JavaScript",
@@ -179,14 +210,14 @@ export const experiences = [
     doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
   },
   {
-    id: 1,
+    id: 3,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYOSnVFC2VDDJ9FUKAB2FBdZaAohgEgjiTPfce0S-C&s",
-    role: "Full-stack Internship",
+    role: "Full-stack Intern",
     company: "Digital It Web",
     date: "Feb 2023 - July 2023",
-    experiencesInYear: "Experience of 6 Month",
-    desc: "Built an Hospital management full stack web app . I was the top performer in the program.",
-    skills: ["Html", "CSS", "JavaScript", "PHP", "Mysql", "Docker", "React Js"],
+    experiencesInYear: "6 months",
+    desc: "Built a comprehensive hospital management system from scratch, handling both frontend and backend development. Recognized as the top performer among interns due to quick learning ability and high-quality deliverables. Implemented responsive UI designs using HTML, CSS, and JavaScript while building a robust backend with PHP and MySQL. Gained valuable experience with React and Docker containerization technologies.",
+    skills: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Docker", "React"],
     doc: "https://drive.google.com/file/d/1PSn0Ix6Ncop_Ky6m2WE-2J22kqejeVU-/view?usp=drivesdk",
   },
 ];
@@ -199,7 +230,7 @@ export const education = [
     date: "Aug 2019 - July 2023",
     grade: "8.02 CGPA",
     percentage: "80.2%",
-    desc: "I have doen my graduation on Bachelor's degree in Computer Science and Engineering at Trident Academy of Technology, Bhubaneswar. I have completed 8 semesters and have a CGPA of 8.02 which is 80.2%. I have taken courses in Object-Oriented Programming, Database Management Systems, and Operating Systems, Javascript, PHP among others. I am also a member of the Cisco Developers Student Club (CiscoDSC) at TAT, where I am learning and working on exciting projects with a team of talented developers.",
+    desc: "Completed my Bachelor's degree in Computer Science and Engineering with a strong academic record of 8.02 CGPA (80.2%). Took advanced courses in Object-Oriented Programming, Database Management Systems, Operating Systems, and web development technologies including JavaScript and PHP. Active member of the Cisco Developers Student Club (CiscoDSC), where I collaborated on innovative projects with fellow tech enthusiasts and expanded my practical coding skills beyond the classroom curriculum.",
     degree: "Bachelor of Technology - BTech, Computer Science and Engineering",
   },
   {
@@ -209,17 +240,17 @@ export const education = [
     date: "Apr 2017 - Apr 2019",
     grade: "A",
     percentage: "69.0%",
-    desc: "I've completed my 12th at Royal College of Science and Technology, Bhubaneswar, I've developed a strong foundation in academics and beyond. With a commitment to excellence, I've honed my skills in various subjects and cultivated a passion for learning. My time at Royal College of Science and Technology has equipped me with valuable knowledge, critical thinking abilities, and a drive for success, setting a solid platform for my future endeavors.",
+    desc: "Completed my higher secondary education (12th) with Science and Computer specialization, securing an A grade. Developed strong analytical and problem-solving skills through rigorous coursework in mathematics, physics, and computer science. Participated in several technical workshops and coding competitions that sparked my interest in software development and laid the foundation for my future academic pursuits.",
     degree: "CHSE(XII), Science with Computer",
   },
   {
     id: 2,
     img: require("../Image/ssvm.jpeg"),
-    school: "SaraSwati Shisu Vidya Mandir,Jajpur",
+    school: "Saraswati Shisu Vidya Mandir, Jajpur",
     date: "Apr 2016 - Apr 2017",
     grade: "A",
     percentage: "77.0%",
-    desc: "I've completed my 10th grade at SaraSwati Shisu Vidya Mandir,Jajpur, I've developed a strong foundation in academics and cultivated valuable skills in various subjects. My time at SSVM has equipped me with critical thinking abilities, effective communication skills, and a dedication to excellence. I look forward to leveraging these qualities as I pursue my academic and career goals.",
+    desc: "Completed my secondary education (10th) with an A grade, establishing a solid academic foundation. Developed essential skills in critical thinking, time management, and effective communication. Participated actively in extracurricular activities including science exhibitions and mathematics competitions, which helped nurture my analytical abilities and passion for technology.",
     degree: "BSE(X)",
   },
 ];
@@ -227,20 +258,20 @@ export const education = [
 export const projects = [
   {
     id: 0,
-    title: "Fullstack Ecommerce Site",
+    title: "E-Commerce Platform",
     date: "June 2023 - Aug 2023",
-    description: `Designed and developed intuitive front-end modules using React and Tailwind, with Express handling the backend to manage user
-data. Implemented MongoDB for efficient data storage, along with JWT-based user login and registration for secure authentication.
-Integrated Stripe and Razorpay payment gateways to ensure secure transactions and provide a seamless user experience across
-platforms. Enabled users to add products to their carts, place orders, and choose from multiple payment options, including Cash on
-Delivery (COD). Developed an admin panel allowing administrators to add, delete, and manage products, as well as oversee order
-processing and shipping statuses.`,
+    description: `Built a fully functional e-commerce platform with intuitive UI/UX using React and Tailwind CSS for the frontend, coupled with Express.js backend for robust data management. Implemented MongoDB for efficient product and user data storage, along with JWT authentication for secure login and registration.
+
+Integrated multiple payment gateways (Stripe and Razorpay) to provide users with flexible payment options including Cash on Delivery. Developed a comprehensive shopping experience featuring product browsing, cart management, order placement, and payment processing.
+
+Created a powerful admin panel enabling store managers to easily add/edit products, manage inventory, and oversee the complete order fulfillment process from payment to shipping.`,
     image: require("../Image/e-commerce.png"),
     tags: [
       "React",
-      "MangoDB",
+      "MongoDB",
       "Express",
-      "Tailwind Css",
+      "Node.js",
+      "Tailwind CSS",
       "Stripe",
       "Razorpay",
       "JWT",
@@ -252,16 +283,15 @@ processing and shipping statuses.`,
   },
   {
     id: 1,
-    title: "Hospital Management Site",
+    title: "Hospital Management System",
     date: "March 2023 - April 2023",
-    description: `Designed and developed dynamic front-end modules using React and Tailwind, with Express managing the backend for user data
-processing. Leveraged MongoDB for efficient data storage and implemented JWT-based user login and registration for robust
-authentication. Patients can easily log in, search for doctors by specialty, and book appointments based on preferred times and dates.
-The system includes a powerful admin panel where doctors can log in, adjust their fees, and manage upcoming appointments.
-Administrators can add or remove doctors, view, and modify all upcoming appointments. Stripe integration ensures secure payments
-for booking appointments, ensuring a smooth and reliable user experience.`,
+    description: `Developed a comprehensive hospital management solution using the MERN stack (MongoDB, Express.js, React, Node.js) with Tailwind CSS for responsive design. Created a patient-centric interface allowing users to easily search for doctors by specialty and book appointments based on availability.
+
+Implemented secure JWT authentication with role-based access control for patients, doctors, and administrators. Built a specialized doctor portal where healthcare providers can manage their schedules, adjust consultation fees, and view upcoming appointments.
+
+Designed an administrative dashboard for hospital staff to manage doctor listings, monitor appointment bookings, and ensure smooth operation of the facility. Integrated Stripe payment processing to handle appointment bookings securely and efficiently.`,
     image: require("../Image/home1.png"),
-    tags: ["React", "MangoDB", "Express", "Tailwind Css", "Razorpay", "JWT"],
+    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "JWT"],
     category: "web app",
     github: "https://github.com/abhi051002/hms-fullstack",
     webapp: "https://hms-frontend-umber.vercel.app",
@@ -269,22 +299,34 @@ for booking appointments, ensuring a smooth and reliable user experience.`,
   },
   {
     id: 2,
-    title: "Job Portal",
+    title: "Job Portal Platform",
     date: "Nov 2024 - Feb 2025",
-    description: `JobPortal is a MERN stack application enabling seamless job searching and recruiting. Recruiters can post jobs and manage applications, while job seekers can create profiles, search positions, and track application status. Features secure authentication, real-time updates, and an intuitive interface for both user types.`,
+    description: `Created a full-featured job marketplace using the MERN stack that connects job seekers with employers. Built separate interfaces for recruiters to post positions, manage applications, and communicate with candidates.
+
+Implemented advanced job search functionality with filters for location, experience level, salary range, and keywords. Designed an intuitive job seeker dashboard for profile management, application tracking, and saved job listings.
+
+Featured real-time notifications for application status updates, interview invitations, and recruiter messages. Ensured data security through JWT authentication and role-based access controls for different user types.`,
     image: require("../Image/jobportal.png"),
-    tags: ["React", "MangoDB", "Express", "Tailwind Css", "JWT"],
+    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "JWT"],
     category: "web app",
     github: "https://github.com/abhi051002/JobPortal",
     webapp: "https://job-portal-frontend-ochre-delta.vercel.app/",
     isDone: true,
   },
-];
+  {
+    id: 3,
+    title: "Construction Company Website",
+    date: "Feb 2025 - Apr 2025",
+    description: `Designed and developed a modern, professional website for a construction company using React frontend with Laravel backend and PostgreSQL database. Created an elegant showcase of the company's services, completed projects, and customer testimonials.
 
-export const TimeLineData = [
-  { year: 2017, text: "Started my journey" },
-  { year: 2018, text: "Worked as a freelance developer" },
-  { year: 2019, text: "Founded JavaScript Mastery" },
-  { year: 2020, text: "Shared my projects with the world" },
-  { year: 2021, text: "Started my own platform" },
+Implemented a responsive design using TailwindCSS to ensure optimal viewing experiences across all devices. Built a secure contact and quote request system that integrates with the company's internal workflow.
+
+Developed a client portal where customers can track project progress, view documents, and communicate with project managers. Utilized Laravel Sanctum for secure API authentication between frontend and backend systems.`,
+    image: require("../Image/construction.png"),
+    tags: ["React", "PostgreSQL", "Laravel", "TailwindCSS", "Sanctum", "REST APIs"],
+    category: "web app",
+    github: "https://github.com/abhi051002/construction-website",
+    webapp: "https://construction-website-kmoa.vercel.app/",
+    isDone: true,
+  },
 ];
