@@ -12,7 +12,6 @@ import {
   MobileMenu,
   MobileLink,
 } from "./NavbarStyledComponent";
-import { DiCssdeck } from "react-icons/di";
 import { FaBars } from "react-icons/fa";
 import { Bio } from "../../data/constants";
 import { useTheme } from "styled-components";
@@ -20,27 +19,46 @@ import { useTheme } from "styled-components";
 const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const theme = useTheme();
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      // You can adjust this value based on when you want the navbar to change
+      const isScrolled = window.scrollY > 80;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener when component unmounts
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrolled]);
+
   return (
-    <Nav>
+    <Nav scrolled={scrolled}>
       <NavbarContainer>
-        <NavLogo to="/">
-          <a
+        <NavLogo to="/" onClick={() => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}>
+          <div
             style={{
               display: "flex",
               alignItems: "center",
               color: "white",
-              marginBottom: "20;",
+              marginBottom: 20, // SOLUTION: Removed quotes, it's now a number
               cursor: "pointer",
-              textDecoration: "none",
             }}
-            href="/"
           >
             <div className="logos">{"<"}</div>
-            <span className="abhijit">Abhijit</span>
+            <Span className="abhijit">Abhijit</Span>
             <div className="slash">{"/"}</div>
-            <span className="abhijit">Nanda</span>
+            <Span className="abhijit">Nanda</Span>
             <div className="logos">{">"}</div>
-          </a>
+          </div>
         </NavLogo>
         <MobileIcon>
           <FaBars

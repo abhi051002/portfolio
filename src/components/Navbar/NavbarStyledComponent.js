@@ -1,9 +1,13 @@
 import { Link as LinkR } from "react-router-dom";
 import styled from "styled-components";
-// import _default from '../../themes/default';
 
 export const Nav = styled.div`
-  background-color: ${({ theme }) => theme.card_light};
+  background-color: ${({ scrolled, theme }) =>
+    scrolled
+      ? 'rgba(17, 17, 23, 0.75)'
+      : theme.card_light};
+  backdrop-filter: ${({ scrolled }) => scrolled ? 'blur(10px)' : 'none'};
+  -webkit-backdrop-filter: ${({ scrolled }) => scrolled ? 'blur(10px)' : 'none'};
   height: 80px;
   display: flex;
   align-items: center;
@@ -12,8 +16,11 @@ export const Nav = styled.div`
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: ${({ scrolled }) =>
+    scrolled ? '0 2px 10px rgba(0, 0, 0, 0.3)' : 'none'};
+  transition: all 0.3s ease-in-out;
   @media (max-width: 960px) {
-    trastion: 0.8s all ease;
+    transition: 0.8s all ease;
   }
 `;
 export const NavbarContainer = styled.div`
@@ -51,7 +58,7 @@ export const NavItems = styled.ul`
   gap: 32px;
   padding: 0 6px;
   list-style: none;
-
+ 
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -63,12 +70,11 @@ export const NavLink = styled.a`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  :hover {
-    color: ${({ theme }) => theme.primary};
-  }
-
-  &.active {
-    border-bottom: 2px solid ${({ theme }) => theme.primary};
+  &:hover {
+      transform: translateY(-2px);
+      color: ${({ theme }) => theme.primary};
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      border-bottom: 2px solid ${({ theme }) => theme.primary};
   }
 `;
 

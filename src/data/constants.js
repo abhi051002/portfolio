@@ -1,6 +1,6 @@
 export const Bio = {
   name: "Abhijit Nanda",
-  roles: ["Full Stack Web Developer", "Laravel Developer", "Problem Solver"],
+  roles: ["Full Stack Web Developer", "Node.Js Developer", "Laravel Developer", "Problem Solver"],
   description: `SDE-I with 2+ year of professional experience specializing in full-stack web development. 
   Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
   Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
@@ -272,6 +272,9 @@ Created a powerful admin panel enabling store managers to easily add/edit produc
       "Express",
       "Node.js",
       "Tailwind CSS",
+      "REST APIs",
+      "bcrypt",
+      "Axios",
       "Stripe",
       "Razorpay",
       "JWT",
@@ -291,7 +294,8 @@ Implemented secure JWT authentication with role-based access control for patient
 
 Designed an administrative dashboard for hospital staff to manage doctor listings, monitor appointment bookings, and ensure smooth operation of the facility. Integrated Stripe payment processing to handle appointment bookings securely and efficiently.`,
     image: require("../Image/home1.png"),
-    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "JWT"],
+    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "REST APIs", "JWT", "bcrypt",
+      "Axios",],
     category: "web app",
     github: "https://github.com/abhi051002/hms-fullstack",
     webapp: "https://hms-frontend-umber.vercel.app",
@@ -307,7 +311,8 @@ Implemented advanced job search functionality with filters for location, experie
 
 Featured real-time notifications for application status updates, interview invitations, and recruiter messages. Ensured data security through JWT authentication and role-based access controls for different user types.`,
     image: require("../Image/jobportal.png"),
-    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "JWT"],
+    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "REST APIs", "JWT", "bcrypt",
+      "Axios",],
     category: "web app",
     github: "https://github.com/abhi051002/JobPortal",
     webapp: "https://job-portal-frontend-ochre-delta.vercel.app/",
@@ -328,5 +333,20 @@ Developed a client portal where customers can track project progress, view docum
     github: "https://github.com/abhi051002/construction-website",
     webapp: "https://construction-website-kmoa.vercel.app/",
     isDone: true,
+  },
+  {
+    id: 4,
+    title: "Edemy - Online Learning Platform",
+    date: "Apr 2025 - Present",
+    description: `Developing a comprehensive online learning platform using the MERN stack, featuring a user-friendly interface for students and instructors. Implemented a robust course management system allowing educators to create, manage, and sell courses.
+Designed an interactive student dashboard for course enrollment, progress tracking, and assignment submissions. Integrated real-time chat functionality for seamless communication between students and instructors.
+Implemented secure payment processing using Stripe for course purchases and subscriptions. Ensured data integrity and security through JWT authentication and role-based access controls.`,
+    image: require("../Image/Edemy.png"),
+    tags: ["React", "Mongodb", "Nodejs", "TailwindCSS", "Express", "REST APIs", 'JWT', "bcrypt",
+      "Axios", "Clerk Auth"],
+    category: "web app",
+    github: "https://github.com/abhi051002/Edemy-Learning-Management-System",
+    // webapp: "",
+    isDone: false,
   },
 ];

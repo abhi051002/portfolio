@@ -1,213 +1,55 @@
 import React from 'react';
-import styled from 'styled-components';
-import {Bio} from '../../data/constants';
+import { Bio } from '../../data/constants';
 import Typewriter from "typewriter-effect";
-import HeroImg from "../../Image/HeroImage.png";
+import HeroImg from "../../Image/HeroImage.jpeg";
 import HeroBgAnimation from "../HeroBgAnimation";
+import { HeroBg, HeroContainer, HeroInnerContainer, HeroLeftContainer, HeroRightContainer, Image, ImageContainer, ImageOverlay, ResumeButton, Span, SubTitle, TextLoop, Title } from './HeroSectionStyle';
 
-export const HeroContainer = styled.div`
-  background: ${({ theme }) => theme.card_light};
-  display: flex;
-  justify-content: center;
-  position: relative;
-  padding: 100px 50px;
-  @media (max-width: 960px) {
-    padding: 66px 16px;
-  }
-  @media (max-width: 640) {
-    padding: 32px 16px;
-  }
-  z-index: 1;
 
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
-`;
-
-export const HeroBg = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: end;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  max-width: 1360px;
-  overflow: hidden;
-  padding: 0 30px;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
-
-  @media (max-width: 960px) {
-    justify-content: center;
-    padding: 0 0px;
-  }
-`;
-
-export const HeroInnerContainer = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: 1100px;
-
-  @media (max-width: 960px) {
-    flex-direction: column;
-  }
-`;
-export const HeroLeftContainer = styled.div`
-  width: 100%;
-  order: 1;
-  @media (max-width: 960px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  @media (max-width: 640px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-`;
-
-export const HeroRightContainer = styled.div`
-  width: 100%;
-  display: flex;
-  order: 2;
-  justify-content: end;
-  gap: 12px;
-  @media (max-width: 960px) {
-    order: 1;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 80px;
-  }
-
-  @media (max-width: 640px) {
-    margin-bottom: 30px;
-  }
-`;
-
-export const Title = styled.div`
-  font-weight: 700;
-  font-size: 50px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-
-  @media (max-width: 640px) {
-    font-size: 40px;
-    line-height: 48px;
-    margin-bottom: 8px;
-  }
-`;
-
-export const TextLoop = styled.div`
-  font-weight: 600;
-  font-size: 32px;
-  display: flex;
-  gap: 12px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  @media (max-width: 960px) {
-    text-align: center;
-    display:block;
-  }
-  @media (max-width: 640px) {
-    font-size: 22px;
-    line-height: 48px;
-    margin-bottom: 16px;
-  }
-`;
-
-export const Span = styled.span`
-  color: ${({ theme }) => theme.primary};
-  cursor: pointer;
-`;
-
-export const SubTitle = styled.div`
-  font-size: 20px;
-  line-height: 32px;
-  margin-bottom: 42px;
-  color: ${({ theme }) => theme.text_primary + 95};
-
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-
-  @media (max-width: 640px) {
-    font-size: 16px;
-    line-height: 32px;
-  }
-`;
-
-export const ResumeButton = styled.a`
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    text-decoration: none;
-    width: 95%;
-    max-width: 300px;
-    text-align: center;
-    padding: 16px 0;
-    color:${({ theme }) => theme.white};
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out !important;
-    background: hsla(271, 100%, 50%, 1);
-    background: linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -moz-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -webkit-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    box-shadow:  20px 20px 60px #1F2634,
-    -20px -20px 60px #1F2634;
-    &:hover {
-        transform: scale(1.05);
-    transition: all 0.4s ease-in-out;
-    box-shadow:  20px 20px 60px #1F2634,
-    filter: brightness(1);
-    }    
-    
-    
-    @media (max-width: 640px) {
-        padding: 12px 0;
-        font-size: 18px;
-    } 
-
-`;
-
-export const Image = styled.img`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 400px;
-  max-height: 400px;
-  border-radius: 50%;
-  object-fit:cover;
-  border: 2px solid ${({ theme }) => theme.primary};
-
-  @media (max-width: 768px) {
-    max-width: 400px;
-    max-height: 400px;
-  }
-
-  @media (max-width: 640px) {
-    max-width: 280px;
-    max-height: 280px;
-  }
-`;
 const Hero = () => {
+  // Define animation variants
+  const fadeIn = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+  };
+
+  const staggerContainer = {
+    animate: {
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const popIn = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 15
+      }
+    }
+  };
+
+  const pulseAnimation = {
+    scale: [1, 1.05, 1],
+    opacity: [0.8, 0.5, 0.8],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+  const hoverScale = {
+    scale: 1.07,
+    boxShadow: "0 0 30px rgba(139, 92, 246, 0.9)",
+    transition: { duration: 0.3 }
+  };
+
   return (
     <div id="about">
       <HeroContainer>
@@ -215,27 +57,58 @@ const Hero = () => {
           <HeroBgAnimation />
         </HeroBg>
         <HeroInnerContainer>
-          <HeroLeftContainer>
-            <Title>
+          <HeroLeftContainer
+            variants={staggerContainer}
+            initial="initial"
+            animate="animate"
+          >
+            <Title variants={fadeIn}>
               Hi, I'm <br />
               {Bio.name}
             </Title>
             <TextLoop>
               I'm a
               <Span>
-                <Typewriter 
-                options={{
-                  strings: Bio.roles,
-                  autoStart:true,
-                  loop:true,
-                }}/>
+                <Typewriter
+                  options={{
+                    strings: Bio.roles,
+                    autoStart: true,
+                  }} />
               </Span>
             </TextLoop>
-            <SubTitle>{Bio.description}</SubTitle>
-            <ResumeButton href={Bio.resume} target='_blank'>Check My Resume</ResumeButton>
+            <SubTitle variants={fadeIn}>{Bio.description}</SubTitle>
+            <ResumeButton
+              href={Bio.resume}
+              target='_blank'
+              variants={popIn}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Check My Resume
+            </ResumeButton>
           </HeroLeftContainer>
-          <HeroRightContainer>
-            <Image src={HeroImg} alt='Hero' />
+          <HeroRightContainer
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <ImageContainer
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                delay: 0.6
+              }}
+            >
+              <Image
+                src={HeroImg}
+                alt={`${Bio.name}'s Profile`}
+                whileHover={hoverScale}
+              />
+              <ImageOverlay animate={pulseAnimation} />
+            </ImageContainer>
           </HeroRightContainer>
         </HeroInnerContainer>
       </HeroContainer>
@@ -243,4 +116,4 @@ const Hero = () => {
   )
 }
 
-export default Hero
+export default Hero;

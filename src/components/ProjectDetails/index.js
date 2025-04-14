@@ -29,6 +29,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden; /* Added to contain the bookmark */
 `;
 
 const Title = styled.div`
@@ -180,6 +181,35 @@ const Button = styled.a`
   }
 `;
 
+// Fixed corner ribbon-style bookmark
+const WorkingBookmark = styled.div`
+  position: absolute;
+  top: 20px;
+  right: -55px;
+  background-color: ${({ theme }) => theme.primary || "#eab308"};
+  color: white;
+  padding: 8px 50px;
+  font-weight: 600;
+  font-size: 14px;
+  transform: rotate(45deg);
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  text-align: center;
+`;
+
+// Not deployed notification
+const NotDeployedNotice = styled.div`
+  background-color: ${({ theme }) => theme.primary + 20};
+  color: ${({ theme }) => theme.primary};
+  padding: 16px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-weight: 500;
+  text-align: center;
+  border: 1px dashed ${({ theme }) => theme.primary};
+`;
+
 const ProjectDetails = ({ openModal, setOpenModal }) => {
   const project = openModal?.project;
   return (
@@ -195,19 +225,25 @@ const ProjectDetails = ({ openModal, setOpenModal }) => {
               top: "10px",
               right: "20px",
               cursor: "pointer",
+              zIndex: 20, // Ensure it's above the bookmark
             }}
             onClick={() => setOpenModal({ state: false, project: null })}
           />
           <Image src={project?.image} />
           <Title>{project?.title}</Title>
-          <Date>{project.date}</Date>
+          <Date>{project?.date}</Date>
           <Tags>
             {project?.tags.map((tag, index) => (
               <Tag key={index}>{tag}</Tag>
             ))}
           </Tags>
           <Desc>{project?.description}</Desc>
-          {project.member && (
+          {!project?.isDone && (
+            <NotDeployedNotice>
+              This project is still in development and has not been deployed yet. Check back soon for updates!
+            </NotDeployedNotice>
+          )}
+          {project?.member && (
             <>
               <Label>Members</Label>
               <Members>
@@ -238,8 +274,20 @@ const ProjectDetails = ({ openModal, setOpenModal }) => {
             <Button dull href={project?.github} target="new">
               View Code
             </Button>
-            <Button href={project?.webapp} target="new">
-              View Live App
+            <Button
+              href={project?.isDone ? project?.webapp : "#"}
+              target={project?.isDone ? "new" : "_self"}
+              onClick={(e) => {
+                if (!project?.isDone) {
+                  e.preventDefault();
+                }
+              }}
+              style={{
+                opacity: project?.isDone ? 1 : 0.6,
+                cursor: project?.isDone ? "pointer" : "not-allowed"
+              }}
+            >
+              {project?.isDone ? "View Live App" : "Not Deployed Yet"}
             </Button>
           </ButtonGroup>
         </Wrapper>

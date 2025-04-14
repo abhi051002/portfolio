@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { experiences } from '../../data/constants';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
@@ -7,93 +7,113 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import ExperienceCard from '../Cards/Experiencecard';
-
-const Container = styled.div`
-display: flex;
-flex-direction: column;
-justify-content: center;
-position: relative;
-z-index: 1;
-align-items: center;
-padding: 60px 0 80px 0px;
-
-@media (max-width:960px){
-    padding:0;
-}
-`;
-
-const Wrapper = styled.div`
-position: relative;
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-direction: column;
-width: 100%;
-max-width: 1100px;
-gap: 12px;
-@media (max-width: 960px) {
-    flex-direction: column;
-}
-`
-
-export const Title = styled.div`
-font-size: 42px;
-text-align: center;
-font-weight: 600;
-margin-top: 20px;
-  color: ${({ theme }) => theme.text_primary};
-  @media (max-width: 768px) {
-margin-top: 12px;
-      font-size: 32px;
-  }
-`;
-
-export const Description = styled.div`
-    font-size: 18px;
-    text-align: center;
-    max-width: 600px;
-    color: ${({ theme }) => theme.text_secondary};
-    @media (max-width: 768px) {
-        font-size: 16px;
-    }
-`;
-
-const TimelineSection = styled.div`
-    width: 100%;
-    max-width: 1000px;
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-`;
+import ExperienceCard from '../Cards/Experiencecard'; // We'll create a motion version of the card
+import { Container, Wrapper, Title, Description, TimelineSection } from './ExperienceStyle';
 
 const Experience = () => {
-  return (
-    <Container id="experience">
-        <Wrapper>
-            <Title>Experience</Title>
-            <Description>Here are some of my Experience</Description>
-            <TimelineSection>
-                <Timeline>
-                    {experiences.map((experience,index)=>(
-                        <TimelineItem key={index}>
-                            <TimelineSeparator>
-                                <TimelineDot variant='outlined' color='secondary'/>
-                                {index!==experiences.length-1 && <TimelineConnector />}
-                            </TimelineSeparator>
-                            <TimelineContent sx={{py:'12px', px: 2}}>
-                                <ExperienceCard experience={experience} />
-                            </TimelineContent>
-                        </TimelineItem>
-                    ))}
-                </Timeline>
-            </TimelineSection>
-        </Wrapper>
-    </Container>
-  )
-}
+    // Animation variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.25,
+                delayChildren: 0.2
+            }
+        }
+    };
 
-export default Experience
+    const titleVariants = {
+        hidden: { y: -20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                duration: 0.6,
+                ease: "easeOut"
+            }
+        }
+    };
+
+    // Custom animation for timeline items that slide in from alternating sides
+    const getTimelineVariants = (index) => {
+        const isEven = index % 2 === 0;
+        return {
+            hidden: {
+                x: isEven ? -50 : 50,
+                opacity: 0
+            },
+            visible: {
+                x: 0,
+                opacity: 1,
+                transition: {
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 12,
+                    delay: index * 0.1
+                }
+            }
+        };
+    };
+
+    const MotionTimelineConnector = motion.create(TimelineConnector);
+
+    return (
+        <Container id="experience">
+            <Wrapper
+                as={motion.div}
+                variants={containerVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                <motion.div variants={titleVariants}>
+                    <Title>Experience</Title>
+                    <Description>Here are some of my Experience</Description>
+                </motion.div>
+                <TimelineSection>
+                    <Timeline>
+                        {experiences.map((experience, index) => (
+                            <motion.div
+                                key={index}
+                                variants={getTimelineVariants(index)}
+                                custom={index}
+                            >
+                                <TimelineItem>
+                                    <TimelineSeparator>
+                                        <motion.div
+                                            whileHover={{ scale: 1.2 }}
+                                            whileTap={{ scale: 0.9 }}
+                                        >
+                                            <TimelineDot variant='outlined' color='secondary' />
+                                        </motion.div>
+                                        {index !== experiences.length - 1 && (
+                                            <MotionTimelineConnector
+                                                initial={{ height: 0 }}
+                                                animate={{ height: '100%' }}
+                                                transition={{ duration: 0.5, delay: 0.3 }}
+                                            />
+                                        )}
+                                    </TimelineSeparator>
+                                    <TimelineContent sx={{ py: '12px', px: 2 }}>
+                                        <motion.div
+                                            whileHover={{
+                                                scale: 1.02,
+                                                boxShadow: "0px 5px 15px rgba(133, 76, 230, 0.2)"
+                                            }}
+                                            transition={{ duration: 0.3 }}
+                                        >
+                                            <ExperienceCard experience={experience} />
+                                        </motion.div>
+                                    </TimelineContent>
+                                </TimelineItem>
+                            </motion.div>
+                        ))}
+                    </Timeline>
+                </TimelineSection>
+            </Wrapper>
+        </Container>
+    );
+};
+
+export default Experience;

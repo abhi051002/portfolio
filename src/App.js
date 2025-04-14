@@ -10,8 +10,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Project from './components/Project';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import ProjectDetails from './components/ProjectDetails';
+import { useState } from 'react';
 
-const Body= styled.div`
+const Body = styled.div`
   background-color:${({ theme }) => theme.bg};
   width:100%;
   overflow-x:hidden;
@@ -33,23 +35,28 @@ const Wrapper = styled.div`
   clip-path:polygon(0 0, 100% 0,100% 100%,30% 98%,0 100%);
 `;
 function App() {
+  const [openModal, setOpenModal] = useState({ state: false, project: null });
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Router>
-      <Navbar />
-      <Body>
-        <Hero/>
-        <Wrapper>
-          <Skills/>
-          <Experience />
-        </Wrapper>
-        <Project />
-        <Wrapper>
-          <Education/>
-          <Contact />
-        </Wrapper>
-        <Footer />
-      </Body>
+        <Navbar />
+        <Body>
+          <Hero />
+          <Wrapper>
+            <Skills />
+            <Experience />
+          </Wrapper>
+          <Project openModal={openModal} setOpenModal={setOpenModal} />
+          <Wrapper>
+            <Education />
+            <Contact />
+          </Wrapper>
+          <Footer />
+          {openModal.state &&
+            <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />
+          }
+        </Body>
       </Router>
     </ThemeProvider>
   );
