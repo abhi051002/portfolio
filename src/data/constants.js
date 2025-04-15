@@ -7,7 +7,7 @@ export const Bio = {
   Known for solving complex problems under tight deadlines and writing clean, maintainable code.
   Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
   github: "https://github.com/abhi051002",
-  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/Abhijit_Nanda_1_w0rblj.pdf",
+  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
   linkedin: "https://www.linkedin.com/in/abhijit-nanda",
   twitter: "https://twitter.com/AbhijitNanda20",
   insta: "https://instagram.com/abhijit.nanda.969",
