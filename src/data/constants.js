@@ -53,6 +53,16 @@ export const skills = [
           "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K",
       },
       {
+        name: "NextJs",
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1evld7nIl8_izeQdDR9XyPTkaLIcnRZGn9w&s",
+      },
+      {
+        name: "NestJs",
+        image:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrAhOlc5mfP52_Oi0uOKGgHniRqaQFBWsePg&s",
+      },
+      {
         name: "Astro",
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5KhCojo9MAD9u7-vbHjYYFzD69By9d-PWcw&s",
@@ -60,10 +70,6 @@ export const skills = [
       {
         name: "Laravel",
         image: "https://laravel.com/img/logomark.min.svg",
-      },
-      {
-        name: "Django",
-        image: "https://avatars.githubusercontent.com/u/27804?s=280&v=4",
       },
       {
         name: "Express",
@@ -336,17 +342,29 @@ Developed a client portal where customers can track project progress, view docum
   },
   {
     id: 4,
-    title: "Edemy - Online Learning Platform",
-    date: "Apr 2025 - Present",
-    description: `Developing a comprehensive online learning platform using the MERN stack, featuring a user-friendly interface for students and instructors. Implemented a robust course management system allowing educators to create, manage, and sell courses.
-Designed an interactive student dashboard for course enrollment, progress tracking, and assignment submissions. Integrated real-time chat functionality for seamless communication between students and instructors.
-Implemented secure payment processing using Stripe for course purchases and subscriptions. Ensured data integrity and security through JWT authentication and role-based access controls.`,
-    image: require("../Image/Edemy.png"),
-    tags: ["React", "Mongodb", "Nodejs", "TailwindCSS", "Express", "REST APIs", 'JWT', "bcrypt",
-      "Axios", "Clerk Auth"],
+    title: "SnapCast",
+    date: "May 2025 - June 2025",
+    description: `Built with Next.js and Bunny.net, this Full Stack Screen Recording & Video Sharing Platform includes user authentication with "Better Auth", screen recording, video uploads, and the ability to share videos via link. Users can set videos as public or private, view AI-generated transcripts, and access metadata like video ID and URL. A built-in search bar makes finding content fast and simple.`,
+    image: require("../Image/SnapCast.png"),
+    tags: ["Nextjs", "Postgres", "Arject", "Bunny.net", "Better Auth", "Drizzle ORM", "Tailwind CSS", "Typescript", "Xata"],
     category: "web app",
-    github: "https://github.com/abhi051002/Edemy-Learning-Management-System",
-    // webapp: "",
-    isDone: false,
+    github: "https://github.com/abhi051002/snapcast",
+    webapp: "https://snapcast-mauve.vercel.app/",
+    isDone: true,
   },
+  //   {
+  //     id: 4,
+  //     title: "Edemy - Online Learning Platform",
+  //     date: "Apr 2025 - Present",
+  //     description: `Developing a comprehensive online learning platform using the MERN stack, featuring a user-friendly interface for students and instructors. Implemented a robust course management system allowing educators to create, manage, and sell courses.
+  // Designed an interactive student dashboard for course enrollment, progress tracking, and assignment submissions. Integrated real-time chat functionality for seamless communication between students and instructors.
+  // Implemented secure payment processing using Stripe for course purchases and subscriptions. Ensured data integrity and security through JWT authentication and role-based access controls.`,
+  //     image: require("../Image/Edemy.png"),
+  //     tags: ["React", "Mongodb", "Nodejs", "TailwindCSS", "Express", "REST APIs", 'JWT', "bcrypt",
+  //       "Axios", "Clerk Auth"],
+  //     category: "web app",
+  //     github: "https://github.com/abhi051002/Edemy-Learning-Management-System",
+  //     // webapp: "",
+  //     isDone: false,
+  //   },
 ];
