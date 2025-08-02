@@ -1,45 +1,166 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled, { createGlobalStyle } from 'styled-components';
 
+// Global styles for animations
+export const GlobalStyle = createGlobalStyle`
+  background: linear-gradient(135deg, #0f0f23 0%, #1a0a2e 25%, #16213e 50%, #0f0f23 100%);
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+`;
+
+export const Container = styled.div`
+  background: linear-gradient(135deg, #0f0f23 0%, #1a0a2e 25%, #16213e 50%, #0f0f23 100%);
+  display:flex;
+  justify-content:center;
+  align-item:center;
+`;
 export const HeroContainer = styled.div`
-  background: ${({ theme }) => theme.card_light};
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
+  min-height: 100vh;
   padding: 100px 50px;
-  @media (max-width: 960px) {
-    padding: 66px 16px;
+  overflow: hidden;
+  max-width:1400px;
+  margin:auto;
+  width:100%;
+
+
+  @media (max-width: 1200px) {
+    padding: 80px 40px;
   }
-  @media (max-width: 640) {
+  
+  @media (max-width: 960px) {
+    padding: 60px 24px;
+    min-height: auto; /* Consider changing this to 100vh for full centering on mobile */
+  }
+  
+  @media (max-width: 768px) {
+    padding: 40px 20px;
+  }
+  
+  @media (max-width: 640px) {
     padding: 32px 16px;
   }
-  z-index: 1;
-
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 70% 95%, 0 100%);
+  
+  @media (max-width: 480px) {
+    margin-top:60px;
+    padding: 24px 12px;
+  }
 `;
 
 export const HeroBg = styled.div`
   position: absolute;
-  display: flex;
-  justify-content: end;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  max-width: 1360px;
   overflow: hidden;
-  padding: 0 30px;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
+  z-index: 1;
+`;
 
-  @media (max-width: 960px) {
-    justify-content: center;
-    padding: 0 0px;
+export const AnimatedOrb = styled(motion.div)`
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.3;
+  
+  &:nth-child(1) {
+    width: 400px;
+    height: 400px;
+    background: linear-gradient(45deg, #8b5cf6, #3b82f6);
+    top: 10%;
+    right: 10%;
+    
+    @media (max-width: 1200px) {
+      width: 300px;
+      height: 300px;
+    }
+    
+    @media (max-width: 768px) {
+      width: 200px;
+      height: 200px;
+      filter: blur(30px);
+    }
+    
+    @media (max-width: 480px) {
+      width: 150px;
+      height: 150px;
+      filter: blur(20px);
+    }
   }
+  
+  &:nth-child(2) {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(45deg, #ec4899, #8b5cf6);
+    bottom: 20%;
+    left: 15%;
+    
+    @media (max-width: 1200px) {
+      width: 250px;
+      height: 250px;
+    }
+    
+    @media (max-width: 768px) {
+      width: 180px;
+      height: 180px;
+      filter: blur(30px);
+    }
+    
+    @media (max-width: 480px) {
+      width: 120px;
+      height: 120px;
+      filter: blur(20px);
+    }
+  }
+  
+  &:nth-child(3) {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(45deg, #06b6d4, #8b5cf6);
+    top: 50%;
+    left: 50%;
+    
+    @media (max-width: 1200px) {
+      width: 180px;
+      height: 180px;
+    }
+    
+    @media (max-width: 768px) {
+      width: 120px;
+      height: 120px;
+      filter: blur(30px);
+    }
+    
+    @media (max-width: 480px) {
+      width: 80px;
+      height: 80px;
+      filter: blur(20px);
+    }
+  }
+`;
+
+export const FloatingParticle = styled(motion.div)`
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(45deg, #8b5cf6, #ec4899);
+  border-radius: 50%;
+  opacity: 0.7;
 `;
 
 export const HeroInnerContainer = styled.div`
@@ -48,191 +169,493 @@ export const HeroInnerContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1400px;
+  z-index: 10;
+  gap: 40px;
+
+  @media (max-width: 1200px) {
+    max-width: 1200px;
+    gap: 30px;
+  }
 
   @media (max-width: 960px) {
     flex-direction: column;
+    gap: 50px;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 40px;
+  }
+  
+  @media (max-width: 640px) {
+    gap: 30px;
   }
 `;
 
-// Convert to motion component
 export const HeroLeftContainer = styled(motion.div)`
   width: 100%;
-  order: 1;
+  display: flex;
+  flex-direction: column;
+  
+  @media (max-width: 1200px) {
+    max-width: 600px;
+  }
+  
   @media (max-width: 960px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
     align-items: center;
+    text-align: center;
+    max-width: 100%;
   }
 
-  @media (max-width: 640px) {
-    order: 2;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* Mobile image container inside left container */
+  .mobile-image {
+    display: none;
+    margin: 30px 0;
+    
+    @media (max-width: 960px) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 350px;
+      align-self: center;
+    }
+    
+    @media (max-width: 768px) {
+      max-width: 320px;
+      margin: 25px 0;
+    }
+    
+    @media (max-width: 640px) {
+      max-width: 280px;
+      margin: 20px 0;
+    }
+    
+    @media (max-width: 480px) {
+      max-width: 250px;
+      margin: 15px 0;
+    }
   }
 `;
 
-// Convert to motion component
 export const HeroRightContainer = styled(motion.div)`
   width: 100%;
   display: flex;
-  order: 2;
-  justify-content: end;
-  gap: 12px;
-  @media (max-width: 960px) {
-    order: 1;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 80px;
+  justify-content: center;
+  align-items: center;
+  
+  @media (max-width: 1200px) {
+    max-width: 500px;
   }
 
-  @media (max-width: 640px) {
-    margin-bottom: 30px;
-  }
-`;
-
-// Convert to motion component
-export const Title = styled(motion.div)`
-  font-weight: 700;
-  font-size: 50px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  @media (max-width: 960px) {
-    text-align: center;
+  /* Desktop image - hide on mobile */
+  &.desktop-image {
+    @media (max-width: 960px) {
+      display: none;
+    }
   }
 
-  @media (max-width: 640px) {
-    font-size: 40px;
-    line-height: 48px;
-    margin-bottom: 8px;
-  }
-`;
-
-export const TextLoop = styled.div`
-  font-weight: 600;
-  font-size: 32px;
-  display: flex;
-  gap: 12px;
-  color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-  @media (max-width: 960px) {
-    text-align: center;
-    display: block;
-  }
-  @media (max-width: 640px) {
-    font-size: 22px;
-    line-height: 48px;
-    margin-bottom: 16px;
-  }
-`;
-
-export const Span = styled.span`
-  color: ${({ theme }) => theme.primary};
-  cursor: pointer;
-`;
-
-// Convert to motion component
-export const SubTitle = styled(motion.div)`
-  font-size: 20px;
-  line-height: 32px;
-  margin-bottom: 42px;
-  color: ${({ theme }) => theme.text_primary + 95};
-
-  @media (max-width: 960px) {
-    text-align: center;
-  }
-
-  @media (max-width: 640px) {
-    font-size: 16px;
-    line-height: 32px;
-  }
-`;
-
-// Convert to motion component
-export const ResumeButton = styled(motion.a)`
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    text-decoration: none;
-    width: 95%;
-    max-width: 300px;
-    text-align: center;
-    padding: 16px 0;
-    color:${({ theme }) => theme.white};
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 600;
-    transition: all 0.2s ease-in-out !important;
-    background: hsla(271, 100%, 50%, 1);
-    background: linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -moz-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    background: -webkit-linear-gradient(225deg, hsla(271, 100%, 50%, 1) 0%, hsla(294, 100%, 50%, 1) 100%);
-    box-shadow:  20px 20px 60px #1F2634,
-    -20px -20px 60px #1F2634;
-    &:hover {
-        transform: scale(1.05);
-    transition: all 0.4s ease-in-out;
-    box-shadow:  20px 20px 60px #1F2634,
-    filter: brightness(1);
-    }    
+  /* Mobile image styling - only applies when inside left container */
+  &.mobile-image {
+    display: none;
     
+    @media (max-width: 960px) {
+      display: flex;
+      max-width: 350px;
+    }
+    
+    @media (max-width: 768px) {
+      max-width: 320px;
+    }
     
     @media (max-width: 640px) {
-        padding: 12px 0;
-        font-size: 18px;
-    } 
+      max-width: 280px;
+    }
+    
+    @media (max-width: 480px) {
+      max-width: 250px;
+    }
+  }
 `;
 
-// Convert to motion component
-export const ImageContainer = styled(motion.div)`
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  overflow: visible; // Allow content to overflow for scaling effect
-  z-index: 1; // Ensure proper stacking
+export const WelcomeBadge = styled(motion.div)`
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 50px;
+  color: #a855f7;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+`;
+
+export const Title = styled(motion.h1)`
+  font-weight: 800;
+  font-size: clamp(25px, 5vw, 50px);
+  line-height: 1.1;
+  margin-bottom: 20px;
+  
+  .normal-text {
+    color: #ffffff;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+  }
   
   @media (max-width: 768px) {
-    max-width: 400px;
-    max-height: 400px;
+    margin-bottom: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+`;
+
+export const TypewriterContainer = styled(motion.div)`
+  font-size: clamp(12px, 3vw, 30px);
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #e2e8f0;
+  
+  .highlight {
+    color: #a855f7;
+    position: relative;
+  }
+  
+  .cursor {
+    color: #a855f7;
+    animation: blink 1s infinite;
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 20px;
+  }
+
+  /* Adjust margin when mobile image follows */
+  @media (max-width: 960px) {
+    margin-bottom: 0;
+  }
+`;
+
+export const SubTitle = styled(motion.p)`
+  font-size: clamp(10px, 2vw, 15px);
+  line-height: 1.6;
+  margin-bottom: 40px;
+  color: #94a3b8;
+  max-width: 600px;
+
+  @media (max-width: 960px) {
+    max-width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 32px;
   }
 
   @media (max-width: 640px) {
-    max-width: 280px;
-    max-height: 280px;
+    margin-bottom: 28px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 24px;
+    line-height: 1.5;
   }
 `;
 
-// Convert to motion component
-export const Image = styled(motion.img)`
-  position: relative; // Add position context
+export const ButtonContainer = styled(motion.div)`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  
+  @media (max-width: 768px) {
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  
+  @media (max-width: 640px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 24px;
+  }
+`;
+
+export const PrimaryButton = styled(motion.a)`
+  display: inline-block;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+  white-space: nowrap;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 24px;
+    font-size: 14px;
+    max-width: 240px;
+  }
+`;
+
+export const SecondaryButton = styled(motion.a)`
+  padding: 16px 32px;
+  background: transparent;
+  color: #a855f7;
+  border: 2px solid #a855f7;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  text-decoration: none;
+  
+  &:hover {
+    background: #a855f7;
+    color: white;
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.3);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 14px 28px;
+    font-size: 15px;
+  }
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 24px;
+    font-size: 14px;
+    max-width: 240px;
+  }
+`;
+
+export const SocialContainer = styled(motion.div)`
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
+`;
+
+export const SocialIcon = styled(motion.div)`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: #a855f7;
+    background: rgba(168, 85, 247, 0.1);
+  }
+  
+  &::after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: #a855f7;
+    border-radius: 50%;
+  }
+  
+  @media (max-width: 768px) {
+    width: 45px;
+    height: 45px;
+    
+    &::after {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+    
+    &::after {
+      width: 16px;
+      height: 16px;
+    }
+  }
+`;
+
+export const ImageContainer = styled(motion.div)`
+  position: relative;
+  width: 400px;
+  height: 400px;
+  
+  @media (max-width: 1200px) {
+    width: 350px;
+    height: 350px;
+  }
+  
+  @media (max-width: 960px) {
+    width: 320px;
+    height: 320px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 280px;
+    height: 280px;
+  }
+  
+  @media (max-width: 640px) {
+    width: 250px;
+    height: 250px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 220px;
+    height: 220px;
+  }
+  
+  @media (max-width: 360px) {
+    width: 200px;
+    height: 200px;
+  }
+`;
+
+export const RotatingRing = styled(motion.div)`
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid;
+  opacity: 0.3;
+  
+  &:nth-child(1) {
+    inset: -20px;
+    border-color: #8b5cf6;
+    animation: rotate 20s linear infinite;
+  }
+  
+  &:nth-child(2) {
+    inset: -40px;
+    border-color: #ec4899;
+    animation: rotate 15s linear infinite reverse;
+  }
+`;
+
+export const ImageWrapper = styled(motion.div)`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  padding: 4px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  &:hover::before {
+    opacity: 0.5;
+  }
+`;
+
+export const ProfileImage = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid ${({ theme }) => theme.primary};
-  box-shadow: 0 0 25px rgba(139, 92, 246, 0.7);
-  z-index: 2; // Ensure proper stacking
-  transform-origin: center center; // Set transform origin to center
-  will-change: transform; // Optimize for transform changes
+  object-position: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
-// Convert to motion component
-export const ImageOverlay = styled(motion.div)`
+export const FloatingElement = styled(motion.div)`
   position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(45deg, #8b5cf6, #ec4899);
   border-radius: 50%;
-  border: 1px solid ${({ theme }) => theme.primary};
-  opacity: 0.5;
-  z-index: 1; // Ensure proper stacking
-  pointer-events: none; // Prevent overlay from capturing mouse events
+  
+  @media (max-width: 768px) {
+    width: 10px;
+    height: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 8px;
+    height: 8px;
+  }
 `;
