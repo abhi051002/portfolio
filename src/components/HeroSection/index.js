@@ -212,26 +212,6 @@ const EnhancedHeroSection = () => {
                     alt={Bio.name}
                   />
                 </ImageWrapper>
-
-                {/* Floating elements around image */}
-                {[...Array(6)].map((_, i) => (
-                  <FloatingElement
-                    key={i}
-                    animate={{
-                      y: [0, -10, 0],
-                      scale: [1, 1.2, 1],
-                    }}
-                    transition={{
-                      duration: 2 + i * 0.3,
-                      repeat: Infinity,
-                      delay: i * 0.2
-                    }}
-                    style={{
-                      top: `${20 + Math.sin(i * Math.PI / 3) * 30}%`,
-                      left: `${50 + Math.cos(i * Math.PI / 3) * 40}%`,
-                    }}
-                  />
-                ))}
               </ImageContainer>
             </HeroRightContainer>
           </HeroInnerContainer>

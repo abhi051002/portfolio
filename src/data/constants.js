@@ -1,19 +1,3 @@
-export const Bio = {
-  name: "Abhijit Nanda",
-  roles: ["Full Stack Web Developer", "Node.Js Developer", "Laravel Developer", "Problem Solver"],
-  description: `SDE-I with 2+ year of professional experience specializing in full-stack web development. 
-  Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
-  Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
-  Known for solving complex problems under tight deadlines and writing clean, maintainable code.
-  Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
-  github: "https://github.com/abhi051002",
-  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
-  linkedin: "https://www.linkedin.com/in/abhijit-nanda",
-  twitter: "https://twitter.com/AbhijitNanda20",
-  insta: "https://instagram.com/abhijit.nanda.969",
-  facebook: "https://www.facebook.com/abhijit.nanda.969?mibextid=LQQJ4d",
-};
-
 export const skills = [
   {
     title: "Programming Languages",
@@ -372,3 +356,44 @@ Developed a client portal where customers can track project progress, view docum
   //     isDone: false,
   //   },
 ];
+
+
+const totalExperience = experiences.length;
+const getMonthDifference = (start, end) => {
+  if (!end) {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    end = `${dd}/${mm}/${yyyy}`;
+  }
+
+  const [, startMonth, startYear] = start.split("/").map(Number);
+  const [, endMonth, endYear] = end.split("/").map(Number);
+
+  const totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+  return totalMonths;
+};
+
+// Calculate total experience in years
+const totalMonths = experiences.reduce((acc, exp) => {
+  return acc + getMonthDifference(exp.startDate, exp.present ? null : exp.endDate);
+}, 0);
+
+const totalYears = (totalMonths / 12).toFixed(1);
+
+export const Bio = {
+  name: "Abhijit Nanda",
+  roles: ["Backend Developer", "Node.Js Developer", "Laravel Developer"],
+  description: `SDE-I with ${totalYears} + year of professional experience specializing in full-stack web development. 
+  Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
+  Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
+  Known for solving complex problems under tight deadlines and writing clean, maintainable code.
+  Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
+  github: "https://github.com/abhi051002",
+  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
+  linkedin: "https://www.linkedin.com/in/abhijit-nanda",
+  twitter: "https://twitter.com/AbhijitNanda20",
+  insta: "https://instagram.com/abhijit.nanda.969",
+  facebook: "https://www.facebook.com/abhijit.nanda.969?mibextid=LQQJ4d",
+};
