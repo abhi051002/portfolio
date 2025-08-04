@@ -15,7 +15,6 @@ import {
   FormContainer,
   InputGroup,
   InputLabel,
-  SuccessMessage
 } from './ContactStyles';
 
 const Contact = () => {

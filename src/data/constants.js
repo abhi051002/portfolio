@@ -361,8 +361,6 @@ Developed a client portal where customers can track project progress, view docum
   //   },
 ];
 
-
-const totalExperience = experiences.length;
 const getMonthDifference = (start, end) => {
   if (!end) {
     const today = new Date();

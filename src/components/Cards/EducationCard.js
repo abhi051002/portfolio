@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Card, Top, Image, Body, Name, Degree, Grade, Date, Description, Span } from './Styles/EducationCardStyle';
 
 const EducationCard = ({ education, index }) => {
