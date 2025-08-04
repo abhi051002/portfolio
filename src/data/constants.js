@@ -1,19 +1,3 @@
-export const Bio = {
-  name: "Abhijit Nanda",
-  roles: ["Full Stack Web Developer", "Node.Js Developer", "Laravel Developer", "Problem Solver"],
-  description: `SDE-I with 2+ year of professional experience specializing in full-stack web development. 
-  Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
-  Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
-  Known for solving complex problems under tight deadlines and writing clean, maintainable code.
-  Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
-  github: "https://github.com/abhi051002",
-  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
-  linkedin: "https://www.linkedin.com/in/abhijit-nanda",
-  twitter: "https://twitter.com/AbhijitNanda20",
-  insta: "https://instagram.com/abhijit.nanda.969",
-  facebook: "https://www.facebook.com/abhijit.nanda.969?mibextid=LQQJ4d",
-};
-
 export const skills = [
   {
     title: "Programming Languages",
@@ -96,6 +80,10 @@ export const skills = [
         image:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNhoXisDruJMDAq3Ltd-wuaMW2lGxck9wAKw&s",
       },
+      {
+        name: "GraphQl",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/512px-GraphQL_Logo.svg.png"
+      }
     ],
   },
   {
@@ -159,8 +147,9 @@ export const experiences = [
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "SDE-I",
     company: "Hyscaler",
-    date: "March 2025 - Present",
-    experiencesInYear: "1+ month",
+    startDate: "01/03/2025",
+    endDate: "",
+    present: true,
     desc: "Recently promoted to SDE-I after demonstrating strong technical skills and consistent delivery of high-quality work. Currently developing and maintaining full-stack web applications using PHP, Laravel, Filament, MySQL, and PostgreSQL. Working directly with clients to implement new features and solve complex technical challenges.",
     skills: [
       "PHP",
@@ -180,8 +169,9 @@ export const experiences = [
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "Junior Software Developer",
     company: "Hyscaler",
-    date: "March 2024 - Feb 2025",
-    experiencesInYear: "1 year",
+    startDate: "01/03/2024",
+    endDate: "01/02/2025",
+    present: false,
     desc: "Developed and maintained client web applications using PHP Laravel framework and FilamentPHP admin panel builder. Built RESTful APIs for various client projects to ensure seamless integration between front-end and back-end systems. Collaborated with senior developers to implement best practices for code quality and application security. Participated in agile development cycles including daily standups and sprint planning sessions.",
     skills: [
       "PHP",
@@ -201,8 +191,9 @@ export const experiences = [
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "Full-stack Trainee Intern",
     company: "Hyscaler",
-    date: "Sept 2023 - March 2024",
-    experiencesInYear: "6 months",
+    startDate: "01/09/2023",
+    endDate: "01/03/2024",
+    present: false,
     desc: "Gained hands-on experience with modern full-stack development technologies while working on real client projects. Assisted senior developers in building and maintaining web applications using PHP, Laravel, and FilamentPHP. Developed and optimized database schemas and queries for MySQL and PostgreSQL databases. Participated in code reviews to improve coding skills and understand industry best practices.",
     skills: [
       "PHP",
@@ -220,8 +211,9 @@ export const experiences = [
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYOSnVFC2VDDJ9FUKAB2FBdZaAohgEgjiTPfce0S-C&s",
     role: "Full-stack Intern",
     company: "Digital It Web",
-    date: "Feb 2023 - July 2023",
-    experiencesInYear: "6 months",
+    startDate: "01/02/2023",
+    endDate: "01/07/2023",
+    present: false,
     desc: "Built a comprehensive hospital management system from scratch, handling both frontend and backend development. Recognized as the top performer among interns due to quick learning ability and high-quality deliverables. Implemented responsive UI designs using HTML, CSS, and JavaScript while building a robust backend with PHP and MySQL. Gained valuable experience with React and Docker containerization technologies.",
     skills: ["HTML", "CSS", "JavaScript", "PHP", "MySQL", "Docker", "React"],
     doc: "https://drive.google.com/file/d/1PSn0Ix6Ncop_Ky6m2WE-2J22kqejeVU-/view?usp=drivesdk",
@@ -368,3 +360,42 @@ Developed a client portal where customers can track project progress, view docum
   //     isDone: false,
   //   },
 ];
+
+const getMonthDifference = (start, end) => {
+  if (!end) {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    end = `${dd}/${mm}/${yyyy}`;
+  }
+
+  const [, startMonth, startYear] = start.split("/").map(Number);
+  const [, endMonth, endYear] = end.split("/").map(Number);
+
+  const totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+  return totalMonths;
+};
+
+// Calculate total experience in years
+const totalMonths = experiences.reduce((acc, exp) => {
+  return acc + getMonthDifference(exp.startDate, exp.present ? null : exp.endDate);
+}, 0);
+
+const totalYears = (totalMonths / 12).toFixed(1);
+
+export const Bio = {
+  name: "Abhijit Nanda",
+  roles: ["Backend Developer", "Node.Js Developer", "Laravel Developer"],
+  description: `SDE-I with ${totalYears} + year of professional experience specializing in full-stack web development. 
+  Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
+  Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
+  Known for solving complex problems under tight deadlines and writing clean, maintainable code.
+  Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
+  github: "https://github.com/abhi051002",
+  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
+  linkedin: "https://www.linkedin.com/in/abhijit-nanda",
+  twitter: "https://twitter.com/AbhijitNanda20",
+  insta: "https://instagram.com/abhijit.nanda.969",
+  facebook: "https://www.facebook.com/abhijit.nanda.969?mibextid=LQQJ4d",
+};
