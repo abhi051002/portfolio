@@ -253,120 +253,357 @@ export const TimelineSection = styled(motion.div)`
     }
 `;
 
-export const TimelineWrapper = styled.div`
+export const TimelineContainer = styled(motion.div)`
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 40px;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    margin-top: 32px;
+  }
+`;
+
+export const ExperienceCardComponent = styled(motion.div)`
+  width: 45%;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: 20px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), transparent);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.2));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: subtract;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: subtract;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover::after {
+    opacity: 1;
+  }
+  
+  // Tablet breakpoint
+  @media (max-width: 1024px) {
+    width: 48%;
+    padding: 24px;
+  }
+  
+  // Small tablet/large phone breakpoint
+  @media (max-width: 768px) {
     width: 100%;
-    position: relative;
+    padding: 20px;
+    margin-left: 0;
+    border-radius: 16px;
+  }
+  
+  // Mobile breakpoint
+  @media (max-width: 480px) {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  // Very small mobile screens
+  @media (max-width: 360px) {
+    padding: 14px;
+  }
+`;
+
+export const CardContent = styled.div`
+  flex: 1;
+`;
+
+// Enhanced CardHeader for better mobile layout
+export const CardHeader = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  
+  @media (max-width: 480px) {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  @media (max-width: 360px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+`;
+
+// Enhanced CompanyLogo with better responsive sizing
+export const CompanyLogo = styled(motion.img)`
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid rgba(139, 92, 246, 0.3);
+  flex-shrink: 0;
+  
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 360px) {
+    width: 40px;
+    height: 40px;
+  }
+`;
+
+// Enhanced Role with better responsive typography
+export const Role = styled(motion.h3)`
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+  line-height: 1.3;
+  
+  @media (max-width: 480px) {
+    margin-bottom: 4px;
+  }
+`;
+
+// Enhanced Company with responsive sizing
+export const Company = styled(motion.p)`
+  font-size: clamp(14px, 2vw, 16px);
+  font-weight: 600;
+  color: #8b5cf6;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  
+  @media (max-width: 480px) {
+    margin-bottom: 3px;
+  }
+`;
+
+// Enhanced Duration with better mobile formatting
+export const Duration = styled(motion.p)`
+  font-size: clamp(12px, 1.8vw, 14px);
+  font-weight: 500;
+  color: #94a3b8;
+  margin-bottom: 2px;
+  line-height: 1.2;
+  
+  @media (max-width: 480px) {
+    font-size: 11px;
+    margin-bottom: 1px;
+  }
+`;
+
+// Enhanced ExperienceYear
+export const ExperienceYear = styled(motion.p)`
+  font-size: clamp(11px, 1.6vw, 13px);
+  font-weight: 600;
+  color: #ec4899;
+  line-height: 1.2;
+`;
+
+// Enhanced Description with better readability
+export const Description2 = styled(motion.p)`
+  font-size: clamp(14px, 2vw, 15px);
+  font-weight: 400;
+  color: #e2e8f0;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+`;
+
+// Enhanced SkillsContainer with better mobile layout
+export const SkillsContainer = styled(motion.div)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  
+  @media (max-width: 480px) {
+    gap: 6px;
+    margin-top: 12px;
+  }
+  
+  @media (max-width: 360px) {
+    gap: 4px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+`;
+
+// Enhanced SkillTag with better responsive sizing
+export const SkillTag = styled(motion.span)`
+  padding: 6px 12px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 20px;
+  font-size: clamp(10px, 1.5vw, 12px);
+  font-weight: 500;
+  color: #a855f7;
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+  
+  @media (max-width: 480px) {
+    padding: 4px 8px;
+    border-radius: 16px;
+  }
+  
+  @media (max-width: 360px) {
+    padding: 3px 6px;
+    border-radius: 12px;
+  }
+`;
+
+// Enhanced TimelineWrapper for better mobile experience
+export const TimelineWrapper = styled.div`
+  position: relative;
+  padding: 40px 0;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, transparent, #8b5cf6, #ec4899, #06b6d4, transparent);
+    border-radius: 2px;
+    transform: translateX(-50%);
     
-    /* Enhanced Timeline Styling */
-    .MuiTimeline-root {
-        padding: 0;
-        margin: 0;
+    @media (max-width: 768px) {
+      left: 30px;
+      width: 2px;
     }
     
-    .MuiTimelineItem-root {
-        min-height: 120px;
-        
-        &::before {
-            flex: 0;
-            padding: 0;
-        }
-        
-        @media (max-width: 768px) {
-            min-height: 100px;
-        }
+    @media (max-width: 480px) {
+      left: 25px;
+      width: 2px;
     }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 32px 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 24px 0;
+  }
+`;
+
+// Enhanced TimelineItem for better mobile spacing
+export const TimelineItem = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+  position: relative;
+  
+  &:nth-child(even) {
+    flex-direction: row-reverse;
     
-    .MuiTimelineContent-root {
-        padding-left: 24px !important;
-        
-        @media (max-width: 768px) {
-            padding-left: 16px !important;
-        }
+    @media (max-width: 768px) {
+      flex-direction: row;
     }
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 40px;
+    padding-left: 80px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 32px;
+    padding-left: 70px;
+  }
+  
+  @media (max-width: 360px) {
+    margin-bottom: 28px;
+    padding-left: 60px;
+  }
+`;
+
+// Enhanced TimelineDot for better mobile interaction
+export const TimelineDot = styled(motion.div)`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  border: 4px solid rgba(15, 15, 35, 1);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  cursor: pointer;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.2);
+    filter: blur(8px);
+    z-index: -1;
+  }
+  
+  @media (max-width: 768px) {
+    left: 30px;
+    width: 16px;
+    height: 16px;
+    border-width: 3px;
     
-    .MuiTimelineSeparator-root {
-        position: relative;
-        
-        &::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(139, 92, 246, 0.1);
-            filter: blur(8px);
-            z-index: -1;
-        }
+    &::before {
+      inset: -6px;
+      filter: blur(6px);
     }
+  }
+  
+  @media (max-width: 480px) {
+    left: 25px;
+    width: 14px;
+    height: 14px;
+    border-width: 2px;
     
-    .MuiTimelineDot-root {
-        border-width: 2px !important;
-        width: 16px;
-        height: 16px;
-        margin: 0;
-        box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
-        transition: all 0.3s ease;
-        
-        &:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.2);
-        }
-        
-        @media (max-width: 768px) {
-            width: 14px;
-            height: 14px;
-        }
+    &::before {
+      inset: -5px;
+      filter: blur(5px);
     }
-    
-    .MuiTimelineConnector-root {
-        width: 2px;
-        background: linear-gradient(180deg, #8b5cf6, #ec4899) !important;
-        margin: 8px 0;
-        border-radius: 1px;
-        position: relative;
-        
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: rgba(139, 92, 246, 0.3);
-            filter: blur(2px);
-            z-index: -1;
-        }
-    }
-    
-    /* Experience Card Enhancements */
-    .experience-card {
-        background: rgba(255, 255, 255, 0.03) !important;
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(139, 92, 246, 0.15) !important;
-        border-radius: 16px !important;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        
-        &::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
-        }
-        
-        &:hover {
-            border-color: rgba(139, 92, 246, 0.3) !important;
-            box-shadow: rgba(139, 92, 246, 0.2) 0px 8px 32px !important;
-        }
-    }
+  }
 `;
 
 const ExperienceStyles = {
@@ -381,7 +618,21 @@ const ExperienceStyles = {
     StatItem,
     StatNumber,
     StatLabel,
-    SectionBadge
+    SectionBadge,
+    TimelineContainer,
+    TimelineDot,
+    TimelineItem,
+    ExperienceCardComponent,
+    CardHeader,
+    CompanyLogo,
+    CardContent,
+    Role,
+    Company,
+    Duration,
+    ExperienceYear,
+    Description2,
+    SkillsContainer,
+    SkillTag
 };
 
 export default ExperienceStyles;

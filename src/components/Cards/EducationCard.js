@@ -1,17 +1,32 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Card, Top, Image, Body, Name, Degree, Grade, Date, Description, Span } from './Styles/EducationCardStyle';
 
 const EducationCard = ({ education, index }) => {
-    // Animation variants
     const cardVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: {
+            opacity: 0,
+            y: 50,
+            scale: 0.9
+        },
         visible: {
             opacity: 1,
             y: 0,
+            scale: 1,
             transition: {
-                duration: 0.5,
+                duration: 0.6,
+                ease: "easeOut",
                 when: "beforeChildren",
                 staggerChildren: 0.1
+            }
+        },
+        hover: {
+            y: -10,
+            scale: 1.02,
+            boxShadow: "0 16px 48px rgba(139, 92, 246, 0.3)",
+            transition: {
+                duration: 0.3,
+                ease: "easeInOut"
             }
         }
     };
@@ -21,36 +36,43 @@ const EducationCard = ({ education, index }) => {
         visible: {
             scale: 1,
             opacity: 1,
-            transition: { duration: 0.4 }
+            transition: { duration: 0.5, ease: "easeOut" }
         },
         hover: {
             scale: 1.1,
-            transition: { duration: 0.2 }
+            rotate: 5,
+            transition: { duration: 0.3 }
         }
     };
 
     const textVariants = {
-        hidden: { opacity: 0, y: 10 },
-        visible: {
+        hidden: { opacity: 0, y: 20 },
+        visible: (custom) => ({
             opacity: 1,
             y: 0,
-            transition: { duration: 0.3 }
-        }
+            transition: {
+                duration: 0.4,
+                delay: custom * 0.1,
+                ease: "easeOut"
+            }
+        })
     };
 
     return (
         <Card
             variants={cardVariants}
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
             whileHover="hover"
+            viewport={{ once: true, amount: 0.3 }}
             layoutId={`education-card-${index}`}
         >
             <Top>
                 <Image
                     src={education.img}
+                    alt={education.school}
                     variants={imageVariants}
-                    whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
+                    whileHover="hover"
                 />
                 <Body>
                     <Name
@@ -73,31 +95,44 @@ const EducationCard = ({ education, index }) => {
                     </Date>
                 </Body>
             </Top>
-            <Grade
-                custom={3}
-                variants={textVariants}
-            >
-                <b>Grade: </b>{education.grade}
-            </Grade>
-            <Grade
-                custom={4}
-                variants={textVariants}
-            >
-                <b>Percentage: </b>{education.percentage}
-            </Grade>
-            <Description
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: index * 0.1 + 0.7, duration: 0.5 }}
-            >
-                <Span
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: index * 0.1 + 0.8, duration: 0.5 }}
+
+            {education.grade && (
+                <Grade
+                    custom={3}
+                    variants={textVariants}
                 >
-                    {education.desc}
-                </Span>
-            </Description>
+                    <b>Grade: </b>{education.grade}
+                </Grade>
+            )}
+
+            {education.percentage && (
+                <Grade
+                    custom={4}
+                    variants={textVariants}
+                >
+                    <b>Percentage: </b>{education.percentage}
+                </Grade>
+            )}
+
+            {education.desc && (
+                <Description
+                    initial={{ opacity: 0, height: 0 }}
+                    whileInView={{
+                        opacity: 1,
+                        height: "auto",
+                        transition: {
+                            duration: 0.5,
+                            delay: 0.3,
+                            ease: "easeOut"
+                        }
+                    }}
+                    viewport={{ once: true }}
+                >
+                    <Span>
+                        {education.desc}
+                    </Span>
+                </Description>
+            )}
         </Card>
     );
 };

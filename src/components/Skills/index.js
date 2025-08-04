@@ -172,7 +172,7 @@ const Skills = () => {
                 <SkillHeader>
                   <SkillIcon>
                     {/* You can add category-specific icons here */}
-                    <div className="icon-placeholder" />
+                    <div className="icon-placeholder">"{}"</div>
                   </SkillIcon>
                   <SkillTitle>{item.title}</SkillTitle>
                   <SkillBadge>

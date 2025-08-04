@@ -1,46 +1,62 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
 import { education } from '../../data/constants';
 import EducationCard from '../Cards/EducationCard';
-import { Container, Wrapper, Title, Description, TimelineSection, StyledTimeline, MotionTimelineItem } from './EducationStyle';
-
-
+import { Container, Wrapper, Title, Description, TimelineContainer, TimelineDot, TimelineItem, TimelineWrapper } from './EducationStyle';
 
 const Education = () => {
-    // Animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
+                duration: 0.8,
+                ease: "easeOut",
+                when: "beforeChildren",
+                staggerChildren: 0.2
+            }
+        }
+    };
+
+    const childVariants = {
+        hidden: { opacity: 0, y: 30 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: {
                 duration: 0.6,
+                ease: "easeOut"
+            }
+        }
+    };
+
+    const timelineVariants = {
+        hidden: { opacity: 0, scale: 0.8 },
+        visible: {
+            opacity: 1,
+            scale: 1,
+            transition: {
+                duration: 0.8,
+                ease: "easeOut",
                 when: "beforeChildren",
                 staggerChildren: 0.3
             }
         }
     };
 
-    const childVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5 }
-        }
-    };
-
-    const timelineItemVariants = {
-        hidden: { opacity: 0, x: -20 },
-        visible: (i) => ({
+    const itemVariants = {
+        hidden: {
+            opacity: 0,
+            x: -50,
+            y: 30
+        },
+        visible: (index) => ({
             opacity: 1,
             x: 0,
+            y: 0,
             transition: {
-                duration: 0.5,
-                delay: i * 0.2
+                duration: 0.7,
+                delay: index * 0.2,
+                ease: "easeOut"
             }
         })
     };
@@ -50,7 +66,7 @@ const Education = () => {
             id="education"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.1 }}
             variants={containerVariants}
         >
             <Wrapper>
@@ -60,33 +76,43 @@ const Education = () => {
                 <Description variants={childVariants}>
                     My education has been a journey of self-discovery and growth. My educational details are as follows.
                 </Description>
-                <TimelineSection variants={childVariants}>
-                    <StyledTimeline>
+
+                <TimelineContainer
+                    variants={timelineVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                >
+                    <TimelineWrapper>
                         {education.map((edu, index) => (
-                            <MotionTimelineItem
-                                key={index}
+                            <TimelineItem
+                                key={edu.id}
                                 custom={index}
-                                variants={timelineItemVariants}
+                                variants={itemVariants}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.2 }}
+                                $isEven={index % 2 === 1}
                             >
-                                <TimelineSeparator>
-                                    <motion.div
-                                        initial={{ scale: 0 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ delay: index * 0.2, duration: 0.3 }}
-                                    >
-                                        <TimelineDot variant='outlined' color='secondary' />
-                                    </motion.div>
-                                    {index !== education.length - 1 && (
-                                        <TimelineConnector />
-                                    )}
-                                </TimelineSeparator>
-                                <TimelineContent sx={{ py: '12px', px: 2 }}>
-                                    <EducationCard education={edu} index={index} />
-                                </TimelineContent>
-                            </MotionTimelineItem>
+                                <TimelineDot
+                                    initial={{ scale: 0 }}
+                                    whileInView={{ scale: 1 }}
+                                    whileHover={{
+                                        scale: 1.4,
+                                        boxShadow: "0 0 30px rgba(139, 92, 246, 0.8)"
+                                    }}
+                                    whileTap={{ scale: 0.9 }}
+                                    transition={{
+                                        duration: 0.5,
+                                        delay: index * 0.1
+                                    }}
+                                    viewport={{ once: true }}
+                                />
+                                <EducationCard education={edu} index={index} />
+                            </TimelineItem>
                         ))}
-                    </StyledTimeline>
-                </TimelineSection>
+                    </TimelineWrapper>
+                </TimelineContainer>
             </Wrapper>
         </Container>
     );

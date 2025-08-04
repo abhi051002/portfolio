@@ -1,26 +1,22 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { experiences, projects } from '../../data/constants';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
 import ExperienceCard from '../Cards/Experiencecard';
 import {
     Container,
     Wrapper,
     Title,
     Description,
-    TimelineSection,
     BackgroundOrb,
     TimelineWrapper,
     StatsContainer,
     StatItem,
     StatNumber,
     StatLabel,
-    SectionBadge
+    SectionBadge,
+    TimelineContainer,
+    TimelineItem,
+    TimelineDot
 } from './ExperienceStyle';
 
 const Experience = () => {
@@ -88,55 +84,6 @@ const Experience = () => {
         }
     };
 
-    // Enhanced timeline animation variants
-    const getTimelineVariants = (index) => {
-        const isEven = index % 2 === 0;
-        return {
-            hidden: {
-                x: isEven ? -60 : 60,
-                opacity: 0,
-                scale: 0.9
-            },
-            visible: {
-                x: 0,
-                opacity: 1,
-                scale: 1,
-                transition: {
-                    type: "spring",
-                    stiffness: 120,
-                    damping: 15,
-                    delay: index * 0.15
-                }
-            }
-        };
-    };
-
-    const dotVariants = {
-        hidden: { scale: 0, rotate: -180 },
-        visible: {
-            scale: 1,
-            rotate: 0,
-            transition: {
-                type: "spring",
-                stiffness: 200,
-                damping: 15,
-                delay: 0.2
-            }
-        }
-    };
-
-    const connectorVariants = {
-        hidden: { scaleY: 0 },
-        visible: {
-            scaleY: 1,
-            transition: {
-                duration: 0.8,
-                ease: "easeInOut",
-                delay: 0.3
-            }
-        }
-    };
-
     // Calculate stats from experiences
     const totalExperience = experiences.length;
     const getMonthDifference = (start, end) => {
@@ -166,8 +113,18 @@ const Experience = () => {
         return acc + (project.isDone ? 1 : 0);
     }, 0);
 
-    const MotionTimelineConnector = motion.create(TimelineConnector);
-    const MotionTimelineDot = motion.create(TimelineDot);
+    const itemVariants = {
+        hidden: { y: 50, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 15,
+            }
+        }
+    };
 
     return (
         <Container id="experience">
@@ -263,69 +220,33 @@ const Experience = () => {
                 </motion.div>
 
                 {/* Timeline Section */}
-                <TimelineSection>
+                <TimelineContainer
+                    variants={itemVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                >
                     <TimelineWrapper>
-                        <Timeline>
-                            {experiences.map((experience, index) => (
-                                <motion.div
-                                    key={index}
-                                    variants={getTimelineVariants(index)}
-                                    whileInView="visible"
-                                    initial="hidden"
-                                    viewport={{ once: true, amount: 0.3 }}
-                                >
-                                    <TimelineItem>
-                                        <TimelineSeparator>
-                                            <MotionTimelineDot
-                                                variants={dotVariants}
-                                                variant='outlined'
-                                                color='secondary'
-                                                whileHover={{
-                                                    scale: 1.3,
-                                                    boxShadow: "rgba(139, 92, 246, 0.5) 0px 0px 20px",
-                                                    transition: { duration: 0.2 }
-                                                }}
-                                                whileTap={{ scale: 0.9 }}
-                                                sx={{
-                                                    borderWidth: 2,
-                                                    borderColor: '#8b5cf6',
-                                                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                                                    backdropFilter: 'blur(10px)'
-                                                }}
-                                            />
-                                            {index !== experiences.length - 1 && (
-                                                <MotionTimelineConnector
-                                                    variants={connectorVariants}
-                                                    sx={{
-                                                        background: 'linear-gradient(180deg, #8b5cf6, #ec4899)',
-                                                        width: 2,
-                                                        transformOrigin: 'top'
-                                                    }}
-                                                />
-                                            )}
-                                        </TimelineSeparator>
-                                        <TimelineContent sx={{ py: '12px', px: 2 }}>
-                                            <motion.div
-                                                whileHover={{
-                                                    scale: 1.02,
-                                                    y: -5,
-                                                    transition: { duration: 0.3 }
-                                                }}
-                                                whileInView={{
-                                                    rotateY: [5, 0],
-                                                    transition: { duration: 0.6, delay: index * 0.1 }
-                                                }}
-                                                viewport={{ once: true }}
-                                            >
-                                                <ExperienceCard experience={experience} />
-                                            </motion.div>
-                                        </TimelineContent>
-                                    </TimelineItem>
-                                </motion.div>
-                            ))}
-                        </Timeline>
+                        {experiences.map((experience, index) => (
+                            <TimelineItem
+                                key={experience.id}
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ delay: index * 0.2 }}
+                            >
+                                <TimelineDot
+                                    whileHover={{
+                                        scale: 1.3,
+                                        boxShadow: "rgba(139, 92, 246, 0.6) 0px 0px 25px"
+                                    }}
+                                    whileTap={{ scale: 0.9 }}
+                                />
+                                <ExperienceCard experience={experience} index={index} />
+                            </TimelineItem>
+                        ))}
                     </TimelineWrapper>
-                </TimelineSection>
+                </TimelineContainer>
             </Wrapper>
         </Container>
     );
