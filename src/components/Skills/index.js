@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { skills } from "../../data/constants";
+import { skills, totalYears } from "../../data/constants";
 import {
   Container,
   Wrapper,
@@ -63,8 +63,8 @@ const Skills = () => {
         >
           <Title>Skills</Title>
           <Description>
-            Here are some of my skills on which I have been working on for the
-            past 2 years
+            {`Here are some of my skills on which I have been working on for the
+            past ${totalYears} years`}
           </Description>
         </motion.div>
 

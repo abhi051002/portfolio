@@ -382,7 +382,7 @@ const totalMonths = experiences.reduce((acc, exp) => {
   return acc + getMonthDifference(exp.startDate, exp.present ? null : exp.endDate);
 }, 0);
 
-const totalYears = (totalMonths / 12).toFixed(1);
+export const totalYears = (totalMonths / 12).toFixed(1);
 
 export const Bio = {
   name: "Abhijit Nanda",
