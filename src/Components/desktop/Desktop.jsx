@@ -5,8 +5,9 @@ import WindowManager from "./WindowManager";
 import Taskbar from "./Taskbar";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useFileManager } from "../../hooks/useFileManager";
-import { LogOut } from "lucide-react";
+import { LogOut, FileText, ExternalLink } from "lucide-react";
 import HexagonGrid from "../HexaGrid";
+import PDFImage from "../../Image/pdf.png";
 
 const Desktop = ({ onExit }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -66,6 +67,13 @@ const Desktop = ({ onExit }) => {
     }, 300);
   };
 
+  const handleResumeClick = () => {
+    window.open(
+      "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
+      "_blank"
+    );
+  };
+
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {
       hour: "2-digit",
@@ -90,8 +98,8 @@ const Desktop = ({ onExit }) => {
       <div className="bg-gray-800 w-full h-8 flex items-center justify-between px-4 border-b border-gray-700 z-30 relative">
         <div className="text-white text-sm font-medium">Abhijit Nanda</div>
 
-        {/* Date and Time */}
-        <div className="flex items-center space-x-4 text-white text-sm">
+        {/* Center section with Date and Time */}
+        <div className="flex items-center space-x-6 text-white text-sm">
           <span>{formatDate(currentTime)}</span>
           <span className="font-mono">{formatTime(currentTime)}</span>
         </div>
@@ -123,6 +131,24 @@ const Desktop = ({ onExit }) => {
         {/* Hexagon Grid for main desktop area (excluding sidebar) */}
         <div className="absolute left-16 top-0 right-0 bottom-0 overflow-hidden">
           <HexagonGrid />
+        </div>
+
+        {/* Resume File Icon - Top Right */}
+        <div className="absolute top-4 right-4">
+          <div
+            className="group flex flex-col items-center space-y-1 cursor-pointer p-3 rounded-lg hover:bg-gray-600 hover:bg-opacity-50 transition-all duration-200"
+            onClick={handleResumeClick}
+            title="Open Resume (PDF)"
+          >
+            <div className="relative p-3 bg-opacity-70 rounded-lg">
+              <img src={PDFImage} alt="PDF" className="w-8 h-8 text-red-400" />
+            </div>
+            <span className="text-white text-xs text-center leading-tight px-2 py-1 rounded">
+              AbhijitNanda
+              <br />
+              _Resume.pdf
+            </span>
+          </div>
         </div>
 
         <DesktopIcons

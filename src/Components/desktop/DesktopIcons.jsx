@@ -1,7 +1,15 @@
 import React from "react";
-import { Terminal, Chrome, FolderOpen, FileText, Plus } from "lucide-react";
+import {
+  Terminal,
+  Chrome,
+  FolderOpen,
+  FileText,
+  Plus,
+  File,
+} from "lucide-react";
 import UserFileIcon from "./UserFileIcons";
 import FileCreatorMenu from "./FileCreaterMenu";
+import PDFImage from "../../Image/pdf.png";
 
 const DesktopIcons = ({
   onToggleWindow,
@@ -10,6 +18,13 @@ const DesktopIcons = ({
   setShowFileCreator,
   createFile,
 }) => {
+  const handleResumeClick = () => {
+    window.open(
+      "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
+      "_blank"
+    );
+  };
+
   return (
     <>
       {/* Left Sidebar with Desktop Icons - Ubuntu Style */}
@@ -38,8 +53,16 @@ const DesktopIcons = ({
         {/* Separator */}
         <div className="w-8 h-px bg-gray-700 my-2"></div>
 
-        {/* Create File Button */}
         <div className="relative">
+          <UbuntuDesktopIcon
+            icon={<img src={PDFImage} alt="PDF Image" className="w-6 h-6" />}
+            label="Resume"
+            onClick={() => handleResumeClick()}
+          />
+        </div>
+
+        {/* Create File Button */}
+        {/* <div className="relative">
           <UbuntuDesktopIcon
             icon={<Plus className="w-6 h-6" />}
             label="New File"
@@ -47,7 +70,6 @@ const DesktopIcons = ({
             isActive={showFileCreator}
           />
 
-          {/* File Creator Menu */}
           {showFileCreator && (
             <div className="absolute left-16 top-0 bg-gray-800 bg-opacity-95 backdrop-blur-sm rounded-lg p-3 min-w-48 border border-gray-600 shadow-xl z-30">
               <FileCreatorMenu
@@ -56,7 +78,7 @@ const DesktopIcons = ({
               />
             </div>
           )}
-        </div>
+        </div> */}
       </div>
 
       {/* User Created Files - positioned in main desktop area */}
