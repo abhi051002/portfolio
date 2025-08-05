@@ -5,7 +5,13 @@ import WindowManager from "./WindowManager";
 import Taskbar from "./Taskbar";
 import { useWindowManager } from "../../hooks/useWindowManager";
 import { useFileManager } from "../../hooks/useFileManager";
-import { LogOut, FileText, ExternalLink } from "lucide-react";
+import {
+  LogOut,
+  FileText,
+  ExternalLink,
+  Monitor,
+  Smartphone,
+} from "lucide-react";
 import HexagonGrid from "../HexaGrid";
 import PDFImage from "../../Image/pdf.png";
 
@@ -23,6 +29,9 @@ const Desktop = ({ onExit }) => {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (event) => {
+      // Don't trigger shortcuts when resizing
+      if (windowManager.isResizing) return;
+
       // Check if Ctrl (or Cmd on Mac) is pressed
       const isCtrlPressed = event.ctrlKey || event.metaKey;
 
@@ -58,6 +67,18 @@ const Desktop = ({ onExit }) => {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [windowManager]);
+
+  // Prevent context menu on resize handles
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      if (windowManager.isResizing) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+    return () => document.removeEventListener("contextmenu", handleContextMenu);
+  }, [windowManager.isResizing]);
 
   const handleExit = () => {
     setIsLoggingOut(true);
@@ -100,7 +121,7 @@ const Desktop = ({ onExit }) => {
 
         {/* Center section with Date and Time */}
         <div className="flex items-center space-x-6 text-white text-sm">
-          <span>{formatDate(currentTime)}</span>
+          <span className="hidden sm:inline">{formatDate(currentTime)}</span>
           <span className="font-mono">{formatTime(currentTime)}</span>
         </div>
 
@@ -120,14 +141,69 @@ const Desktop = ({ onExit }) => {
                 : "text-white group-hover:text-red-300"
             }`}
           />
-          <span className="text-white text-xs">
+          <span className="text-white text-xs hidden sm:inline">
             {isLoggingOut ? "Logging out..." : "Logout"}
           </span>
         </button>
       </div>
 
-      {/* Main Desktop Area */}
-      <div className="absolute inset-0 top-8 bg-gray-800">
+      {/* Mobile View - Show message to use desktop */}
+      <div className="block lg:hidden absolute inset-0 top-8">
+        {/* Background with hexagon grid */}
+        <div className="absolute inset-0 overflow-hidden">
+          <HexagonGrid />
+        </div>
+
+        {/* Mobile message overlay */}
+        <div className="absolute inset-0 bg-gray-900 bg-opacity-80 backdrop-blur-sm flex items-center justify-center p-6">
+          <div className="text-center text-white max-w-md">
+            <div className="mb-6">
+              <Monitor className="w-16 h-16 mx-auto mb-4 text-blue-400" />
+              <h2 className="text-2xl font-bold mb-2 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                Desktop Experience Required
+              </h2>
+            </div>
+
+            <div className="space-y-4 text-gray-300">
+              <p className="text-lg">
+                This portfolio is designed as a desktop operating system
+                experience.
+              </p>
+              <p>
+                Please open this on a desktop or laptop computer to explore the
+                full interactive experience.
+              </p>
+            </div>
+
+            <div className="mt-8 p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-600">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <Smartphone className="w-5 h-5 text-orange-400" />
+                <span className="text-sm font-semibold text-orange-400">
+                  Mobile Alternative
+                </span>
+              </div>
+              <p className="text-sm text-gray-400 mb-3">
+                You can still view my resume while on mobile:
+              </p>
+              <button
+                onClick={handleResumeClick}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
+              >
+                <FileText className="w-4 h-4" />
+                <span>View Resume (PDF)</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="mt-6 text-xs text-gray-500">
+              <p>Best viewed on screens 1024px and wider</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop View - Full experience */}
+      <div className="hidden lg:block absolute inset-0 top-8 bg-gray-800">
         {/* Hexagon Grid for main desktop area (excluding sidebar) */}
         <div className="absolute left-16 top-0 right-0 bottom-0 overflow-hidden">
           <HexagonGrid />
@@ -141,7 +217,11 @@ const Desktop = ({ onExit }) => {
             title="Open Resume (PDF)"
           >
             <div className="relative p-3 bg-opacity-70 rounded-lg">
-              <img src={PDFImage} alt="PDF" className="w-8 h-8 text-red-400" />
+              <img
+                src={PDFImage || "/placeholder.svg"}
+                alt="PDF"
+                className="w-8 h-8 text-red-400"
+              />
             </div>
             <span className="text-white text-xs text-center leading-tight px-2 py-1 rounded">
               AbhijitNanda
@@ -171,14 +251,25 @@ const Desktop = ({ onExit }) => {
           onMinimizeWindow={windowManager.minimizeWindow}
           onRestoreWindow={windowManager.restoreWindow}
         />
-      </div>
 
-      {/* Keyboard Shortcuts Help */}
-      <div className="absolute top-12 left-20 text-white text-xs bg-gray-900 bg-opacity-60 rounded p-2 backdrop-blur-sm">
-        <div className="font-semibold mb-1">Shortcuts:</div>
-        <div>Ctrl+M - Minimize All</div>
-        <div>Ctrl+Q - Close All</div>
-        <div>Ctrl+R - Restore All</div>
+        {/* Enhanced Keyboard Shortcuts Help */}
+        <div className="absolute top-12 left-20 text-white text-xs bg-gray-900 bg-opacity-60 rounded p-2 backdrop-blur-sm">
+          <div className="font-semibold mb-1">Shortcuts:</div>
+          <div>Ctrl+M - Minimize All</div>
+          <div>Ctrl+Q - Close All</div>
+          <div>Ctrl+R - Restore All</div>
+          <div>F9 - Show Desktop</div>
+          <div className="mt-1 pt-1 border-t border-gray-600">
+            <div className="font-semibold">Resize:</div>
+            <div>Drag edges/corners</div>
+            <div>Double-click title to maximize</div>
+          </div>
+        </div>
+
+        {/* Resize cursor overlay when resizing */}
+        {windowManager.isResizing && (
+          <div className="absolute inset-0 z-50 pointer-events-none" />
+        )}
       </div>
 
       {/* Logout overlay effect */}

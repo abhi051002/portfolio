@@ -18,7 +18,7 @@ const Hexagon = ({ size = 50, strokeColor = "#e76f51" }) => {
       height={radius * 2}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`transition-all ease-in-out duration-700 transform ${
+      className={`transition-all delay-150 ease-in-out duration-300 transform ${
         isHovered ? "scale-110" : ""
       }`}
     >
@@ -27,8 +27,8 @@ const Hexagon = ({ size = 50, strokeColor = "#e76f51" }) => {
         fill="none"
         stroke={strokeColor}
         strokeWidth="1.5"
-        className={`transition-all ease-in-out duration-700 ${
-          isHovered ? "fill-orange-500" : ""
+        className={`transition-all transition-discrete delay-75 ease-linear duration-300 ${
+          isHovered ? "fill-orange-500" : "fill-transparent"
         }`}
       />
     </svg>

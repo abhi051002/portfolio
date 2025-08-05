@@ -10,6 +10,7 @@ const DesktopPortfolio = () => {
     loadingText,
     isShuttingDown,
     handleLogout,
+    handleClick,
   } = useBootSequence();
 
   if (showBootScreen) {
@@ -19,6 +20,7 @@ const DesktopPortfolio = () => {
         shutterAnimation={shutterAnimation}
         loadingText={loadingText}
         isShuttingDown={isShuttingDown}
+        onContinue={handleClick}
       />
     );
   }

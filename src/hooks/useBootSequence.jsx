@@ -15,25 +15,31 @@ export const useBootSequence = () => {
     setIsShuttingDown(false);
   }, []);
 
+  // Start boot animation
+  const startBootAnimation = useCallback(() => {
+    if (showBootScreen && !bootAnimation && !isShuttingDown) {
+      setBootAnimation(true);
+      setTimeout(() => {
+        setShutterAnimation(true);
+      }, 800);
+      setTimeout(() => {
+        setShowBootScreen(false);
+      }, 2800);
+    }
+  }, [showBootScreen, bootAnimation, isShuttingDown]);
+
   const handleKeyPress = useCallback(
     (e) => {
-      if (
-        e.key === "Enter" &&
-        showBootScreen &&
-        !bootAnimation &&
-        !isShuttingDown
-      ) {
-        setBootAnimation(true);
-        setTimeout(() => {
-          setShutterAnimation(true);
-        }, 800);
-        setTimeout(() => {
-          setShowBootScreen(false);
-        }, 2800);
+      if (e.key === "Enter") {
+        startBootAnimation();
       }
     },
-    [showBootScreen, bootAnimation, isShuttingDown]
+    [startBootAnimation]
   );
+
+  const handleClick = useCallback(() => {
+    startBootAnimation();
+  }, [startBootAnimation]);
 
   useEffect(() => {
     if (showBootScreen) {
@@ -46,10 +52,8 @@ export const useBootSequence = () => {
   const handleLogout = useCallback(() => {
     setIsShuttingDown(true);
     setLoadingText("Shutting down system...");
-
     // Reverse shutter animation
     setShutterAnimation(false);
-
     setTimeout(() => {
       setShowBootScreen(true);
       // Reset everything after showing boot screen
@@ -67,5 +71,6 @@ export const useBootSequence = () => {
     isShuttingDown,
     setShowBootScreen,
     handleLogout,
+    handleClick,
   };
 };

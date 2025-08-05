@@ -18,12 +18,6 @@ const DesktopIcons = ({
   setShowFileCreator,
   createFile,
 }) => {
-  const handleResumeClick = () => {
-    window.open(
-      "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
-      "_blank"
-    );
-  };
 
   return (
     <>
@@ -51,15 +45,7 @@ const DesktopIcons = ({
         />
 
         {/* Separator */}
-        <div className="w-8 h-px bg-gray-700 my-2"></div>
-
-        <div className="relative">
-          <UbuntuDesktopIcon
-            icon={<img src={PDFImage} alt="PDF Image" className="w-6 h-6" />}
-            label="Resume"
-            onClick={() => handleResumeClick()}
-          />
-        </div>
+        {/* <div className="w-8 h-px bg-gray-700 my-2"></div> */}
 
         {/* Create File Button */}
         {/* <div className="relative">

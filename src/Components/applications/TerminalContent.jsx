@@ -8,8 +8,6 @@ import {
   experiences,
   totalYears,
 } from "../../data/constants.js";
-import { type } from "@testing-library/user-event/dist/type";
-import { label } from "framer-motion/client";
 
 const TerminalContent = () => {
   const [commands, setCommands] = useState([
@@ -116,7 +114,6 @@ const TerminalContent = () => {
         "Ctrl+R : Restore All",
       ],
       skills: [
-        // Fixed: Properly group skills under their categories
         ...skills.flatMap((category) => [
           {
             type: "category",
@@ -133,7 +130,7 @@ const TerminalContent = () => {
           type: "project",
           content: {
             name: `${index + 1}. ${project.title}`,
-            description: project.description.split("\n")[0], // First paragraph only
+            description: project.description.split("\n")[0],
             status: project.isDone ? "✓ Completed" : "🔄 In Progress",
             github: project.github,
             demo: project.webapp,
@@ -146,7 +143,7 @@ const TerminalContent = () => {
           content: {
             companyname: `${index + 1}. ${exp.company}`,
             role: exp.role,
-            description: exp.desc.split("\n")[0], // First paragraph only
+            description: exp.desc.split("\n")[0],
             startDate: exp.startDate,
             endDate: exp.endDate,
             present: exp.present,
@@ -159,10 +156,10 @@ const TerminalContent = () => {
           label: "Email",
           value: "abhijitnanda8249@gmail.com",
         },
+        { type: "colored", label: "Phone", value: "+91-8249001710" },
         { type: "colored", label: "GitHub", value: Bio.github },
         { type: "colored", label: "LinkedIn", value: Bio.linkedin },
         { type: "colored", label: "Twitter", value: Bio.twitter },
-        { type: "colored", label: "Resume", value: Bio.resume },
       ],
       clear: [],
     };
@@ -187,18 +184,18 @@ const TerminalContent = () => {
         ...prev,
         { type: "command", content: cmd },
         ...response.map((r) => {
-          // If r is already an object with type and content, use it directly
+          // FIXED: Don't wrap objects that already have a type - just add response wrapper
           if (typeof r === "object" && r !== null && r.type) {
             return { type: "response", content: r };
           }
-          // If r is a string, wrap it
+          // For strings, wrap them directly
           return { type: "response", content: r };
         }),
       ]);
     }
 
     setCurrentInput("");
-    setHistoryIndex(-1); // Reset history index after executing command
+    setHistoryIndex(-1);
   };
 
   const handleKeyDown = (e) => {
@@ -252,8 +249,12 @@ const TerminalContent = () => {
     if (cmd.type === "response") {
       const content = cmd.content;
 
-      // Colored object (used in `whoami`, `contact`)
-      if (typeof content === "object" && content.type === "colored") {
+      // Colored object (used in `whoami`, `contact`, `help`)
+      if (
+        typeof content === "object" &&
+        content !== null &&
+        content.type === "colored"
+      ) {
         return (
           <div key={index} className="flex">
             <span className="text-cyan-400 font-semibold">{content.label}</span>
@@ -264,7 +265,11 @@ const TerminalContent = () => {
       }
 
       // Skill object
-      if (typeof content === "object" && content.type === "skill") {
+      if (
+        typeof content === "object" &&
+        content !== null &&
+        content.type === "skill"
+      ) {
         return (
           <div key={index} className="text-green-300 pl-4">
             • {content.content}
@@ -273,7 +278,11 @@ const TerminalContent = () => {
       }
 
       // Skill category
-      if (typeof content === "object" && content.type === "category") {
+      if (
+        typeof content === "object" &&
+        content !== null &&
+        content.type === "category"
+      ) {
         return (
           <div key={index} className="text-yellow-400 font-bold mt-2">
             {content.content}
@@ -282,9 +291,13 @@ const TerminalContent = () => {
       }
 
       // Project object
-      if (typeof content === "object" && content.type === "project") {
+      if (
+        typeof content === "object" &&
+        content !== null &&
+        content.type === "project"
+      ) {
         return (
-          <div key={index} className="text-green-300 space-y-1">
+          <div key={index} className="text-green-300 space-y-1 mb-2">
             <div className="font-bold text-yellow-300">
               {content.content.name}
             </div>
@@ -295,7 +308,8 @@ const TerminalContent = () => {
               <a
                 href={content.content.github}
                 target="_blank"
-                className="underline text-blue-400"
+                rel="noopener noreferrer"
+                className="underline text-blue-400 hover:text-blue-300"
               >
                 {content.content.github}
               </a>
@@ -305,7 +319,8 @@ const TerminalContent = () => {
               <a
                 href={content.content.demo}
                 target="_blank"
-                className="underline text-blue-400"
+                rel="noopener noreferrer"
+                className="underline text-blue-400 hover:text-blue-300"
               >
                 {content.content.demo}
               </a>
@@ -314,9 +329,14 @@ const TerminalContent = () => {
         );
       }
 
-      if (typeof content === "object" && content.type === "experience") {
+      // Experience object
+      if (
+        typeof content === "object" &&
+        content !== null &&
+        content.type === "experience"
+      ) {
         return (
-          <div key={index} className="text-green-300 space-y-1">
+          <div key={index} className="text-green-300 space-y-1 mb-2">
             <div className="font-bold text-yellow-300">
               {content.content.companyname}
             </div>
@@ -338,24 +358,31 @@ const TerminalContent = () => {
         );
       }
 
-      // Fallback
+      // Fallback for unrecognized content
       return (
         <div key={index} className="text-red-500">
-          [Unsupported response format]
+          [Unsupported response format: {typeof content}]
         </div>
       );
     }
+
+    // Fallback for unrecognized command types
+    return (
+      <div key={index} className="text-red-500">
+        [Unrecognized command type: {cmd.type}]
+      </div>
+    );
   };
 
   return (
     <div
       ref={terminalRef}
-      className="bg-black px-2 py-6 rounded-lg font-mono text-green-400 text-sm h-full overflow-auto"
+      className="bg-black px-2 py-6 rounded-lg font-mono text-green-400 text-sm h-full overflow-auto relative"
     >
-      <div className="space-y-1 mb-4">
+      <div className="space-y-1 mb-4 min-h-0">
         {commands.map((cmd, index) => renderCommand(cmd, index))}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center sticky bottom-0 bg-black pt-2">
         <span className="text-blue-400">abhijit-nanda@portfolio:~#&nbsp;</span>
         <input
           type="text"
