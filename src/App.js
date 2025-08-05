@@ -1,9 +1,12 @@
 import './App.css';
+import DesktopPortfolio from './Components/DesktopPortfolio';
 
 function App() {
 
   return (
-    <>Hello</>
+    <>
+      <DesktopPortfolio />
+    </>
   );
 }
 
