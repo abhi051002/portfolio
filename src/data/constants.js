@@ -398,4 +398,6 @@ export const Bio = {
   twitter: "https://twitter.com/AbhijitNanda20",
   insta: "https://instagram.com/abhijit.nanda.969",
   facebook: "https://www.facebook.com/abhijit.nanda.969?mibextid=LQQJ4d",
+  email: "abhijitnanda8249@gmail.com",
+  phone: "8249001710"
 };

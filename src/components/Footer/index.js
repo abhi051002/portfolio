@@ -20,8 +20,8 @@ function Footer() {
           <NavLink href="#contact">Contact</NavLink>
         </Nav>
         <ContactInfo>
-          <ContactInfoText>Emails:<ContactInfos href="mailto:abhijitnanda8249@gmail.com">abhijitnanda8249@gmail.com</ContactInfos></ContactInfoText>
-          <ContactInfoText>Number:<ContactInfos href="tel:+918249001710"> +91 8249001710</ContactInfos></ContactInfoText>
+          <ContactInfoText>Emails:<ContactInfos href={`mailto:${Bio.email}`}>{Bio.email}</ContactInfos></ContactInfoText>
+          <ContactInfoText>Number:<ContactInfos href={`tel:+91${Bio.phone}`}> +91 {Bio.phone}</ContactInfos></ContactInfoText>
         </ContactInfo>
         <SocialMediaIcons>
           <SocialMediaIcon href={Bio.facebook} target="display"><FacebookIcon /></SocialMediaIcon>

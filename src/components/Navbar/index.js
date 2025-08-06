@@ -49,8 +49,9 @@ const Navbar = () => {
               display: "flex",
               alignItems: "center",
               color: "white",
-              marginBottom: 20, // SOLUTION: Removed quotes, it's now a number
+              marginBottom: 20,
               cursor: "pointer",
+              marginTop: 20,
             }}
           >
             <div className="logos">{"<"}</div>

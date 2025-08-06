@@ -181,23 +181,6 @@ const Button = styled.a`
   }
 `;
 
-// Fixed corner ribbon-style bookmark
-const WorkingBookmark = styled.div`
-  position: absolute;
-  top: 20px;
-  right: -55px;
-  background-color: ${({ theme }) => theme.primary || "#eab308"};
-  color: white;
-  padding: 8px 50px;
-  font-weight: 600;
-  font-size: 14px;
-  transform: rotate(45deg);
-  z-index: 10;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  width: 200px;
-  text-align: center;
-`;
-
 // Not deployed notification
 const NotDeployedNotice = styled.div`
   background-color: ${({ theme }) => theme.primary + 20};
