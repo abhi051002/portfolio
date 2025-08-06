@@ -112,7 +112,7 @@ const BootScreen = ({
               {/* Description - Responsive text and spacing */}
               <p
                 className="text-xs line-clamp-3 sm:text-sm md:text-base text-gray-400 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl leading-relaxed opacity-0 animate-fade-in px-2 sm:px-0"
-                style={{ animationDelay: "4s", animationFillMode: "forwards" }}
+                style={{ animationDelay: "1s", animationFillMode: "forwards" }}
               >
                 {Bio.description}
               </p>
@@ -121,7 +121,7 @@ const BootScreen = ({
               <div
                 className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 opacity-0 animate-fade-in"
                 style={{
-                  animationDelay: "4.5s",
+                  animationDelay: "1.5s",
                   animationFillMode: "forwards",
                 }}
               >
@@ -172,7 +172,7 @@ const BootScreen = ({
             <div className="space-y-2 sm:space-y-3 md:space-y-4">
               <div
                 className="inline-block px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full cursor-pointer select-none transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 opacity-0 animate-fade-in"
-                style={{ animationDelay: "5s", animationFillMode: "forwards" }}
+                style={{ animationDelay: "2s", animationFillMode: "forwards" }}
                 onClick={() => {
                   if (window.innerWidth < 768) {
                     onContinue();
@@ -222,20 +222,8 @@ const BootScreen = ({
 
         {/* System info - Responsive positioning and sizing */}
         <div className="mt-6 sm:mt-8 md:mt-12 text-xs opacity-30 space-y-1">
-          <div>Portfolio OS v2.0.1</div>
+          <div>Abhijit OS v2.0.1</div>
           <div className="hidden sm:block">Built with React & Tailwind CSS</div>
-          <div className="flex items-center justify-center space-x-2 mt-2 sm:mt-4">
-            <Circle
-              className={`w-2 h-2 fill-current ${
-                isShuttingDown
-                  ? "animate-ping text-red-400"
-                  : "animate-ping text-green-400"
-              }`}
-            />
-            <span className="text-xs">
-              System Status: {isShuttingDown ? "Shutting Down" : "Online"}
-            </span>
-          </div>
         </div>
       </div>
 
