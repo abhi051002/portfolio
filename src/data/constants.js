@@ -148,9 +148,9 @@ export const experiences = [
     role: "SDE-I",
     company: "Hyscaler",
     startDate: "01/03/2025",
-    endDate: "",
-    present: true,
-    desc: "Recently promoted to SDE-I after demonstrating strong technical skills and consistent delivery of high-quality work. Currently developing and maintaining full-stack web applications using PHP, Laravel, Filament, MySQL, and PostgreSQL. Working directly with clients to implement new features and solve complex technical challenges.",
+    endDate: "07/08/2025",
+    present: false,
+    desc: "Promoted to SDE-I for strong technical expertise and consistent project delivery. Building and maintaining full-stack web applications using PHP, Laravel, Filament, MySQL, and PostgreSQL. Collaborating with clients to develop new features, optimize performance, and resolve complex technical issues.",
     skills: [
       "PHP",
       "Laravel",
