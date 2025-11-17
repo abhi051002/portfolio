@@ -144,6 +144,26 @@ export const skills = [
 export const experiences = [
   {
     id: 0,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3cdD4N-8-CFFsKRQtvNyfrbmnQ4emBVHvRw&s",
+    role: "Senior PHP Officer",
+    company: "Cozentus",
+    startDate: "11/08/2025",
+    endDate: "",
+    present: true,
+    desc: "Working on full-stack web applications using PHP, Laravel, Filament, MySQL and PostgreSQL. Contributing to feature development, performance improvements and debugging across client projects. Collaborating with stakeholders to plan enhancements, deliver stable updates and resolve technical issues.",
+    skills: [
+      "PHP",
+      "Laravel",
+      "MySQL",
+      "HTML",
+      "CSS",
+      "Postman",
+      "PHPUnit"
+    ],
+    // doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
+  },
+  {
+    id: 1,
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "SDE-I",
     company: "Hyscaler",
@@ -165,7 +185,7 @@ export const experiences = [
     doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
   },
   {
-    id: 1,
+    id: 2,
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "Junior Software Developer",
     company: "Hyscaler",
@@ -187,7 +207,7 @@ export const experiences = [
     doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
   },
   {
-    id: 2,
+    id: 3,
     img: "https://web-assets.hyscaler.com/wp-content/uploads-webpc/uploads/2023/03/hyscaler-square-light-bg.png.webp",
     role: "Full-stack Trainee Intern",
     company: "Hyscaler",
@@ -207,7 +227,7 @@ export const experiences = [
     doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
   },
   {
-    id: 3,
+    id: 4,
     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYOSnVFC2VDDJ9FUKAB2FBdZaAohgEgjiTPfce0S-C&s",
     role: "Full-stack Intern",
     company: "Digital It Web",
@@ -387,7 +407,7 @@ export const totalYears = (totalMonths / 12).toFixed(1);
 export const Bio = {
   name: "Abhijit Nanda",
   roles: ["Backend Developer", "Node.Js Developer", "Laravel Developer"],
-  description: `SDE-I with ${totalYears} + year of professional experience specializing in full-stack web development. 
+  description: `Backend Developer with ${totalYears} + year of professional experience specializing in full-stack web development. 
   Proficient in modern tech stack including HTML, CSS, JavaScript, React, Nextjs, PHP, Laravel, and FilamentPHP. 
   Demonstrated track record of delivering responsive, efficient web applications while collaborating effectively in team environments.
   Known for solving complex problems under tight deadlines and writing clean, maintainable code.
