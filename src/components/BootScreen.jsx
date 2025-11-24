@@ -1,8 +1,9 @@
 "use client";
 import { Github, Linkedin, Twitter, Instagram, FileText } from "lucide-react";
-import { Bio } from "../data/constants.js";
 import HeroImg from "../Image/HeroImage.jpeg";
-import { useTypewriter } from "../hooks/useTypeWritter.jsx"; // Import the new hook
+import { useTypewriter } from "../hooks/useTypeWritter.jsx";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const BootScreen = ({
   bootAnimation,
@@ -10,7 +11,32 @@ const BootScreen = ({
   isShuttingDown = false,
   onContinue,
 }) => {
-  const displayedRole = useTypewriter(Bio.roles, 100, 1500); // Use the typewriter hook
+  const [portfolioId, setPortfolioId] = useState("");
+  const [bioData, setBioData] = useState([]);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
+  const fetchPortFolio = async () => {
+    const response = await axios.get(`${backendUrl}/portfolios`);
+    localStorage.setItem("portfolioId", response.data[0]._id);
+    setPortfolioId(response.data[0]._id);
+  };
+
+  useEffect(() => {
+    fetchPortFolio();
+  }, []);
+
+  useEffect(() => {
+    if (!portfolioId) return;
+    const fetchBio = async () => {
+      const res = await axios.get(`${backendUrl}/bio/${portfolioId}`);
+      localStorage.setItem('totalYearofExperience',res.data.totalYears);
+      setBioData(res.data);
+    };
+
+    fetchBio();
+  }, [portfolioId]);
+
+  const displayedRole = useTypewriter(bioData?.roles || ["Backend Developer", "Node.Js Developer", "Laravel Developer"], 100, 1500);
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center text-white font-mono relative overflow-hidden">
@@ -92,7 +118,7 @@ const BootScreen = ({
               {/* Name and Title - Responsive typography */}
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent animate-pulse leading-tight">
-                  {Bio.name}
+                  {bioData.name}
                 </h1>
 
                 {/* Roles with typing animation effect - Responsive spacing */}
@@ -107,7 +133,7 @@ const BootScreen = ({
                 className="text-xs line-clamp-3 sm:text-sm md:text-base text-gray-400 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl leading-relaxed opacity-0 animate-fade-in px-2 sm:px-0"
                 style={{ animationDelay: "1s", animationFillMode: "forwards" }}
               >
-                {Bio.description}
+                {bioData.description}
               </p>
 
               {/* Social Links - Responsive sizing and spacing */}
@@ -119,7 +145,7 @@ const BootScreen = ({
                 }}
               >
                 <a
-                  href={Bio.github}
+                  href={bioData.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
@@ -127,7 +153,7 @@ const BootScreen = ({
                   <Github className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
                 </a>
                 <a
-                  href={Bio.linkedin}
+                  href={bioData.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
@@ -135,7 +161,7 @@ const BootScreen = ({
                   <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
                 </a>
                 <a
-                  href={Bio.twitter}
+                  href={bioData.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
@@ -143,7 +169,7 @@ const BootScreen = ({
                   <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
                 </a>
                 <a
-                  href={Bio.insta}
+                  href={bioData.insta}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
@@ -151,7 +177,7 @@ const BootScreen = ({
                   <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
                 </a>
                 <a
-                  href={Bio.resume}
+                  href={bioData.resume}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"

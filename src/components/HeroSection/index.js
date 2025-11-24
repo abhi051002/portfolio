@@ -1,24 +1,49 @@
-import React from 'react';
-import { Bio } from '../../data/constants';
+import React, { useEffect, useState } from "react";
 import Typewriter from "typewriter-effect";
 import HeroImg from "../../Image/HeroImage.jpeg";
 import HeroBgAnimation from "../HeroBgAnimation";
-import { HeroBg, HeroContainer, HeroInnerContainer, HeroLeftContainer, HeroRightContainer, Image, ImageContainer, ImageOverlay, ResumeButton, Span, SubTitle, TextLoop, Title } from './HeroSectionStyle';
-
+import {
+  HeroBg,
+  HeroContainer,
+  HeroInnerContainer,
+  HeroLeftContainer,
+  HeroRightContainer,
+  Image,
+  ImageContainer,
+  ImageOverlay,
+  ResumeButton,
+  Span,
+  SubTitle,
+  TextLoop,
+  Title,
+} from "./HeroSectionStyle";
+import axios from 'axios';
 
 const Hero = () => {
-  // Define animation variants
+  const [bioData, setBioData] = useState([]);
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const portfolioId = localStorage.getItem("portfolioId");
+
+  useEffect(() => {
+    const fetchBio = async () => {
+      const res = await axios.get(`${backendUrl}/bio/${portfolioId}`);
+      setBioData(res.data);
+    };
+
+    fetchBio();
+  },[portfolioId]);
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   const staggerContainer = {
     animate: {
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const popIn = {
@@ -29,9 +54,9 @@ const Hero = () => {
       transition: {
         type: "spring",
         stiffness: 300,
-        damping: 15
-      }
-    }
+        damping: 15,
+      },
+    },
   };
 
   const pulseAnimation = {
@@ -40,14 +65,14 @@ const Hero = () => {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: "easeInOut"
-    }
+      ease: "easeInOut",
+    },
   };
 
   const hoverScale = {
     scale: 1.07,
     boxShadow: "0 0 30px rgba(139, 92, 246, 0.9)",
-    transition: { duration: 0.3 }
+    transition: { duration: 0.3 },
   };
 
   return (
@@ -64,22 +89,23 @@ const Hero = () => {
           >
             <Title variants={fadeIn}>
               Hi, I'm <br />
-              {Bio.name}
+              {bioData.name}
             </Title>
             <TextLoop>
               I'm a
               <Span>
                 <Typewriter
                   options={{
-                    strings: Bio.roles,
+                    strings: bioData.roles,
                     autoStart: true,
-                  }} />
+                  }}
+                />
               </Span>
             </TextLoop>
-            <SubTitle variants={fadeIn}>{Bio.description}</SubTitle>
+            <SubTitle variants={fadeIn}>{bioData.description}</SubTitle>
             <ResumeButton
-              href={Bio.resume}
-              target='_blank'
+              href={bioData.resume}
+              target="_blank"
               variants={popIn}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
@@ -99,12 +125,12 @@ const Hero = () => {
                 type: "spring",
                 stiffness: 260,
                 damping: 20,
-                delay: 0.6
+                delay: 0.6,
               }}
             >
               <Image
                 src={HeroImg}
-                alt={`${Bio.name}'s Profile`}
+                alt={`${bioData.name}'s Profile`}
                 whileHover={hoverScale}
               />
               <ImageOverlay animate={pulseAnimation} />
@@ -113,7 +139,7 @@ const Hero = () => {
         </HeroInnerContainer>
       </HeroContainer>
     </div>
-  )
-}
+  );
+};
 
 export default Hero;

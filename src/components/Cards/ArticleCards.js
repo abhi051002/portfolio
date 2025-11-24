@@ -36,7 +36,7 @@ const ArticleCards = ({ article }) => {
           {article.subTitle}
         </Description>
       </Details>
-        <ReadButton>Read Article <MessageSquareShare/></ReadButton>
+        <ReadButton dull href={article?.link} target="new">Read Article <MessageSquareShare/></ReadButton>
     </Card>
   );
 };
