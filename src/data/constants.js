@@ -82,8 +82,9 @@ export const skills = [
       },
       {
         name: "GraphQl",
-        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/512px-GraphQL_Logo.svg.png"
-      }
+        image:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/512px-GraphQL_Logo.svg.png",
+      },
     ],
   },
   {
@@ -151,15 +152,7 @@ export const experiences = [
     endDate: "",
     present: true,
     desc: "Working on full-stack web applications using PHP, Laravel, Filament, MySQL and PostgreSQL. Contributing to feature development, performance improvements and debugging across client projects. Collaborating with stakeholders to plan enhancements, deliver stable updates and resolve technical issues.",
-    skills: [
-      "PHP",
-      "Laravel",
-      "MySQL",
-      "HTML",
-      "CSS",
-      "Postman",
-      "PHPUnit"
-    ],
+    skills: ["PHP", "Laravel", "MySQL", "HTML", "CSS", "Postman", "PHPUnit"],
     // doc: "https://drive.google.com/file/d/1DSnPOVgK4huL4Tw1H51-VKPjx6j1fMWH/view?usp=drivesdk",
   },
   {
@@ -312,8 +305,17 @@ Implemented secure JWT authentication with role-based access control for patient
 
 Designed an administrative dashboard for hospital staff to manage doctor listings, monitor appointment bookings, and ensure smooth operation of the facility. Integrated Stripe payment processing to handle appointment bookings securely and efficiently.`,
     image: require("../Image/home1.png"),
-    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "REST APIs", "JWT", "bcrypt",
-      "Axios",],
+    tags: [
+      "React",
+      "MongoDB",
+      "Express",
+      "Node.js",
+      "Tailwind CSS",
+      "REST APIs",
+      "JWT",
+      "bcrypt",
+      "Axios",
+    ],
     category: "web app",
     github: "https://github.com/abhi051002/hms-fullstack",
     webapp: "https://hms-frontend-umber.vercel.app",
@@ -329,8 +331,17 @@ Implemented advanced job search functionality with filters for location, experie
 
 Featured real-time notifications for application status updates, interview invitations, and recruiter messages. Ensured data security through JWT authentication and role-based access controls for different user types.`,
     image: require("../Image/jobportal.png"),
-    tags: ["React", "MongoDB", "Express", "Node.js", "Tailwind CSS", "REST APIs", "JWT", "bcrypt",
-      "Axios",],
+    tags: [
+      "React",
+      "MongoDB",
+      "Express",
+      "Node.js",
+      "Tailwind CSS",
+      "REST APIs",
+      "JWT",
+      "bcrypt",
+      "Axios",
+    ],
     category: "web app",
     github: "https://github.com/abhi051002/JobPortal",
     webapp: "https://job-portal-frontend-ochre-delta.vercel.app/",
@@ -346,7 +357,14 @@ Implemented a responsive design using TailwindCSS to ensure optimal viewing expe
 
 Developed a client portal where customers can track project progress, view documents, and communicate with project managers. Utilized Laravel Sanctum for secure API authentication between frontend and backend systems.`,
     image: require("../Image/construction.png"),
-    tags: ["React", "PostgreSQL", "Laravel", "TailwindCSS", "Sanctum", "REST APIs"],
+    tags: [
+      "React",
+      "PostgreSQL",
+      "Laravel",
+      "TailwindCSS",
+      "Sanctum",
+      "REST APIs",
+    ],
     category: "web app",
     github: "https://github.com/abhi051002/construction-website",
     webapp: "https://construction-website-kmoa.vercel.app/",
@@ -358,7 +376,17 @@ Developed a client portal where customers can track project progress, view docum
     date: "May 2025 - June 2025",
     description: `Built with Next.js and Bunny.net, this Full Stack Screen Recording & Video Sharing Platform includes user authentication with "Better Auth", screen recording, video uploads, and the ability to share videos via link. Users can set videos as public or private, view AI-generated transcripts, and access metadata like video ID and URL. A built-in search bar makes finding content fast and simple.`,
     image: require("../Image/SnapCast.png"),
-    tags: ["Nextjs", "Postgres", "Arject", "Bunny.net", "Better Auth", "Drizzle ORM", "Tailwind CSS", "Typescript", "Xata"],
+    tags: [
+      "Nextjs",
+      "Postgres",
+      "Arject",
+      "Bunny.net",
+      "Better Auth",
+      "Drizzle ORM",
+      "Tailwind CSS",
+      "Typescript",
+      "Xata",
+    ],
     category: "web app",
     github: "https://github.com/abhi051002/snapcast",
     webapp: "https://snapcast-mauve.vercel.app/",
@@ -384,8 +412,8 @@ Developed a client portal where customers can track project progress, view docum
 const getMonthDifference = (start, end) => {
   if (!end) {
     const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
     const yyyy = today.getFullYear();
     end = `${dd}/${mm}/${yyyy}`;
   }
@@ -399,7 +427,9 @@ const getMonthDifference = (start, end) => {
 
 // Calculate total experience in years
 const totalMonths = experiences.reduce((acc, exp) => {
-  return acc + getMonthDifference(exp.startDate, exp.present ? null : exp.endDate);
+  return (
+    acc + getMonthDifference(exp.startDate, exp.present ? null : exp.endDate)
+  );
 }, 0);
 
 export const totalYears = (totalMonths / 12).toFixed(1);
@@ -413,11 +443,58 @@ export const Bio = {
   Known for solving complex problems under tight deadlines and writing clean, maintainable code.
   Passionate about continuous learning and staying current with emerging technologies to drive innovation.`,
   github: "https://github.com/abhi051002",
-  resume: "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
+  resume:
+    "https://res.cloudinary.com/dzncl0gbm/image/upload/v1744692517/Abhijit_Nanda_Resume_cxsobk.pdf",
   linkedin: "https://www.linkedin.com/in/abhijit-nanda",
   twitter: "https://twitter.com/AbhijitNanda20",
   insta: "https://instagram.com/abhijit.nanda.969",
   facebook: "https://www.facebook.com/abhijit.nanda.969?mibextid=LQQJ4d",
   email: "abhijitnanda8249@gmail.com",
-  phone: "8249001710"
+  phone: "8249001710",
 };
+
+export const articles = [
+  {
+    id: 1,
+    title:
+      "10 Subtle Mistakes That Make Your Website Slower (and How to Fix Them)",
+    subTitle:
+      "You’ve optimized your images. You’ve minified your CSS. Your hosting is top-tier. So why does your website still feel sluggish?",
+    link: "https://medium.com/@abhijitnanda8249/10-subtle-mistakes-that-make-your-website-slower-and-how-to-fix-them-703bffc391ba",
+    image:
+      "https://miro.medium.com/v2/resize:fit:720/format:webp/1*FUtNo06jzdQSucy9r-dwxA.jpeg",
+    publishedAt: "October 14, 2025",
+  },
+  {
+    id: 2,
+    title:
+      "How Free Social Media Platforms Make Billions: The Business Model Behind WhatsApp, Instagram & More",
+    subTitle:
+      "Ever wondered how apps you use every day — without paying a single cent — are worth billions of dollars?",
+    link: "https://medium.com/@abhijitnanda8249/how-free-social-media-platforms-make-billions-the-business-model-behind-whatsapp-instagram-more-f127a47f85ab",
+    image:
+      "https://miro.medium.com/v2/resize:fit:720/format:webp/1*vk9bN1tap-uHBdluwXw9YQ.webp",
+    publishedAt: "October 16, 2025",
+  },
+  {
+    id: 3,
+    title: "PHP 8.5: A Clear Look at the New Features, Functions and Changes",
+    subTitle:
+      "PHP 8.5 brings small but meaningful improvements to modern PHP development. From the new pipe operator to helpful array functions and better debugging tools, here’s a simple guide to everything that’s new and how it impacts real-world applications.",
+    link: "https://medium.com/@abhijitnanda8249/php-8-5-a-clear-look-at-the-new-features-functions-and-changes-fdd3e05c060f",
+    image:
+      "https://miro.medium.com/v2/resize:fit:720/format:webp/1*6vk-i7PF6NcKzKp4DRcs0g.avif",
+    publishedAt: "November 23, 2025",
+  },
+  {
+    id: 4,
+    title:
+      "Master Git Like a Pro: The Most Useful (and Rarely Discussed) Commands Every Developer Should Know",
+    subTitle:
+      "Most developers use Git every day but only rely on five or six commands. The real power of Git sits in the commands no one talks about — the ones that save you hours, protect your work and make you feel in control during a crisis. This guide walks you through a mix of common, underrated and almost unknown commands that every developer should master — especially if you want to work smarter and avoid messy repos.",
+    link: "https://medium.com/@abhijitnanda8249/master-git-like-a-pro-the-most-useful-and-rarely-discussed-commands-every-developer-should-know-1bddd59066af",
+    image:
+      "https://miro.medium.com/v2/resize:fit:720/format:webp/1*OMMijcKXU7e8z-OcXTYb0A.jpeg",
+    publishedAt: "November 24, 2025",
+  },
+];

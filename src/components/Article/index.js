@@ -1,10 +1,16 @@
 import React from "react";
 import { motion } from "framer-motion";
-import ProjectCards from "../Cards/ProjectCards";
-import { projects } from "../../data/constants";
-import { CardContainer, Container, Description, Title, Wrapper } from "./ProjectStyle";
+import { articles } from "../../data/constants";
+import {
+  CardContainer,
+  Container,
+  Description,
+  Title,
+  Wrapper,
+} from "./ArticleStyle";
+import ArticleCards from "../Cards/ArticleCards";
 
-const Project = ({ openModal, setOpenModal }) => {
+const Article = () => {
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -13,9 +19,9 @@ const Project = ({ openModal, setOpenModal }) => {
       transition: {
         duration: 0.6,
         when: "beforeChildren",
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const childVariants = {
@@ -23,46 +29,40 @@ const Project = ({ openModal, setOpenModal }) => {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   return (
     <Container
-      id="apps"
+      id="articles"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       variants={containerVariants}
     >
       <Wrapper>
-        <Title variants={childVariants}>
-          Projects
-        </Title>
+        <Title variants={childVariants}>Articles</Title>
         <Description variants={childVariants}>
-          I have worked on some of projects. Here are some of projects Some of
-          Projects.
+          Here are a few articles I’ve written based on my work and learning
+          experiences.
         </Description>
         <CardContainer variants={childVariants}>
-          {[...projects]
+          {[...articles]
             .sort((a, b) => b.id - a.id)
-            .map((project, index) => (
+            .map((article, index) => (
               <motion.div
-                key={project.id}
+                key={article.id}
                 variants={{
                   hidden: { opacity: 0, y: 20 },
                   visible: {
                     opacity: 1,
                     y: 0,
-                    transition: { duration: 0.5, delay: index * 0.1 }
-                  }
+                    transition: { duration: 0.5, delay: index * 0.1 },
+                  },
                 }}
               >
-                <ProjectCards
-                  project={project}
-                  openModal={openModal}
-                  setOpenModal={setOpenModal}
-                />
+                <ArticleCards article={article} />
               </motion.div>
             ))}
         </CardContainer>
@@ -71,4 +71,4 @@ const Project = ({ openModal, setOpenModal }) => {
   );
 };
 
-export default Project;
+export default Article;

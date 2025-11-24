@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ProjectDetails from './components/ProjectDetails';
 import { useState } from 'react';
+import Article from './components/Article';
 
 const Body = styled.div`
   background-color:${({ theme }) => theme.bg};
@@ -48,6 +49,7 @@ function App() {
             <Experience />
           </Wrapper>
           <Project openModal={openModal} setOpenModal={setOpenModal} />
+          <Article />
           <Wrapper>
             <Education />
             <Contact />
