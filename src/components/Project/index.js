@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import ProjectCards from "../Cards/ProjectCards";
-import { projects } from "../../data/constants";
 import { CardContainer, Container, Description, Title, Wrapper } from "./ProjectStyle";
+import Loader from "../Loader/Loader";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 const Project = ({ openModal, setOpenModal }) => {
+  const { projects, loading, fetchProjects } = usePortfolio();
+
+  useEffect(() => {
+    if (projects.length === 0) {
+      fetchProjects();
+    }
+  }, [projects.length,fetchProjects]);
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -43,29 +52,45 @@ const Project = ({ openModal, setOpenModal }) => {
           I have worked on some of projects. Here are some of projects Some of
           Projects.
         </Description>
-        <CardContainer variants={childVariants}>
-          {[...projects]
-            .sort((a, b) => b.id - a.id)
-            .map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.5, delay: index * 0.1 }
-                  }
-                }}
-              >
-                <ProjectCards
-                  project={project}
-                  openModal={openModal}
-                  setOpenModal={setOpenModal}
-                />
-              </motion.div>
-            ))}
-        </CardContainer>
+
+        {loading.projects ? (
+          <Loader text="Loading projects..." size="60px" minHeight="400px" />
+        ) : (
+          <CardContainer variants={childVariants}>
+            {projects && projects.length > 0 ? (
+              [...projects]
+                .sort((a, b) => b.id - a.id)
+                .map((project, index) => (
+                  <motion.div
+                    key={project._id}
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.5, delay: index * 0.1 }
+                      }
+                    }}
+                  >
+                    <ProjectCards
+                      project={project}
+                      openModal={openModal}
+                      setOpenModal={setOpenModal}
+                    />
+                  </motion.div>
+                ))
+            ) : (
+              <div style={{ 
+                color: "white", 
+                textAlign: "center", 
+                padding: "40px",
+                width: "100%" 
+              }}>
+                No projects found
+              </div>
+            )}
+          </CardContainer>
+        )}
       </Wrapper>
     </Container>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Container,
@@ -12,41 +12,18 @@ import {
   SkillItem,
   SkillImage,
 } from "./SkillsStyle";
-import axios from "axios";
+import Loader from "../Loader/Loader";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 const Skills = () => {
-  const [categories, setCategories] = useState([]);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-  const portfolioId = localStorage.getItem("portfolioId");
+  const { skills, loading, fetchSkills } = usePortfolio();
   const totalYears = localStorage.getItem("totalYearofExperience");
 
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const categoriesRes = await axios.get(
-          `${backendUrl}/skills/categories/${portfolioId}`
-        );
-
-        // Fetch items for each category
-        const categoriesWithItems = await Promise.all(
-          categoriesRes.data.map(async (cat) => {
-            const itemsRes = await axios.get(
-              `${backendUrl}/skills/items/${cat._id}`
-            );
-            return { ...cat, items: itemsRes.data };
-          })
-        );
-
-        setCategories(categoriesWithItems);
-      } catch (error) {
-        console.error("❌ Error fetching skills:", error);
-      }
-    };
-
-    if (backendUrl && portfolioId) {
+    if (skills.length === 0) {
       fetchSkills();
     }
-  }, [backendUrl, portfolioId]);
+  }, [skills.length,fetchSkills]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -100,55 +77,66 @@ const Skills = () => {
           </Description>
         </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          style={{ width: "100%" }}
-        >
-          <SkillsContainer>
-            {categories && categories.length > 0 ? (
-              categories.map((item, index) => {
-                return (
-                  <Skill
-                    key={index}
-                    variants={skillVariants}
-                    whileHover={{
-                      scale: 1.05,
-                      boxShadow: "rgba(23, 92, 230, 0.25) 0px 4px 24px",
-                    }}
-                  >
-                    <SkillTitle>{item.title || item.name}</SkillTitle>
-                    <SkillList>
-                      {item.items &&
-                        item.items.map((skill, indexs) => {
-                          return (
-                            <SkillItem
-                              key={indexs}
-                              variants={itemVariants}
-                              whileHover={{
-                                scale: 1.05,
-                                color: "#854CE6",
-                                borderColor: "#854CE6",
-                                transition: { duration: 0.2 },
-                              }}
-                            >
-                              <SkillImage src={skill.image} />
-                              {skill.name}
-                            </SkillItem>
-                          );
-                        })}
-                    </SkillList>
-                  </Skill>
-                );
-              })
-            ) : (
-              <div style={{ color: "white", fontSize: "24px" }}>
-                No categories to display
-              </div>
-            )}
-          </SkillsContainer>
-        </motion.div>
+        {loading.skills ? (
+          <Loader text="Loading skills..." size="60px" minHeight="400px" />
+        ) : (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            style={{ width: "100%" }}
+          >
+            <SkillsContainer>
+              {skills && skills.length > 0 ? (
+                skills.map((item, index) => {
+                  return (
+                    <Skill
+                      key={index}
+                      variants={skillVariants}
+                      whileHover={{
+                        scale: 1.05,
+                        boxShadow: "rgba(23, 92, 230, 0.25) 0px 4px 24px",
+                      }}
+                    >
+                      <SkillTitle>{item.title || item.name}</SkillTitle>
+                      <SkillList>
+                        {item.items &&
+                          item.items.map((skill, indexs) => {
+                            return (
+                              <SkillItem
+                                key={indexs}
+                                variants={itemVariants}
+                                whileHover={{
+                                  scale: 1.05,
+                                  color: "#854CE6",
+                                  borderColor: "#854CE6",
+                                  transition: { duration: 0.2 },
+                                }}
+                              >
+                                <SkillImage src={skill.image} />
+                                {skill.name}
+                              </SkillItem>
+                            );
+                          })}
+                      </SkillList>
+                    </Skill>
+                  );
+                })
+              ) : (
+                <div
+                  style={{
+                    color: "white",
+                    fontSize: "18px",
+                    textAlign: "center",
+                    padding: "40px",
+                  }}
+                >
+                  No skills found
+                </div>
+              )}
+            </SkillsContainer>
+          </motion.div>
+        )}
       </Wrapper>
     </Container>
   );

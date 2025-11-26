@@ -2,8 +2,7 @@
 import { Github, Linkedin, Twitter, Instagram, FileText } from "lucide-react";
 import HeroImg from "../Image/HeroImage.jpeg";
 import { useTypewriter } from "../hooks/useTypeWritter.jsx";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { usePortfolio } from "../context/PortfolioContext.jsx";
 
 const BootScreen = ({
   bootAnimation,
@@ -11,36 +10,19 @@ const BootScreen = ({
   isShuttingDown = false,
   onContinue,
 }) => {
-  const [portfolioId, setPortfolioId] = useState("");
-  const [bioData, setBioData] = useState([]);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-
-  const fetchPortFolio = async () => {
-    const response = await axios.get(`${backendUrl}/portfolios`);
-    localStorage.setItem("portfolioId", response.data[0]._id);
-    setPortfolioId(response.data[0]._id);
-  };
-
-  useEffect(() => {
-    fetchPortFolio();
-  }, []);
-
-  useEffect(() => {
-    if (!portfolioId) return;
-    const fetchBio = async () => {
-      const res = await axios.get(`${backendUrl}/bio/${portfolioId}`);
-      localStorage.setItem('totalYearofExperience',res.data.totalYears);
-      setBioData(res.data);
-    };
-
-    fetchBio();
-  }, [portfolioId]);
-
-  const displayedRole = useTypewriter(bioData?.roles || ["Backend Developer", "Node.Js Developer", "Laravel Developer"], 100, 1500);
+  const { bioData, loading } = usePortfolio();
+  const displayedRole = useTypewriter(
+    bioData?.roles || [
+      "Backend Developer",
+      "Node.Js Developer",
+      "Laravel Developer",
+    ],
+    100,
+    1500
+  );
 
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center text-white font-mono relative overflow-hidden">
-      {/* Enhanced Animated background particles - Responsive count */}
       <div className="absolute inset-0">
         {[
           ...Array(
@@ -100,7 +82,40 @@ const BootScreen = ({
           bootAnimation ? "-translate-y-full opacity-0" : ""
         } z-10 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8`}
       >
-        {!isShuttingDown ? (
+        {loading.bio ? (
+          /* Loading State */
+          <div className="space-y-4 sm:space-y-6">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto">
+              <div className="w-full h-full border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+              Initializing System...
+            </h2>
+            <div className="space-y-2 text-xs sm:text-sm text-gray-400">
+              <div className="animate-pulse">Loading portfolio data...</div>
+              <div className="flex justify-center items-center space-x-1">
+                <span
+                  className="animate-bounce"
+                  style={{ animationDelay: "0s" }}
+                >
+                  .
+                </span>
+                <span
+                  className="animate-bounce"
+                  style={{ animationDelay: "0.2s" }}
+                >
+                  .
+                </span>
+                <span
+                  className="animate-bounce"
+                  style={{ animationDelay: "0.4s" }}
+                >
+                  .
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : !isShuttingDown ? (
           <div className="space-y-4 sm:space-y-6 md:space-y-8">
             {/* Profile Section */}
             <div className="flex flex-col items-center space-y-3 sm:space-y-4 md:space-y-6">
@@ -109,7 +124,7 @@ const BootScreen = ({
                 <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 p-1 animate-pulse">
                   <img
                     src={HeroImg || "/placeholder.svg"}
-                    alt="Abhijit Nanda"
+                    alt={bioData?.name || "Profile"}
                     className="w-full h-full rounded-full object-cover bg-gray-700"
                   />
                 </div>
@@ -118,7 +133,7 @@ const BootScreen = ({
               {/* Name and Title - Responsive typography */}
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent animate-pulse leading-tight">
-                  {bioData.name}
+                  {bioData?.name || "Loading..."}
                 </h1>
 
                 {/* Roles with typing animation effect - Responsive spacing */}
@@ -133,7 +148,7 @@ const BootScreen = ({
                 className="text-xs line-clamp-3 sm:text-sm md:text-base text-gray-400 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl leading-relaxed opacity-0 animate-fade-in px-2 sm:px-0"
                 style={{ animationDelay: "1s", animationFillMode: "forwards" }}
               >
-                {bioData.description}
+                {bioData?.description || ""}
               </p>
 
               {/* Social Links - Responsive sizing and spacing */}
@@ -144,46 +159,56 @@ const BootScreen = ({
                   animationFillMode: "forwards",
                 }}
               >
-                <a
-                  href={bioData.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
-                >
-                  <Github className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
-                </a>
-                <a
-                  href={bioData.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
-                >
-                  <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
-                </a>
-                <a
-                  href={bioData.twitter}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
-                >
-                  <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
-                </a>
-                <a
-                  href={bioData.insta}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
-                >
-                  <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
-                </a>
-                <a
-                  href={bioData.resume}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
-                >
-                  <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
-                </a>
+                {bioData?.github && (
+                  <a
+                    href={bioData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+                  >
+                    <Github className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
+                  </a>
+                )}
+                {bioData?.linkedin && (
+                  <a
+                    href={bioData.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+                  >
+                    <Linkedin className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
+                  </a>
+                )}
+                {bioData?.twitter && (
+                  <a
+                    href={bioData.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+                  >
+                    <Twitter className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
+                  </a>
+                )}
+                {bioData?.insta && (
+                  <a
+                    href={bioData.insta}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+                  >
+                    <Instagram className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
+                  </a>
+                )}
+                {bioData?.resume && (
+                  <a
+                    href={bioData.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-1.5 sm:p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+                  >
+                    <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white hover:text-blue-400" />
+                  </a>
+                )}
               </div>
             </div>
 
@@ -209,7 +234,7 @@ const BootScreen = ({
               <div
                 className="text-xs sm:text-sm text-gray-500 opacity-0 animate-fade-in px-4 sm:px-0"
                 style={{
-                  animationDelay: "5.5s",
+                  animationDelay: "2.5s",
                   animationFillMode: "forwards",
                 }}
               >
@@ -223,7 +248,7 @@ const BootScreen = ({
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-red-400 to-orange-500 p-1 mx-auto">
               <img
                 src={HeroImg || "/placeholder.svg"}
-                alt="Abhijit Nanda"
+                alt={bioData?.name || "Profile"}
                 className="w-full h-full rounded-full object-cover bg-gray-700 opacity-50"
               />
             </div>
@@ -295,7 +320,7 @@ const BootScreen = ({
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes fade-in {
           from {
             opacity: 0;

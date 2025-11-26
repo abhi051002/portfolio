@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Nav,
   NavLink,
@@ -16,13 +16,15 @@ import {
 } from "./NavbarStyledComponent";
 
 import { FaBars } from "react-icons/fa";
-import { Bio } from "../../data/constants";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [scrolled, setScrolled] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  React.useEffect(() => {
+  const { bioData } = usePortfolio();
+
+  useEffect(() => {
     const handleScroll = () => {
       // You can adjust this value based on when you want the navbar to change
       const isScrolled = window.scrollY > 80;
@@ -80,7 +82,7 @@ const Navbar = () => {
           <NavLink href="#articles">Articles at Medium</NavLink>
         </NavItems>
         <ButtonContainer>
-          <GitHubButton href={Bio.github} target="_blank">
+          <GitHubButton href={bioData.github} target="_blank">
             Github Profile
           </GitHubButton>
         </ButtonContainer>
@@ -104,7 +106,7 @@ const Navbar = () => {
               </MobileLink>
             </MobileMenuItems>
 
-            <MobileMenuButton href={Bio.github} target="_blank">
+            <MobileMenuButton href={bioData.github} target="_blank">
               Github Profile
             </MobileMenuButton>
           </MobileMenu>
@@ -129,7 +131,7 @@ const Navbar = () => {
               </MobileLink>
             </MobileMenuItems>
 
-            <MobileMenuButton href={Bio.github} target="_blank">
+            <MobileMenuButton href={bioData.github} target="_blank">
               Github Profile
             </MobileMenuButton>
           </MobileMenu>

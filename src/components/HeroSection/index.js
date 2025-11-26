@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Typewriter from "typewriter-effect";
 import HeroImg from "../../Image/HeroImage.jpeg";
 import HeroBgAnimation from "../HeroBgAnimation";
@@ -17,21 +17,11 @@ import {
   TextLoop,
   Title,
 } from "./HeroSectionStyle";
-import axios from 'axios';
+import Loader from "../Loader/Loader";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 const Hero = () => {
-  const [bioData, setBioData] = useState([]);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-  const portfolioId = localStorage.getItem("portfolioId");
-
-  useEffect(() => {
-    const fetchBio = async () => {
-      const res = await axios.get(`${backendUrl}/bio/${portfolioId}`);
-      setBioData(res.data);
-    };
-
-    fetchBio();
-  },[portfolioId]);
+  const { bioData, loading } = usePortfolio();
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -75,6 +65,42 @@ const Hero = () => {
     transition: { duration: 0.3 },
   };
 
+  if (loading.bio) {
+    return (
+      <div id="about">
+        <HeroContainer>
+          <HeroBg>
+            <HeroBgAnimation />
+          </HeroBg>
+          <Loader text="Loading profile..." size="70px" minHeight="100vh" />
+        </HeroContainer>
+      </div>
+    );
+  }
+
+  if (!bioData) {
+    return (
+      <div id="about">
+        <HeroContainer>
+          <HeroBg>
+            <HeroBgAnimation />
+          </HeroBg>
+          <div style={{ 
+            color: "white", 
+            textAlign: "center", 
+            padding: "40px",
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}>
+            Profile data not available
+          </div>
+        </HeroContainer>
+      </div>
+    );
+  }
+
   return (
     <div id="about">
       <HeroContainer>
@@ -96,8 +122,9 @@ const Hero = () => {
               <Span>
                 <Typewriter
                   options={{
-                    strings: bioData.roles,
+                    strings: bioData.roles || [],
                     autoStart: true,
+                    loop: true,
                   }}
                 />
               </Span>

@@ -2,7 +2,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { Bio } from "../../data/constants";
 import {
   FooterContainer,
   FooterWrapper,
@@ -16,9 +15,11 @@ import {
   Copyright,
   ContactInfoText,
 } from "./FooterStyle";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 function Footer() {
   const currentYear = new Date().getFullYear();
+  const { bioData } = usePortfolio();
 
   return (
     <FooterContainer>
@@ -38,40 +39,46 @@ function Footer() {
         <ContactInfo>
           <ContactInfoText>
             Email:
-            <ContactInfos href={`mailto:${Bio.email}`}>{Bio.email}</ContactInfos>
+            <ContactInfos href={`mailto:${bioData.email}`}>
+              {bioData.email}
+            </ContactInfos>
           </ContactInfoText>
           <ContactInfoText>
             Phone:
-            <ContactInfos href={`tel:+91${Bio.phone}`}>
+            <ContactInfos href={`tel:+91${bioData.phone}`}>
               {" "}
-              +91 {Bio.phone}
+              +91 {bioData.phone}
             </ContactInfos>
           </ContactInfoText>
         </ContactInfo>
 
         <SocialMediaIcons>
           <SocialMediaIcon
-            href={Bio.facebook}
+            href={bioData.facebook}
             target="_blank"
             rel="noreferrer"
           >
             <FacebookIcon />
           </SocialMediaIcon>
           <SocialMediaIcon
-            href={Bio.twitter}
+            href={bioData.twitter}
             target="_blank"
             rel="noreferrer"
           >
             <TwitterIcon />
           </SocialMediaIcon>
           <SocialMediaIcon
-            href={Bio.linkedin}
+            href={bioData.linkedin}
             target="_blank"
             rel="noreferrer"
           >
             <LinkedInIcon />
           </SocialMediaIcon>
-          <SocialMediaIcon href={Bio.insta} target="_blank" rel="noreferrer">
+          <SocialMediaIcon
+            href={bioData.insta}
+            target="_blank"
+            rel="noreferrer"
+          >
             <InstagramIcon />
           </SocialMediaIcon>
         </SocialMediaIcons>
