@@ -3,6 +3,8 @@ import { Github, Linkedin, Twitter, Instagram, FileText } from "lucide-react";
 import HeroImg from "../Image/HeroImage.jpeg";
 import { useTypewriter } from "../hooks/useTypeWritter.jsx";
 import { usePortfolio } from "../context/PortfolioContext.jsx";
+import { useCallback, useState } from "react";
+import Preloader from "./ui/preloader.tsx";
 
 const BootScreen = ({
   bootAnimation,
@@ -10,6 +12,7 @@ const BootScreen = ({
   isShuttingDown = false,
   onContinue,
 }) => {
+  const [showPreloader, setShowPreloader] = useState(true);
   const { bioData, loading } = usePortfolio();
   const displayedRole = useTypewriter(
     bioData?.roles || [
@@ -21,9 +24,15 @@ const BootScreen = ({
     1500
   );
 
+  const handleComplete = useCallback(() => {
+    setShowPreloader(false)
+    onContinue()
+  }, []);
+
   return (
     <div className="h-screen w-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center text-white font-mono relative overflow-hidden">
-      <div className="absolute inset-0">
+      {showPreloader && <Preloader onComplete={handleComplete} />}
+      {/* <div className="absolute inset-0">
         {[
           ...Array(
             window.innerWidth < 768 ? 40 : window.innerWidth < 1024 ? 60 : 80
@@ -50,10 +59,10 @@ const BootScreen = ({
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Floating geometric shapes - Responsive count */}
-      <div className="absolute inset-0 pointer-events-none">
+      {/* <div className="absolute inset-0 pointer-events-none">
         {[...Array(window.innerWidth < 768 ? 3 : 6)].map((_, i) => (
           <div
             key={i}
@@ -74,16 +83,17 @@ const BootScreen = ({
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* Boot Screen Content */}
-      <div
+
+      {/* <div
         className={`text-center transition-all duration-1000 ${
           bootAnimation ? "-translate-y-full opacity-0" : ""
         } z-10 w-full max-w-xs sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8`}
       >
         {loading.bio ? (
-          /* Loading State */
+          //  Loading State
           <div className="space-y-4 sm:space-y-6">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto">
               <div className="w-full h-full border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
@@ -117,9 +127,9 @@ const BootScreen = ({
           </div>
         ) : !isShuttingDown ? (
           <div className="space-y-4 sm:space-y-6 md:space-y-8">
-            {/* Profile Section */}
+            // Profile Section
             <div className="flex flex-col items-center space-y-3 sm:space-y-4 md:space-y-6">
-              {/* Profile Image - Responsive sizing */}
+              // Profile Image - Responsive sizing
               <div className="relative">
                 <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 p-1 animate-pulse">
                   <img
@@ -130,20 +140,20 @@ const BootScreen = ({
                 </div>
               </div>
 
-              {/* Name and Title - Responsive typography */}
+              // Name and Title - Responsive typography
               <div className="space-y-2 sm:space-y-3 md:space-y-4">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent animate-pulse leading-tight">
                   {bioData?.name || "Loading..."}
                 </h1>
 
-                {/* Roles with typing animation effect - Responsive spacing */}
+                // Roles with typing animation effect - Responsive spacing
                 <div className="text-lg md:text-xl text-gray-300 min-h-[1.5em]">
                   <span className="text-green-400">{">"}</span> {displayedRole}
                   <span className="inline-block w-1 h-4 bg-green-400 animate-blink ml-1"></span>
                 </div>
               </div>
 
-              {/* Description - Responsive text and spacing */}
+              // Description - Responsive text and spacing
               <p
                 className="text-xs line-clamp-3 sm:text-sm md:text-base text-gray-400 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl leading-relaxed opacity-0 animate-fade-in px-2 sm:px-0"
                 style={{ animationDelay: "1s", animationFillMode: "forwards" }}
@@ -151,7 +161,7 @@ const BootScreen = ({
                 {bioData?.description || ""}
               </p>
 
-              {/* Social Links - Responsive sizing and spacing */}
+              // Social Links - Responsive sizing and spacing
               <div
                 className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 opacity-0 animate-fade-in"
                 style={{
@@ -212,7 +222,7 @@ const BootScreen = ({
               </div>
             </div>
 
-            {/* Continue Button - Responsive sizing */}
+            // Continue Button - Responsive sizing
             <div className="space-y-2 sm:space-y-3 md:space-y-4">
               <div
                 className="inline-block px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full cursor-pointer select-none transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 opacity-0 animate-fade-in"
@@ -243,7 +253,7 @@ const BootScreen = ({
             </div>
           </div>
         ) : (
-          /* Shutdown Screen - Responsive sizing */
+          //  Shutdown Screen - Responsive sizing
           <div className="space-y-3 sm:space-y-4 md:space-y-6">
             <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-red-400 to-orange-500 p-1 mx-auto">
               <img
@@ -264,15 +274,16 @@ const BootScreen = ({
           </div>
         )}
 
-        {/* System info - Responsive positioning and sizing */}
+        // System info - Responsive positioning and sizing
         <div className="mt-6 sm:mt-8 md:mt-12 text-xs opacity-30 space-y-1">
           <div>Abhijit OS v2.0.1</div>
           <div className="hidden sm:block">Built with React & Tailwind CSS</div>
         </div>
-      </div>
+      </div> */}
+
 
       {/* Enhanced Shutter Effect */}
-      <div
+      {/* <div
         className={`absolute inset-0 z-20 pointer-events-none ${
           shutterAnimation || isShuttingDown ? "" : "opacity-0"
         }`}
@@ -306,7 +317,7 @@ const BootScreen = ({
             shutterAnimation && !isShuttingDown ? "opacity-0" : "opacity-100"
           }`}
         ></div>
-        {/* Enhanced light rays */}
+        // Enhanced light rays
         <div
           className={`absolute inset-0 z-15 pointer-events-none transition-all duration-1500 ${
             shutterAnimation && !isShuttingDown ? "opacity-100" : "opacity-0"
@@ -318,9 +329,9 @@ const BootScreen = ({
             style={{ animationDelay: "0.5s" }}
           ></div>
         </div>
-      </div>
+      </div> */}
 
-      <style>{`
+      {/* <style>{`
         @keyframes fade-in {
           from {
             opacity: 0;
@@ -348,14 +359,14 @@ const BootScreen = ({
           animation: blink 1s step-end infinite;
         }
 
-        /* Mobile-specific optimizations */
+        // Mobile-specific optimizations
         @media (max-width: 640px) {
           .animate-fade-in {
             animation: fade-in 0.6s ease-out;
           }
         }
 
-        /* Reduce motion for users who prefer it */
+        // Reduce motion for users who prefer it
         @media (prefers-reduced-motion: reduce) {
           .animate-pulse,
           .animate-ping,
@@ -371,7 +382,7 @@ const BootScreen = ({
             transition: none;
           }
         }
-      `}</style>
+      `}</style> */}
     </div>
   );
 };
