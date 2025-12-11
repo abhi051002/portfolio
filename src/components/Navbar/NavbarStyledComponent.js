@@ -1,7 +1,8 @@
 import { Link as LinkR } from "react-router-dom";
 import styled from "styled-components";
 
-export const Nav = styled.div`
+/* FIXED: Nav should be semantic <nav>, not <div> */
+export const Nav = styled.nav`
   background-color: ${({ scrolled, theme }) =>
     scrolled ? "rgba(17, 17, 23, 0.85)" : theme.card_light};
   backdrop-filter: blur(10px);
@@ -17,6 +18,7 @@ export const Nav = styled.div`
   box-shadow: ${({ scrolled }) =>
     scrolled ? "0 2px 16px rgba(0, 0, 0, 0.5)" : "none"};
   transition: background-color 0.25s ease, box-shadow 0.25s ease;
+
   @media (max-width: 960px) {
     transition: 0.8s all ease;
   }
@@ -39,17 +41,19 @@ export const NavLogo = styled(LinkR)`
   justify-content: flex-start;
   align-items: center;
   text-decoration: none;
+
   @media (max-width: 640px) {
     padding: 0;
   }
 `;
 
-export const Span = styled.div`
+export const Span = styled.span`
   padding: 0 4px;
   font-weight: 700;
   font-size: 1.1rem;
 `;
 
+/* DESKTOP NAVIGATION */
 export const NavItems = styled.ul`
   display: flex;
   align-items: center;
@@ -63,6 +67,9 @@ export const NavItems = styled.ul`
   }
 `;
 
+export const NavItem = styled.li``;
+
+/* Navigation link */
 export const NavLink = styled.a`
   position: relative;
   color: ${({ theme }) => theme.text_primary};
@@ -130,6 +137,7 @@ export const ButtonContainer = styled.div`
   }
 `;
 
+/* MOBILE HAMBURGER ICON */
 export const MobileIcon = styled.div`
   display: none;
 
@@ -145,6 +153,7 @@ export const MobileIcon = styled.div`
   }
 `;
 
+/* MOBILE MENU DROPDOWN */
 export const MobileMenu = styled.div`
   display: flex;
   flex-direction: column;
@@ -165,6 +174,7 @@ export const MobileMenu = styled.div`
   z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
 `;
 
+/* MOBILE NAV LIST */
 export const MobileMenuItems = styled.ul`
   display: flex;
   flex-direction: column;
@@ -175,6 +185,9 @@ export const MobileMenuItems = styled.ul`
   width: 100%;
 `;
 
+export const MobileMenuItem = styled.li``;
+
+/* MOBILE LINK */
 export const MobileLink = styled.a`
   color: ${({ theme }) => theme.text_primary};
   font-weight: 500;
@@ -191,6 +204,7 @@ export const MobileLink = styled.a`
   }
 `;
 
+/* MOBILE BUTTON */
 export const MobileMenuButton = styled.a`
   border: 1.8px solid ${({ theme }) => theme.primary};
   justify-content: center;
@@ -217,6 +231,7 @@ export const MobileNavLogo = styled(LinkR)`
   justify-content: flex-start;
   align-items: center;
   text-decoration: none;
+
   @media (max-width: 640px) {
     padding: 0;
   }

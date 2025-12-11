@@ -10,9 +10,10 @@ import {
   ButtonContainer,
   MobileIcon,
   MobileMenu,
-  MobileLink,
   MobileMenuItems,
   MobileMenuButton,
+  MobileLink,
+  MobileMenuItem,
 } from "./NavbarStyledComponent";
 
 import { FaBars } from "react-icons/fa";
@@ -21,34 +22,24 @@ import { usePortfolio } from "../../context/PortfolioContext";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const { bioData } = usePortfolio();
 
   useEffect(() => {
     const handleScroll = () => {
-      // You can adjust this value based on when you want the navbar to change
-      const isScrolled = window.scrollY > 80;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
+      setScrolled(window.scrollY > 80);
     };
-
     window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    // Clean up the event listener when component unmounts
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [scrolled]);
+  const handleMenuClose = () => setIsOpen(false);
 
   return (
     <Nav scrolled={scrolled}>
       <NavbarContainer>
         <NavLogo
           to="/"
-          onClick={() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           <div
             style={{
@@ -67,75 +58,68 @@ const Navbar = () => {
             <div className="logos">{">"}</div>
           </div>
         </NavLogo>
+
         <MobileIcon>
-          <FaBars
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          />
+          <FaBars onClick={() => setIsOpen(!isOpen)} />
         </MobileIcon>
+
         <NavItems>
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#skills">Skills</NavLink>
-          <NavLink href="#apps">Apps</NavLink>
-          <NavLink href="#experience">Work Experience</NavLink>
-          <NavLink href="#articles">Articles at Medium</NavLink>
+          <li>
+            <NavLink href="#about">About</NavLink>
+          </li>
+          <li>
+            <NavLink href="#skills">Skills</NavLink>
+          </li>
+          <li>
+            <NavLink href="#apps">Apps</NavLink>
+          </li>
+          <li>
+            <NavLink href="#experience">Experience</NavLink>
+          </li>
+          <li>
+            <NavLink href="#articles">Articles</NavLink>
+          </li>
         </NavItems>
+
         <ButtonContainer>
           <GitHubButton href={bioData.github} target="_blank">
             Github Profile
           </GitHubButton>
         </ButtonContainer>
-        {isOpen && (
-          <MobileMenu isOpen={isOpen}>
-            <MobileMenuItems>
-              <MobileLink href="#about" onClick={() => setIsOpen(false)}>
+
+        <MobileMenu isOpen={isOpen}>
+          <MobileMenuItems>
+            <MobileMenuItem>
+              <MobileLink href="#about" onClick={handleMenuClose}>
                 About
               </MobileLink>
-              <MobileLink href="#skills" onClick={() => setIsOpen(false)}>
+            </MobileMenuItem>
+            <MobileMenuItem>
+              <MobileLink href="#skills" onClick={handleMenuClose}>
                 Skills
               </MobileLink>
-              <MobileLink href="#experience" onClick={() => setIsOpen(false)}>
-                Experience
-              </MobileLink>
-              <MobileLink href="#apps" onClick={() => setIsOpen(false)}>
+            </MobileMenuItem>
+            <MobileMenuItem>
+              <MobileLink href="#apps" onClick={handleMenuClose}>
                 Apps
               </MobileLink>
-              <MobileLink href="#articles" onClick={() => setIsOpen(false)}>
-                Articles
-              </MobileLink>
-            </MobileMenuItems>
-
-            <MobileMenuButton href={bioData.github} target="_blank">
-              Github Profile
-            </MobileMenuButton>
-          </MobileMenu>
-        )}
-        {isOpen && (
-          <MobileMenu isOpen={isOpen}>
-            <MobileMenuItems>
-              <MobileLink href="#about" onClick={() => setIsOpen(false)}>
-                About
-              </MobileLink>
-              <MobileLink href="#skills" onClick={() => setIsOpen(false)}>
-                Skills
-              </MobileLink>
-              <MobileLink href="#apps" onClick={() => setIsOpen(false)}>
-                Apps
-              </MobileLink>
-              <MobileLink href="#experience" onClick={() => setIsOpen(false)}>
+            </MobileMenuItem>
+            <MobileMenuItem>
+              <MobileLink href="#experience" onClick={handleMenuClose}>
                 Experience
               </MobileLink>
-              <MobileLink href="#articles" onClick={() => setIsOpen(false)}>
+            </MobileMenuItem>
+            <MobileMenuItem>
+              <MobileLink href="#articles" onClick={handleMenuClose}>
                 Articles
               </MobileLink>
-            </MobileMenuItems>
+            </MobileMenuItem>
+          </MobileMenuItems>
 
-            <MobileMenuButton href={bioData.github} target="_blank">
-              Github Profile
-            </MobileMenuButton>
-          </MobileMenu>
-        )}
+          <MobileMenuButton href={bioData.github} target="_blank">
+            Github Profile
+          </MobileMenuButton>
+        </MobileMenu>
       </NavbarContainer>
     </Nav>
   );

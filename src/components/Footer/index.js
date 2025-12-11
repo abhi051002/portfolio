@@ -14,6 +14,7 @@ import {
   SocialMediaIcons,
   Copyright,
   ContactInfoText,
+  NavList,
 } from "./FooterStyle";
 import { usePortfolio } from "../../context/PortfolioContext";
 
@@ -27,13 +28,15 @@ function Footer() {
         <Logo>Abhijit Nanda</Logo>
 
         <Nav>
-          <NavLink href="#about">About</NavLink>
-          <NavLink href="#skills">Skills</NavLink>
-          <NavLink href="#apps">Apps</NavLink>
-          <NavLink href="#experience">Work Experience</NavLink>
-          <NavLink href="#articles">Articles at Medium</NavLink>
-          <NavLink href="#education">Education</NavLink>
-          <NavLink href="#contact">Contact</NavLink>
+          <NavList>
+            <NavLink href="#about">About</NavLink>
+            <NavLink href="#skills">Skills</NavLink>
+            <NavLink href="#apps">Apps</NavLink>
+            <NavLink href="#experience">Work Experience</NavLink>
+            <NavLink href="#articles">Articles at Medium</NavLink>
+            <NavLink href="#education">Education</NavLink>
+            <NavLink href="#contact">Contact</NavLink>
+          </NavList>
         </Nav>
 
         <ContactInfo>

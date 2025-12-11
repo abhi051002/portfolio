@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
+/* Footer Container (wrapper around footer) */
 export const FooterContainer = styled.div`
   width: 100%;
   padding: 2.5rem 0 2rem;
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.bg};
-  margin-top : -1px;
+  margin-top: -1px;
 `;
 
-
+/* The actual <footer> semantic tag */
 export const FooterWrapper = styled.footer`
   width: 100%;
   max-width: 1200px;
@@ -22,6 +23,7 @@ export const FooterWrapper = styled.footer`
   text-align: center;
 `;
 
+/* Site name (leave as h1 for identity) */
 export const Logo = styled.h1`
   font-weight: 600;
   font-size: 1.6rem;
@@ -35,20 +37,29 @@ export const Logo = styled.h1`
   }
 `;
 
+/* Navigation list for SEO + accessibility */
 export const Nav = styled.nav`
   width: 100%;
   max-width: 800px;
   margin-top: 0.5rem;
+`;
+
+export const NavList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 1.4rem;
   justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
   @media (max-width: 768px) {
     gap: 0.75rem;
     font-size: 0.9rem;
   }
 `;
+
+export const NavItem = styled.li``;
 
 export const NavLink = styled.a`
   position: relative;
@@ -81,12 +92,49 @@ export const NavLink = styled.a`
   }
 `;
 
-export const SocialMediaIcons = styled.div`
+/* Contact Info Section */
+export const ContactInfo = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+`;
+
+/* FIX: This should be a <p>, not a raw div */
+export const ContactInfoText = styled.p`
+  font-size: 1rem;
+  margin: 0;
+`;
+
+export const ContactInfos = styled.a`
+  margin-left: 0.35rem;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.text_primary};
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+`;
+
+/* Social Icons arranged as list for semantics */
+export const SocialMediaIcons = styled.ul`
   display: flex;
   margin-top: 1rem;
   gap: 1.2rem;
   justify-content: center;
   align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 `;
 
 export const SocialMediaIcon = styled.a`
@@ -104,36 +152,7 @@ export const SocialMediaIcon = styled.a`
   }
 `;
 
-export const ContactInfo = styled.div`
-  display: flex;
-  margin-top: 1rem;
-  gap: 1.5rem;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-`;
-
-export const ContactInfos = styled.a`
-  margin-left: 0.35rem;
-  font-size: 1rem;
-  color: ${({ theme }) => theme.text_primary};
-  text-decoration: none;
-  transition: color 0.2s ease-in-out;
-
-  &:hover {
-    color: ${({ theme }) => theme.primary};
-  }
-`;
-
-export const ContactInfoText = styled.div`
-  font-size: 1rem;
-`;
-
+/* Copyright remains <p> */
 export const Copyright = styled.p`
   margin-top: 1.3rem;
   font-size: 0.85rem;

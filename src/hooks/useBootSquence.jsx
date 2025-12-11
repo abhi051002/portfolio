@@ -21,10 +21,10 @@ export const useBootSequence = () => {
       setBootAnimation(true);
       setTimeout(() => {
         setShutterAnimation(true);
-      }, 800);
+      }, 100);
       setTimeout(() => {
         setShowBootScreen(false);
-      }, 2800);
+      }, 200);
     }
   }, [showBootScreen, bootAnimation, isShuttingDown]);
 

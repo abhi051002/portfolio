@@ -33,12 +33,14 @@ export const StyledWrapper = styled.div`
 `;
 export const Wrapper = motion.create(StyledWrapper);
 
-export const StyledTitle = styled.div`
+/* FIXED: Should be <h2> */
+export const StyledTitle = styled.h2`
   font-size: 42px;
   text-align: center;
   font-weight: 600;
   margin-top: 20px;
   color: ${({ theme }) => theme.text_primary};
+
   @media (max-width: 768px) {
     margin-top: 12px;
     font-size: 32px;
@@ -46,11 +48,13 @@ export const StyledTitle = styled.div`
 `;
 export const Title = motion.create(StyledTitle);
 
-export const StyledDescription = styled.div`
+/* FIXED: Should be <p> */
+export const StyledDescription = styled.p`
   font-size: 18px;
   text-align: center;
   max-width: 600px;
   color: ${({ theme }) => theme.text_secondary};
+
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -69,7 +73,7 @@ export const StyledTimelineSection = styled.div`
 `;
 export const TimelineSection = motion.create(StyledTimelineSection);
 
-// Custom styled timeline components
+// Timeline styling
 export const StyledTimeline = styled(Timeline)`
   .MuiTimelineItem-root::before {
     flex: 0;

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+/* Modal overlay */
 export const Container = styled.div`
   width: 100%;
   height: 100%;
@@ -14,7 +15,8 @@ export const Container = styled.div`
   transition: all 0.5s ease;
 `;
 
-export const Wrapper = styled.div`
+/* Modal wrapper */
+export const Wrapper = styled.article`
   max-width: 800px;
   width: 100%;
   border-radius: 16px;
@@ -26,35 +28,40 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* Added to contain the bookmark */
+  overflow: hidden;
 `;
 
-export const Title = styled.div`
+/* FIXED: Should be a heading */
+export const Title = styled.h2`
   font-size: 28px;
   font-weight: 600;
   color: ${({ theme }) => theme.text_primary};
   margin: 8px 6px 0px 6px;
+
   @media only screen and (max-width: 600px) {
     font-size: 24px;
     margin: 6px 6px 0px 6px;
   }
 `;
 
-export const Date = styled.div`
+/* FIXED: This is metadata → use <time> */
+export const Date = styled.time`
   font-size: 16px;
   margin: 2px 6px;
   font-weight: 400;
   color: ${({ theme }) => theme.text_secondary};
+
   @media only screen and (max-width: 768px) {
     font-size: 12px;
   }
 `;
 
-export const Desc = styled.div`
+export const Desc = styled.p`
   font-size: 16px;
   font-weight: 400;
   color: ${({ theme }) => theme.text_primary};
   margin: 8px 6px;
+
   @media only screen and (max-width: 600px) {
     font-size: 14px;
     margin: 6px 6px;
@@ -69,27 +76,33 @@ export const Image = styled.img`
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
 `;
 
-export const Label = styled.div`
+/* FIXED: Should be a heading inside section */
+export const Label = styled.h3`
   font-size: 20px;
   font-weight: 600;
   color: ${({ theme }) => theme.text_primary};
   margin: 8px 6px;
+
   @media only screen and (max-width: 600px) {
     font-size: 16px;
     margin: 8px 6px;
   }
 `;
 
-export const Tags = styled.div`
+/* FIXED: This is a list of tags */
+export const Tags = styled.ul`
   display: flex;
   flex-wrap: wrap;
   margin: 8px 0px;
+  padding: 0;
+  list-style: none;
+
   @media only screen and (max-width: 600px) {
     margin: 4px 0px;
   }
 `;
 
-export const Tag = styled.div`
+export const Tag = styled.li`
   font-size: 14px;
   font-weight: 400;
   color: ${({ theme }) => theme.primary};
@@ -97,23 +110,29 @@ export const Tag = styled.div`
   padding: 4px 8px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.primary + 20};
+
   @media only screen and (max-width: 600px) {
     font-size: 12px;
   }
 `;
 
-export const Members = styled.div`
+/* FIXED: Members list should be UL */
+export const Members = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 6px;
   flex-wrap: wrap;
   margin: 12px 6px;
+  padding: 0;
+  list-style: none;
+
   @media only screen and (max-width: 600px) {
     margin: 4px 6px;
   }
 `;
 
-export const Member = styled.div`
+/* FIXED: Member item = <li> */
+export const Member = styled.li`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -126,17 +145,19 @@ export const MemberImage = styled.img`
   border-radius: 50%;
   margin-bottom: 4px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+
   @media only screen and (max-width: 600px) {
     width: 32px;
     height: 32px;
   }
 `;
 
-export const MemberName = styled.div`
+export const MemberName = styled.p`
   font-size: 16px;
   font-weight: 500;
   width: 200px;
   color: ${({ theme }) => theme.text_primary};
+
   @media only screen and (max-width: 600px) {
     font-size: 14px;
   }
@@ -158,27 +179,27 @@ export const Button = styled.a`
   padding: 12px 16px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.primary};
+
   ${({ dull, theme }) =>
     dull &&
     `
         background-color: ${theme.bgLight};
         color: ${theme.text_secondary};
-        &:hover {
-            background-color: ${({ theme }) => theme.bg + 99};
-        }
     `}
+
   cursor: pointer;
   text-decoration: none;
   transition: all 0.5s ease;
+
   &:hover {
     background-color: ${({ theme }) => theme.primary + 99};
   }
+
   @media only screen and (max-width: 600px) {
     font-size: 12px;
   }
 `;
 
-// Not deployed notification
 export const NotDeployedNotice = styled.div`
   background-color: ${({ theme }) => theme.primary + 20};
   color: ${({ theme }) => theme.primary};
