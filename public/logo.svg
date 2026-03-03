@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" shape-rendering="geometricPrecision">
+  <defs>
+    <!-- Main gradient: cyan to violet to magenta -->
+    <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#00F5FF"/>
+      <stop offset="50%"  stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#FF2D78"/>
+    </linearGradient>
+
+    <!-- Glow gradient for hex border -->
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#00F5FF" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#A855F7" stop-opacity="0.9"/>
+    </linearGradient>
+
+    <!-- Inner glow filter -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Strong outer glow -->
+    <filter id="outerGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip to hexagon -->
+    <clipPath id="hexClip">
+      <polygon points="100,15 172,57.5 172,142.5 100,185 28,142.5 28,57.5"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="200" height="200" fill="#060610" rx="20"/>
+
+  <!-- Dark hex fill -->
+  <polygon
+    points="100,15 172,57.5 172,142.5 100,185 28,142.5 28,57.5"
+    fill="#0A0A1A"
+  />
+
+  <!-- Hex border glow (thick) -->
+  <polygon
+    points="100,15 172,57.5 172,142.5 100,185 28,142.5 28,57.5"
+    fill="none"
+    stroke="url(#hexGrad)"
+    stroke-width="2.5"
+    filter="url(#outerGlow)"
+  />
+
+  <!-- Hex border crisp -->
+  <polygon
+    points="100,15 172,57.5 172,142.5 100,185 28,142.5 28,57.5"
+    fill="none"
+    stroke="url(#hexGrad)"
+    stroke-width="1.5"
+  />
+
+  <!-- Corner accent dots on hex vertices -->
+  <circle cx="100" cy="15"  r="2.5" fill="#00F5FF" filter="url(#glow)"/>
+  <circle cx="172" cy="57.5"  r="2.5" fill="#A855F7" filter="url(#glow)"/>
+  <circle cx="172" cy="142.5" r="2.5" fill="#FF2D78" filter="url(#glow)"/>
+  <circle cx="100" cy="185" r="2.5" fill="#FF2D78" filter="url(#glow)"/>
+  <circle cx="28"  cy="142.5" r="2.5" fill="#A855F7" filter="url(#glow)"/>
+  <circle cx="28"  cy="57.5"  r="2.5" fill="#00F5FF" filter="url(#glow)"/>
+
+  <!-- ======= "AN" Monogram ======= -->
+  <!--
+    "A": left half of the monogram
+    Left leg: (62,148) -> (85,60)
+    Right leg: (85,60) -> (108,148)
+    Crossbar: (70,110) -> (100,110)
+
+    "N": right half, sharing the left stroke with A's right leg
+    Left leg: (108,148) -> (108,60)
+    Diagonal: (108,60) -> (138,148)
+    Right leg: (138,148) -> (138,60)
+  -->
+
+  <!-- Glow pass (blurred behind the strokes) -->
+  <g filter="url(#outerGlow)" opacity="0.6">
+    <!-- A left leg -->
+    <line x1="62" y1="148" x2="85" y2="62" stroke="#00F5FF" stroke-width="7" stroke-linecap="round"/>
+    <!-- A right leg -->
+    <line x1="85" y1="62" x2="108" y2="148" stroke="#A855F7" stroke-width="7" stroke-linecap="round"/>
+    <!-- A crossbar -->
+    <line x1="70" y1="112" x2="100" y2="112" stroke="#00F5FF" stroke-width="5" stroke-linecap="round"/>
+    <!-- N left leg (shared with A right leg top) -->
+    <line x1="108" y1="62" x2="108" y2="148" stroke="#A855F7" stroke-width="7" stroke-linecap="round"/>
+    <!-- N diagonal -->
+    <line x1="108" y1="62" x2="138" y2="148" stroke="#FF2D78" stroke-width="7" stroke-linecap="round"/>
+    <!-- N right leg -->
+    <line x1="138" y1="62" x2="138" y2="148" stroke="#FF2D78" stroke-width="7" stroke-linecap="round"/>
+  </g>
+
+  <!-- Crisp strokes with gradient fill -->
+  <g filter="url(#glow)">
+    <!-- A left leg -->
+    <line x1="62" y1="148" x2="85" y2="62" stroke="url(#mainGrad)" stroke-width="5" stroke-linecap="round"/>
+    <!-- A right leg / N left leg (shared stroke for seamless join) -->
+    <line x1="85" y1="62" x2="108" y2="148" stroke="url(#mainGrad)" stroke-width="5" stroke-linecap="round"/>
+    <!-- A crossbar -->
+    <line x1="70" y1="112" x2="100" y2="112" stroke="#00F5FF" stroke-width="3.5" stroke-linecap="round"/>
+    <!-- N left vertical -->
+    <line x1="108" y1="62" x2="108" y2="148" stroke="url(#mainGrad)" stroke-width="5" stroke-linecap="round"/>
+    <!-- N diagonal -->
+    <line x1="108" y1="62" x2="138" y2="148" stroke="url(#mainGrad)" stroke-width="5" stroke-linecap="round"/>
+    <!-- N right vertical -->
+    <line x1="138" y1="62" x2="138" y2="148" stroke="url(#mainGrad)" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Tiny spark particles -->
+  <circle cx="55"  cy="45"  r="1.2" fill="#00F5FF" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="150" cy="160" r="1"   fill="#FF2D78" opacity="0.7" filter="url(#glow)"/>
+  <circle cx="160" cy="50"  r="0.8" fill="#A855F7" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="42"  cy="155" r="1"   fill="#A855F7" opacity="0.6" filter="url(#glow)"/>
+</svg>

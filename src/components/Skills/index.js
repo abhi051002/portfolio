@@ -1,17 +1,5 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  Container,
-  Wrapper,
-  Title,
-  Description,
-  SkillsContainer,
-  Skill,
-  SkillTitle,
-  SkillList,
-  SkillItem,
-  SkillImage,
-} from "./SkillsStyle";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
 
@@ -20,125 +8,79 @@ const Skills = () => {
   const totalYears = localStorage.getItem("totalYearofExperience");
 
   useEffect(() => {
-    if (skills.length === 0) {
-      fetchSkills();
-    }
-  }, [skills.length,fetchSkills]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const skillVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { scale: 0.8, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-      },
-    },
-  };
+    if (skills.length === 0) fetchSkills();
+  }, [skills.length, fetchSkills]);
 
   return (
-    <Container id="skills">
-      <Wrapper>
+    <section id="skills" className="py-20 px-4 relative">
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-violet-950/10 via-transparent to-transparent pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="text-center mb-12"
         >
-          <Title>Skills</Title>
-          <Description>
-            {`Here are some of my skills on which I have been working on for the
-          past ${totalYears} years`}
-          </Description>
+          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+            My <span className="gradient-text">Skills</span>
+          </h2>
+          <p className="text-slate-400 text-base max-w-lg mx-auto">
+            {totalYears
+              ? `Technologies I've worked with over the past ${totalYears} years`
+              : "Technology stack I work with"}
+          </p>
+          <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
         </motion.div>
 
         {loading.skills ? (
           <Loader text="Loading skills..." size="60px" minHeight="400px" />
-        ) : (
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            style={{ width: "100%" }}
-          >
-            <SkillsContainer>
-              {skills && skills.length > 0 ? (
-                skills.map((item, index) => {
-                  return (
-                    <Skill
-                      key={index}
-                      variants={skillVariants}
-                      whileHover={{
-                        scale: 1.05,
-                        boxShadow: "rgba(23, 92, 230, 0.25) 0px 4px 24px",
-                      }}
-                    >
-                      <SkillTitle>{item.title || item.name}</SkillTitle>
-                      <SkillList>
-                        {item.items &&
-                          item.items.map((skill, indexs) => {
-                            return (
-                              <SkillItem
-                                key={indexs}
-                                variants={itemVariants}
-                                whileHover={{
-                                  scale: 1.05,
-                                  color: "#854CE6",
-                                  borderColor: "#854CE6",
-                                  transition: { duration: 0.2 },
-                                }}
-                              >
-                                <SkillImage src={skill.image} />
-                                {skill.name}
-                              </SkillItem>
-                            );
-                          })}
-                      </SkillList>
-                    </Skill>
-                  );
-                })
-              ) : (
-                <div
-                  style={{
-                    color: "white",
-                    fontSize: "18px",
-                    textAlign: "center",
-                    padding: "40px",
-                  }}
-                >
-                  No skills found
+        ) : skills && skills.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            {skills.map((category, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+                className="glass rounded-2xl p-6 hover:border-violet-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10"
+              >
+                <h3 className="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-violet-500 rounded-full" />
+                  {category.title || category.name}
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {category.items &&
+                    category.items.map((skill, i) => (
+                      <motion.div
+                        key={i}
+                        whileHover={{ scale: 1.08, y: -2 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex items-center gap-2 px-3 py-2 bg-white/5 hover:bg-violet-600/20 border border-white/8 hover:border-violet-500/40 rounded-xl text-sm text-slate-300 hover:text-white transition-all duration-200 cursor-default"
+                      >
+                        <img
+                          src={skill.image}
+                          alt={skill.name}
+                          className="w-5 h-5 object-contain"
+                          onError={(e) => { e.target.style.display = "none"; }}
+                        />
+                        <span>{skill.name}</span>
+                      </motion.div>
+                    ))}
                 </div>
-              )}
-            </SkillsContainer>
-          </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-slate-400 text-center py-10">No skills found</p>
         )}
-      </Wrapper>
-    </Container>
+      </div>
+    </section>
   );
 };
 

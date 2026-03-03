@@ -1,119 +1,145 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineContent from "@mui/lab/TimelineContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import ExperienceCard from "../Cards/Experiencecard";
-import {
-  Container,
-  Wrapper,
-  Title,
-  Description,
-  TimelineSection,
-} from "./ExperienceStyle";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
+
+const formatDate = (input) => {
+  if (!input) return "Present";
+  const parts = input.split("/");
+  if (parts.length < 3) return input;
+  const [, month, year] = parts;
+  return new Date(`${month}/01/${year}`).toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric",
+  });
+};
+
+const getDuration = (start, end) => {
+  if (!end) {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const yyyy = today.getFullYear();
+    end = `${dd}/${mm}/${yyyy}`;
+  }
+  const [, sm, sy] = start.split("/").map(Number);
+  const [, em, ey] = end.split("/").map(Number);
+  const totalMonths = (ey - sy) * 12 + (em - sm) + 1;
+  if (totalMonths < 12) return `${totalMonths}m`;
+  const years = Math.floor(totalMonths / 12);
+  const rem = totalMonths % 12;
+  return rem === 0 ? `${years}y` : `${years}y ${rem}m`;
+};
 
 const Experience = () => {
   const { experiences, loading, fetchExperiences } = usePortfolio();
 
   useEffect(() => {
-    if (experiences.length === 0) {
-      fetchExperiences();
-    }
-  }, [experiences.length,fetchExperiences]);
-
-  const getTimelineVariants = (index) => {
-    const isEven = index % 2 === 0;
-    return {
-      hidden: {
-        x: isEven ? -50 : 50,
-        opacity: 0,
-      },
-      visible: {
-        x: 0,
-        opacity: 1,
-        transition: {
-          type: "spring",
-          stiffness: 100,
-          damping: 12,
-          delay: index * 0.1,
-        },
-      },
-    };
-  };
-
-  const MotionTimelineConnector = motion.create(TimelineConnector);
+    if (experiences.length === 0) fetchExperiences();
+  }, [experiences.length, fetchExperiences]);
 
   return (
-    <Container id="experience">
-      <Wrapper>
+    <section id="experience" className="py-20 px-4 relative">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/5 to-transparent pointer-events-none" />
+
+      <div className="max-w-4xl mx-auto relative z-10">
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="text-center mb-14"
         >
-          <Title>Experience</Title>
-          <Description>Here are some of my Experience</Description>
+          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+            Work <span className="gradient-text">Experience</span>
+          </h2>
+          <p className="text-slate-400 text-base">My professional journey so far</p>
+          <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
         </motion.div>
 
         {loading.experiences ? (
-          <Loader text="Loading experiences..." size="60px" minHeight="400px" />
-        ) : (
-          <TimelineSection>
-            <Timeline>
-              {experiences && experiences.length > 0 ? (
-                experiences.map((experience, index) => (
+          <Loader text="Loading experience..." size="60px" minHeight="400px" />
+        ) : experiences && experiences.length > 0 ? (
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/80 via-violet-500/30 to-transparent hidden sm:block" />
+
+            <div className="flex flex-col gap-8">
+              {experiences.map((exp, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="relative flex gap-6 sm:pl-16"
+                >
+                  {/* Timeline dot */}
+                  <div className="hidden sm:flex absolute left-0 top-6 w-12 justify-center">
+                    <div className="w-3 h-3 rounded-full bg-violet-500 border-2 border-violet-300 shadow-lg shadow-violet-500/50 mt-0.5" />
+                  </div>
+
+                  {/* Card */}
                   <motion.div
-                    key={index}
-                    variants={getTimelineVariants(index)}
-                    initial="hidden"
-                    animate="visible"
-                    custom={index}
+                    whileHover={{ scale: 1.01, translateY: -2 }}
+                    className="glass rounded-2xl p-5 sm:p-6 w-full hover:border-violet-500/30 hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300"
                   >
-                    <TimelineItem>
-                      <TimelineSeparator>
-                        <motion.div
-                          whileHover={{ scale: 1.2 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <TimelineDot variant="outlined" color="secondary" />
-                        </motion.div>
-                        {index !== experiences.length - 1 && (
-                          <MotionTimelineConnector
-                            initial={{ height: 0 }}
-                            animate={{ height: "100%" }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                          />
+                    <div className="flex items-start gap-4">
+                      {/* Company logo */}
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-black/40 border border-white/10">
+                        <img
+                          src={exp.img}
+                          alt={exp.company}
+                          className="w-full h-full object-cover"
+                          onError={(e) => { e.target.style.display = "none"; }}
+                        />
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
+                          <h3 className="text-white font-bold text-base sm:text-lg">{exp.role}</h3>
+                          <span className="text-xs text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full whitespace-nowrap">
+                            {getDuration(exp.startDate, exp.present ? null : exp.endDate)}
+                          </span>
+                        </div>
+                        <p className="text-violet-400 font-semibold text-sm mb-0.5">{exp.company}</p>
+                        <p className="text-slate-500 text-xs mb-3">
+                          {formatDate(exp.startDate)} – {exp.present ? "Present" : formatDate(exp.endDate)}
+                          {exp.present && (
+                            <span className="ml-2 text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
+                              Current
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-slate-400 text-sm leading-relaxed mb-4">{exp.desc}</p>
+
+                        {/* Skills */}
+                        {exp.skills && exp.skills.length > 0 && (
+                          <div className="flex flex-wrap gap-2">
+                            {exp.skills.map((skill, si) => (
+                              <span
+                                key={si}
+                                className="text-xs px-2.5 py-1 bg-white/5 border border-white/10 text-slate-300 rounded-lg hover:border-violet-500/40 hover:text-violet-300 transition-colors"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
                         )}
-                      </TimelineSeparator>
-                      <TimelineContent sx={{ py: "12px", px: 2 }}>
-                        <motion.div
-                          whileHover={{
-                            scale: 1.02,
-                            boxShadow: "0px 5px 15px rgba(133, 76, 230, 0.2)",
-                          }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <ExperienceCard experience={experience} />
-                        </motion.div>
-                      </TimelineContent>
-                    </TimelineItem>
+                      </div>
+                    </div>
                   </motion.div>
-                ))
-              ) : (
-                <div style={{ color: "white", textAlign: "center", padding: "40px" }}>
-                  No experiences found
-                </div>
-              )}
-            </Timeline>
-          </TimelineSection>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <p className="text-slate-400 text-center py-10">No experience found</p>
         )}
-      </Wrapper>
-    </Container>
+      </div>
+    </section>
   );
 };
 
