@@ -20,10 +20,10 @@ const Contact = () => {
     setError(false);
     try {
       await emailjs.sendForm(
-        "service_7m4717z",
-        "template_3unam1p",
+        process.env.REACT_APP_EMAILJS_SERVICE_ID,
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID,
         form.current,
-        "Jw5dTq5t3-l10LMrF"
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY
       );
       setOpen(true);
       form.current.reset();
