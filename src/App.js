@@ -11,13 +11,17 @@ import Footer from "./components/Footer";
 import ProjectDetails from "./components/ProjectDetails";
 import { useState } from "react";
 import Article from "./components/Article";
+import MouseBackground from "./components/MouseBackground";
 
 function App() {
   const [openModal, setOpenModal] = useState({ state: false, project: null });
 
   return (
     <Router>
-      <div className="bg-[#030712] w-full overflow-x-hidden min-h-screen">
+      {/* Fixed full-page mouse-reactive background */}
+      <MouseBackground />
+
+      <div className="bg-transparent w-full overflow-x-hidden min-h-screen" style={{ position: "relative", zIndex: 1 }}>
         <Navbar />
         <Hero />
         <Skills />
