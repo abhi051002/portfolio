@@ -73,6 +73,8 @@ const BOOT_LINES = [
   "> All systems nominal. Launching 🚀",
 ];
 
+const TOTAL_CHARS = BOOT_LINES.reduce((sum, line) => sum + line.length, 0);
+
 const NAME_CHARS = "ABHIJIT NANDA".split("");
 
 // ─── Main Preloader ───────────────────────────────────────────────────────────
@@ -100,15 +102,20 @@ export default function Preloader({ onComplete }) {
   const startTyping = () => {
     let li = 0;
     let ci = 0;
+    let totalTyped = 0;
     const SPEED = 28;
 
     const tick = () => {
       if (li >= BOOT_LINES.length) {
+        setProgress(100);
         setTypedDone(true);
         return;
       }
       const line = BOOT_LINES[li];
       ci++;
+      totalTyped++;
+      // Update progress based on how many characters have been typed
+      setProgress(Math.round((totalTyped / TOTAL_CHARS) * 100));
       setTypedLines((prev) => {
         const next = [...prev];
         next[li] = line.slice(0, ci);
@@ -126,18 +133,6 @@ export default function Preloader({ onComplete }) {
   };
 
   const tickRef = useRef(null);
-
-  // Progress bar ticker
-  useEffect(() => {
-    if (!showBar) return;
-    let v = 0;
-    const id = setInterval(() => {
-      v += Math.random() * 4 + 1.5;
-      if (v >= 100) { v = 100; clearInterval(id); }
-      setProgress(Math.round(Math.min(v, 100)));
-    }, 60);
-    return () => clearInterval(id);
-  }, [showBar]);
 
   // Exit when both typing and progress done
   useEffect(() => {
