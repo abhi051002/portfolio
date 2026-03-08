@@ -254,7 +254,6 @@ const HeroBgAnimation = () => {
       }
     }
 
-    let prevSpeedX = 0, prevSpeedY = 0;
     const spawnSparks = () => {
       const speed = Math.sqrt(mouse.vx ** 2 + mouse.vy ** 2);
       if (speed > 6 && mouse.x !== -9999) {
