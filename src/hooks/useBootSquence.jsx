@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 
+const BOOT_KEY = "bootCompleted";
+
 export const useBootSequence = () => {
-  const [showBootScreen, setShowBootScreen] = useState(true);
+  // Skip boot screen if already shown this session
+  const alreadyBooted = sessionStorage.getItem(BOOT_KEY) === "true";
+
+  const [showBootScreen, setShowBootScreen] = useState(!alreadyBooted);
   const [bootAnimation, setBootAnimation] = useState(false);
   const [shutterAnimation, setShutterAnimation] = useState(false);
   const [loadingText, setLoadingText] = useState("Initializing system...");
@@ -24,6 +29,8 @@ export const useBootSequence = () => {
       }, 100);
       setTimeout(() => {
         setShowBootScreen(false);
+        // Mark boot as completed for this session
+        sessionStorage.setItem(BOOT_KEY, "true");
       }, 200);
     }
   }, [showBootScreen, bootAnimation, isShuttingDown]);

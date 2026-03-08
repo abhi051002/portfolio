@@ -6,6 +6,10 @@ import {
   FaEnvelope, FaPhone, FaMapMarkerAlt,
   FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaPaperPlane
 } from "react-icons/fa";
+import {
+  SectionHeading,
+  ScrollReveal,
+} from "../ui/ScrollReveal";
 
 const Contact = () => {
   const [open, setOpen] = useState(false);
@@ -51,31 +55,15 @@ const Contact = () => {
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
-            Get In <span className="gradient-text">Touch</span>
-          </h2>
-          <p className="text-slate-400 text-base max-w-lg mx-auto">
-            Feel free to reach out for opportunities, collaborations or just a chat!
-          </p>
-          <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
-        </motion.div>
+        <SectionHeading
+          title="Get In"
+          highlight="Touch"
+          subtitle="Feel free to reach out for opportunities, collaborations or just a chat!"
+        />
 
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Left: Contact info */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-2 flex flex-col gap-5"
-          >
+          <ScrollReveal preset="slide-left" className="lg:col-span-2 flex flex-col gap-5">
             <div className="glass rounded-2xl p-6">
               <h3 className="text-white font-bold text-lg mb-5">Contact Info</h3>
               <div className="flex flex-col gap-4">
@@ -136,16 +124,10 @@ const Contact = () => {
                 </div>
               </div>
             )}
-          </motion.div>
+          </ScrollReveal>
 
           {/* Right: Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="lg:col-span-3"
-          >
+          <ScrollReveal preset="slide-right" delay={0.1} className="lg:col-span-3">
             <div className="glass rounded-2xl p-6 sm:p-8">
               <h3 className="text-white font-bold text-lg mb-6 flex items-center gap-2">
                 <FaPaperPlane className="text-violet-400" size={18} /> Send a Message 🚀
@@ -239,7 +221,7 @@ const Contact = () => {
                 )}
               </form>
             </div>
-          </motion.div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

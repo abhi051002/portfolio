@@ -17,7 +17,7 @@ const Hero = () => {
 
   if (loading.bio) {
     return (
-      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030712]">
+      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0"><HeroBgAnimation /></div>
         <Loader text="Loading profile..." size="70px" minHeight="100vh" />
       </div>
@@ -26,7 +26,7 @@ const Hero = () => {
 
   if (!bioData) {
     return (
-      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030712]">
+      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0"><HeroBgAnimation /></div>
         <p className="text-white text-center px-8">Profile data not available</p>
       </div>
@@ -36,7 +36,7 @@ const Hero = () => {
   return (
     <div
       id="about"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#030712]"
+      className="relative min-h-screen flex items-center overflow-hidden"
     >
       {/* Animated background */}
       <div className="absolute inset-0">

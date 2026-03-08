@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
-import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaArrowRight } from "react-icons/fa";
+import {
+  SectionHeading,
+  StaggerContainer,
+  StaggerItem,
+} from "../ui/ScrollReveal";
 
-const ProjectCard = ({ project, onClick }) => (
+export const ProjectCard = ({ project, onClick }) => (
   <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
     whileHover={{ y: -5 }}
-    className="glass rounded-2xl overflow-hidden cursor-pointer group hover:border-violet-500/30 hover:shadow-2xl hover:shadow-violet-500/10 transition-all duration-300"
+    className="glass rounded-2xl overflow-hidden cursor-pointer group hover:border-violet-500/30 hover:shadow-2xl hover:shadow-violet-500/10 transition-all duration-300 h-full"
     onClick={onClick}
   >
     {/* Project image */}
@@ -93,40 +95,64 @@ const Project = ({ openModal, setOpenModal }) => {
     if (projects.length === 0) fetchProjects();
   }, [projects.length, fetchProjects]);
 
+  const sorted = [...projects].sort((a, b) => b.id - a.id);
+  const displayed = sorted.slice(0, 3);
+  const hasMore = sorted.length > 3;
+
   return (
     <section id="apps" className="py-20 px-4 relative">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
-            My <span className="gradient-text">Projects</span>
-          </h2>
-          <p className="text-slate-400 text-base max-w-lg mx-auto">
-            A showcase of the things I've built
-          </p>
-          <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
-        </motion.div>
+        <SectionHeading
+          title="My"
+          highlight="Projects"
+          subtitle="A showcase of the things I've built"
+        />
 
         {loading.projects ? (
           <Loader text="Loading projects..." size="60px" minHeight="400px" />
         ) : projects && projects.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...projects]
-              .sort((a, b) => b.id - a.id)
-              .map((project, index) => (
-                <ProjectCard
-                  key={project._id || index}
-                  project={project}
-                  onClick={() => setOpenModal({ state: true, project })}
-                />
+          <>
+            <StaggerContainer
+              staggerDelay={0.15}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {displayed.map((project, index) => (
+                <StaggerItem key={project._id || index} preset="fade-up">
+                  <ProjectCard
+                    project={project}
+                    onClick={() => setOpenModal({ state: true, project })}
+                  />
+                </StaggerItem>
               ))}
-          </div>
+            </StaggerContainer>
+
+            {/* Show More Button */}
+            {hasMore && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="flex justify-center mt-10"
+              >
+                <Link
+                  to="/projects"
+                  className="group relative inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl font-semibold text-sm overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-violet-500/20 hover:-translate-y-0.5"
+                >
+                  {/* Gradient border */}
+                  <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 p-[1px]">
+                    <span className="flex h-full w-full rounded-2xl bg-[#030712] items-center justify-center" />
+                  </span>
+                  {/* Inner content */}
+                  <span className="relative z-10 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-400 to-cyan-400 group-hover:from-white group-hover:to-white transition-all duration-300">
+                    View All Projects
+                    <FaArrowRight size={12} className="text-violet-400 group-hover:text-white group-hover:translate-x-1 transition-all duration-300" />
+                  </span>
+                </Link>
+              </motion.div>
+            )}
+          </>
         ) : (
           <p className="text-slate-400 text-center py-10">No projects found</p>
         )}

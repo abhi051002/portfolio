@@ -88,3 +88,52 @@ html.light section {
   background: transparent;
 }
 
+/* ── Mouse glow ambient animations ─────────── */
+@keyframes glowDrift {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(60px, -40px) scale(1.05); }
+  50%  { transform: translate(-30px, 50px) scale(0.95); }
+  75%  { transform: translate(-50px, -20px) scale(1.03); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes glowDriftSecondary {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(-40px, 30px) scale(1.08); }
+  66%  { transform: translate(50px, -40px) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.mouse-glow-ambient {
+  animation: glowDrift 12s ease-in-out infinite;
+}
+
+.mouse-glow-ambient-secondary {
+  animation: glowDriftSecondary 16s ease-in-out infinite;
+}
+
+/* ── Hero orb floating animations ─────────── */
+@keyframes heroOrb1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  30%  { transform: translate(30px, 20px) scale(1.06); }
+  60%  { transform: translate(-20px, 40px) scale(0.97); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes heroOrb2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  40%  { transform: translate(-35px, -25px) scale(1.04); }
+  70%  { transform: translate(25px, -15px) scale(0.96); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes heroOrb3 {
+  0%   { transform: translateX(-50%) scale(1); }
+  50%  { transform: translateX(-50%) translateY(-20px) scale(1.08); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+.hero-orb-1 { animation: heroOrb1 14s ease-in-out infinite; }
+.hero-orb-2 { animation: heroOrb2 18s ease-in-out infinite; }
+.hero-orb-3 { animation: heroOrb3 10s ease-in-out infinite; }
+

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes, FaGithub } from "react-icons/fa";
 import { usePortfolio } from "../../context/PortfolioContext";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#apps" },
+  { label: "Projects", href: "#apps", route: "/projects" },
   { label: "Experience", href: "#experience" },
-  { label: "Articles", href: "#articles" },
+  { label: "Articles", href: "#articles", route: "/articles" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -16,6 +16,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { bioData } = usePortfolio();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -24,6 +26,17 @@ const Navbar = () => {
   }, []);
 
   const handleClose = () => setIsOpen(false);
+
+  // On sub-pages, clicking a hash link should navigate back to homepage + hash
+  const getNavHref = (link) => {
+    if (isHome) return link.href;
+    return `/${link.href}`;
+  };
+
+  const isActiveRoute = (link) => {
+    if (link.route && location.pathname === link.route) return true;
+    return false;
+  };
 
   return (
     <nav
@@ -53,8 +66,12 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
-                  className="text-slate-400 hover:text-white text-sm font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full"
+                  href={getNavHref(link)}
+                  className={`text-sm font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full ${
+                    isActiveRoute(link)
+                      ? "text-violet-400 after:w-full"
+                      : "text-slate-400 hover:text-white"
+                  }`}
                 >
                   {link.label}
                 </a>
@@ -97,9 +114,13 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={getNavHref(link)}
                   onClick={handleClose}
-                  className="block px-3 py-2.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg text-sm font-medium transition-all duration-200"
+                  className={`block px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    isActiveRoute(link)
+                      ? "text-violet-400 bg-violet-500/10"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                  }`}
                 >
                   {link.label}
                 </a>

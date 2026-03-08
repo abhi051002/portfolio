@@ -2,6 +2,11 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
+import {
+  SectionHeading,
+  StaggerContainer,
+  StaggerItem,
+} from "../ui/ScrollReveal";
 
 const formatDate = (input) => {
   if (!input) return "Present";
@@ -44,19 +49,11 @@ const Experience = () => {
 
       <div className="max-w-4xl mx-auto relative z-10">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
-            Work <span className="gradient-text">Experience</span>
-          </h2>
-          <p className="text-slate-400 text-base">My professional journey so far</p>
-          <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
-        </motion.div>
+        <SectionHeading
+          title="Work"
+          highlight="Experience"
+          subtitle="My professional journey so far"
+        />
 
         {loading.experiences ? (
           <Loader text="Loading experience..." size="60px" minHeight="400px" />
@@ -65,14 +62,11 @@ const Experience = () => {
             {/* Timeline line */}
             <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/80 via-violet-500/30 to-transparent hidden sm:block" />
 
-            <div className="flex flex-col gap-8">
+            <StaggerContainer staggerDelay={0.15} className="flex flex-col gap-8">
               {experiences.map((exp, index) => (
-                <motion.div
+                <StaggerItem
                   key={index}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  preset={index % 2 === 0 ? "slide-left" : "slide-right"}
                   className="relative flex gap-6 sm:pl-16"
                 >
                   {/* Timeline dot */}
@@ -92,7 +86,9 @@ const Experience = () => {
                           src={exp.img}
                           alt={exp.company}
                           className="w-full h-full object-cover"
-                          onError={(e) => { e.target.style.display = "none"; }}
+                          onError={(e) => {
+                            e.target.style.display = "none";
+                          }}
                         />
                       </div>
 
@@ -131,9 +127,9 @@ const Experience = () => {
                       </div>
                     </div>
                   </motion.div>
-                </motion.div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerContainer>
           </div>
         ) : (
           <p className="text-slate-400 text-center py-10">No experience found</p>
