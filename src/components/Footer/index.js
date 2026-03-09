@@ -1,94 +1,93 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { usePortfolio } from "../../context/PortfolioContext";
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaEnvelope, FaHeart } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaHeart } from "react-icons/fa";
 
 const navLinks = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#apps" },
   { label: "Experience", href: "#experience" },
-  { label: "Articles", href: "#articles" },
   { label: "Contact", href: "#contact" },
 ];
 
 const Footer = () => {
   const { bioData } = usePortfolio();
 
-  const socialLinks = [
-    { icon: FaGithub, href: bioData?.github, label: "GitHub" },
-    { icon: FaLinkedin, href: bioData?.linkedin, label: "LinkedIn" },
-    { icon: FaTwitter, href: bioData?.twitter, label: "Twitter" },
-    { icon: FaInstagram, href: bioData?.insta, label: "Instagram" },
-    { icon: FaEnvelope, href: bioData?.email ? `mailto:${bioData.email}` : null, label: "Email" },
+  const socials = [
+    { href: bioData?.github,   Icon: FaGithub,    label: "GitHub" },
+    { href: bioData?.linkedin, Icon: FaLinkedin,  label: "LinkedIn" },
+    { href: bioData?.twitter,  Icon: FaTwitter,   label: "Twitter" },
+    { href: bioData?.insta,    Icon: FaInstagram, label: "Instagram" },
   ].filter((s) => s.href);
 
   return (
-    <footer className="relative border-t border-white/5 bg-[#030712]">
-      {/* Gradient top accent */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/50 to-transparent" />
+    <footer className="relative border-t border-white/5 py-12 px-4">
+      {/* Top gradient line */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-px bg-gradient-to-r from-transparent via-violet-500 to-transparent opacity-60" />
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-0.5 font-bold text-xl mb-3">
-              <span className="text-violet-400">&lt;</span>
-              <span className="gradient-text">Abhijit</span>
-              <span className="text-slate-400">/</span>
-              <span className="gradient-text">Nanda</span>
-              <span className="text-violet-400">&gt;</span>
-            </div>
-            <p className="text-slate-500 text-sm leading-relaxed max-w-xs">
-              Full-stack developer passionate about building elegant, performant web applications.
-            </p>
-          </div>
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-col items-center gap-8 text-center">
+          {/* Logo */}
+          <motion.a
+            href="/"
+            whileHover={{ scale: 1.04 }}
+            className="text-2xl font-bold"
+          >
+            <span className="text-violet-400 font-mono">&lt;</span>
+            <span className="gradient-text-static">Abhijit</span>
+            <span className="text-slate-500 font-mono">/</span>
+            <span className="gradient-text-static">Nanda</span>
+            <span className="text-violet-400 font-mono">&gt;</span>
+          </motion.a>
+
+          {/* Tagline */}
+          <p className="text-slate-500 text-sm max-w-sm">
+            Building elegant, high-performance web applications that make a difference.
+          </p>
 
           {/* Nav links */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Sections</h4>
-            <ul className="grid grid-cols-2 gap-2">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-slate-500 hover:text-violet-400 text-sm transition-colors duration-200"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-slate-500 text-sm hover:text-violet-400 transition-colors duration-200"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Social icons */}
+          <div className="flex items-center gap-3">
+            {socials.map(({ href, Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl glass border border-white/8 flex items-center justify-center text-slate-400 hover:text-violet-400 hover:border-violet-500/40 hover:bg-violet-500/10 transition-all duration-200"
+                title={label}
+              >
+                <Icon size={15} />
+              </a>
+            ))}
           </div>
 
-          {/* Social */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-4 uppercase tracking-widest">Connect</h4>
-            <div className="flex flex-wrap gap-2">
-              {socialLinks.map(({ icon: Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  className="w-9 h-9 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-violet-600/30 hover:border-violet-500/40 transition-all duration-200"
-                  title={label}
-                >
-                  <Icon size={15} />
-                </motion.a>
-              ))}
-            </div>
-          </div>
-        </div>
+          {/* Divider */}
+          <div className="w-full h-px bg-white/5" />
 
-        {/* Bottom bar */}
-        <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-slate-600 text-sm text-center">
-            © {new Date().getFullYear()} Abhijit Nanda. All rights reserved.
-          </p>
-          <p className="text-slate-600 text-sm flex items-center gap-1.5">
-            Made with <FaHeart className="text-red-500 text-xs animate-pulse" /> using React & Tailwind CSS
+          {/* Copyright */}
+          <p className="text-slate-600 text-xs flex items-center gap-1.5">
+            Built with
+            <motion.span
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <FaHeart size={10} className="text-violet-500" />
+            </motion.span>
+            by {bioData?.name || "Abhijit Nanda"} · {new Date().getFullYear()}
           </p>
         </div>
       </div>

@@ -1,142 +1,186 @@
-import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import Loader from "../Loader/Loader";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { usePortfolio } from "../../context/PortfolioContext";
+import SectionHeading from "../ui/SectionHeading";
+import Loader from "../Loader/Loader";
+import { FaMapMarkerAlt, FaCalendarAlt, FaChevronDown, FaExternalLinkAlt } from "react-icons/fa";
 
-const formatDate = (input) => {
-  if (!input) return "Present";
-  const parts = input.split("/");
-  if (parts.length < 3) return input;
-  const [, month, year] = parts;
-  return new Date(`${month}/01/${year}`).toLocaleDateString("en-US", {
-    month: "short",
-    year: "numeric",
-  });
+gsap.registerPlugin(ScrollTrigger);
+
+const cardVariants = {
+  hidden: { opacity: 0, x: -30, scale: 0.97 },
+  visible: {
+    opacity: 1, x: 0, scale: 1,
+    transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
-const getDuration = (start, end) => {
-  if (!end) {
-    const today = new Date();
-    const dd = String(today.getDate()).padStart(2, "0");
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const yyyy = today.getFullYear();
-    end = `${dd}/${mm}/${yyyy}`;
-  }
-  const [, sm, sy] = start.split("/").map(Number);
-  const [, em, ey] = end.split("/").map(Number);
-  const totalMonths = (ey - sy) * 12 + (em - sm) + 1;
-  if (totalMonths < 12) return `${totalMonths}m`;
-  const years = Math.floor(totalMonths / 12);
-  const rem = totalMonths % 12;
-  return rem === 0 ? `${years}y` : `${years}y ${rem}m`;
+const formatDate = (dateStr) => {
+  if (!dateStr) return "";
+  const [day, month, year] = dateStr.split("/");
+  const d = new Date(`${year}-${month}-${day}`);
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short" });
+};
+
+const ExperienceItem = ({ exp, index }) => {
+  const [expanded, setExpanded] = useState(index === 0);
+
+  return (
+    <motion.div variants={cardVariants} className="relative pl-8 lg:pl-0">
+      {/* Timeline dot */}
+      <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-br from-violet-500 to-cyan-500 border-2 border-dark-950 shadow-neon-sm z-10"
+        style={{ top: "28px" }}
+      />
+
+      <div
+        className={`glass-card rounded-2xl overflow-hidden cursor-pointer ${
+          index % 2 === 0 ? "lg:mr-[55%] lg:pr-8" : "lg:ml-[55%] lg:pl-8"
+        }`}
+        onClick={() => setExpanded(!expanded)}
+      >
+        {/* Card header */}
+        <div className="flex items-start gap-4 p-5">
+          {/* Company logo */}
+          <div className="w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center p-1">
+            {exp.img ? (
+              <img src={exp.img} alt={exp.company} className="w-full h-full object-contain" />
+            ) : (
+              <div className="w-8 h-8 rounded-lg gradient-text-static flex items-center justify-center font-bold text-lg">
+                {exp.company?.[0]}
+              </div>
+            )}
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h3 className="font-bold text-white text-base leading-tight">{exp.role}</h3>
+                <p className="text-violet-400 font-semibold text-sm mt-0.5">{exp.company}</p>
+              </div>
+              {exp.present && (
+                <span className="flex-shrink-0 px-2.5 py-0.5 rounded-full bg-green-500/15 border border-green-500/30 text-green-400 text-xs font-semibold">
+                  Present
+                </span>
+              )}
+            </div>
+
+            <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-500">
+              <span className="flex items-center gap-1">
+                <FaCalendarAlt size={10} />
+                {formatDate(exp.startDate)} — {exp.present ? "Present" : formatDate(exp.endDate)}
+              </span>
+            </div>
+          </div>
+
+          <motion.div
+            animate={{ rotate: expanded ? 180 : 0 }}
+            transition={{ duration: 0.3 }}
+            className="flex-shrink-0 mt-1 text-slate-500"
+          >
+            <FaChevronDown size={14} />
+          </motion.div>
+        </div>
+
+        {/* Expandable content */}
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="px-5 pb-5 border-t border-white/5 pt-4">
+                <p className="text-slate-400 text-sm leading-relaxed mb-4">{exp.desc}</p>
+
+                {/* Skills */}
+                {exp.skills && exp.skills.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {exp.skills.map((s) => (
+                      <span key={s} className="tag">{s}</span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Certificate link */}
+                {exp.doc && (
+                  <a
+                    href={exp.doc} target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors mt-3 font-medium"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <FaExternalLinkAlt size={10} />
+                    View Certificate
+                  </a>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
 };
 
 const Experience = () => {
-  const { experiences, loading, fetchExperiences } = usePortfolio();
+  const { experiences, loading, fetchExperiences, portfolioId } = usePortfolio();
+  const sectionRef = useRef(null);
+  const lineRef = useRef(null);
 
   useEffect(() => {
-    if (experiences.length === 0) fetchExperiences();
-  }, [experiences.length, fetchExperiences]);
+    if (portfolioId && experiences.length === 0) fetchExperiences();
+  }, [portfolioId, experiences.length, fetchExperiences]);
+
+  // GSAP: animate the timeline vertical line drawing
+  useEffect(() => {
+    if (!lineRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        lineRef.current,
+        { scaleY: 0, transformOrigin: "top center" },
+        {
+          scaleY: 1, duration: 1.5, ease: "power2.inOut",
+          scrollTrigger: { trigger: lineRef.current, start: "top 80%", once: true },
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [experiences]);
 
   return (
-    <section id="experience" className="py-20 px-4 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-950/5 to-transparent pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
-            Work <span className="gradient-text">Experience</span>
-          </h2>
-          <p className="text-slate-400 text-base">My professional journey so far</p>
-          <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
-        </motion.div>
+    <section ref={sectionRef} id="experience" className="section-padding relative">
+      <div className="max-w-5xl mx-auto">
+        <SectionHeading
+          label="Career"
+          title="Work"
+          highlight="Experience"
+          subtitle="My professional journey building real-world products and services."
+        />
 
         {loading.experiences ? (
-          <Loader text="Loading experience..." size="60px" minHeight="400px" />
-        ) : experiences && experiences.length > 0 ? (
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/80 via-violet-500/30 to-transparent hidden sm:block" />
-
-            <div className="flex flex-col gap-8">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="relative flex gap-6 sm:pl-16"
-                >
-                  {/* Timeline dot */}
-                  <div className="hidden sm:flex absolute left-0 top-6 w-12 justify-center">
-                    <div className="w-3 h-3 rounded-full bg-violet-500 border-2 border-violet-300 shadow-lg shadow-violet-500/50 mt-0.5" />
-                  </div>
-
-                  {/* Card */}
-                  <motion.div
-                    whileHover={{ scale: 1.01, translateY: -2 }}
-                    className="glass rounded-2xl p-5 sm:p-6 w-full hover:border-violet-500/30 hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300"
-                  >
-                    <div className="flex items-start gap-4">
-                      {/* Company logo */}
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-black/40 border border-white/10">
-                        <img
-                          src={exp.img}
-                          alt={exp.company}
-                          className="w-full h-full object-cover"
-                          onError={(e) => { e.target.style.display = "none"; }}
-                        />
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
-                          <h3 className="text-white font-bold text-base sm:text-lg">{exp.role}</h3>
-                          <span className="text-xs text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full whitespace-nowrap">
-                            {getDuration(exp.startDate, exp.present ? null : exp.endDate)}
-                          </span>
-                        </div>
-                        <p className="text-violet-400 font-semibold text-sm mb-0.5">{exp.company}</p>
-                        <p className="text-slate-500 text-xs mb-3">
-                          {formatDate(exp.startDate)} – {exp.present ? "Present" : formatDate(exp.endDate)}
-                          {exp.present && (
-                            <span className="ml-2 text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
-                              Current
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-slate-400 text-sm leading-relaxed mb-4">{exp.desc}</p>
-
-                        {/* Skills */}
-                        {exp.skills && exp.skills.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
-                            {exp.skills.map((skill, si) => (
-                              <span
-                                key={si}
-                                className="text-xs px-2.5 py-1 bg-white/5 border border-white/10 text-slate-300 rounded-lg hover:border-violet-500/40 hover:text-violet-300 transition-colors"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+          <Loader text="Loading experience..." size="50px" minHeight="260px" />
         ) : (
-          <p className="text-slate-400 text-center py-10">No experience found</p>
+          <div className="relative">
+            {/* Animated vertical timeline line */}
+            <div className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px" style={{ background: "linear-gradient(to bottom, transparent, #7c3aed 8%, #a855f7 50%, #06b6d4 92%, transparent)" }}>
+              <div ref={lineRef} className="w-full h-full" />
+            </div>
+
+            <motion.div
+              className="flex flex-col gap-6"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ staggerChildren: 0.15 }}
+            >
+              {experiences.map((exp, i) => (
+                <ExperienceItem key={exp.id ?? i} exp={exp} index={i} />
+              ))}
+            </motion.div>
+          </div>
         )}
       </div>
     </section>

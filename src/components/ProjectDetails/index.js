@@ -1,105 +1,106 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt, FaTimes } from "react-icons/fa";
+import { FaTimes, FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { modalOverlay, modalContent } from "../../animations/variants";
 
 const ProjectDetails = ({ openModal, setOpenModal }) => {
-  const { project } = openModal;
-  if (!project) return null;
+  const { state, project } = openModal;
+  const close = () => setOpenModal({ state: false, project: null });
 
   return (
     <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-[999] flex items-center justify-center p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        {/* Backdrop */}
+      {state && project && (
         <motion.div
-          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-          onClick={() => setOpenModal({ state: false, project: null })}
-        />
-
-        {/* Modal */}
-        <motion.div
-          className="relative z-10 glass rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-violet-500/20 shadow-2xl shadow-violet-900/30"
-          initial={{ scale: 0.9, opacity: 0, y: 30 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          variants={modalOverlay}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
+          style={{ background: "rgba(3,2,15,0.85)", backdropFilter: "blur(12px)" }}
+          onClick={close}
         >
-          {/* Close button */}
-          <button
-            onClick={() => setOpenModal({ state: false, project: null })}
-            className="absolute top-4 right-4 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+          <motion.div
+            variants={modalContent}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-2xl max-h-[90vh] rounded-2xl overflow-hidden flex flex-col"
+            style={{
+              background: "rgba(13,13,32,0.97)",
+              border: "1px solid rgba(124,58,237,0.25)",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.7), 0 0 60px rgba(124,58,237,0.1)",
+            }}
           >
-            <FaTimes size={16} />
-          </button>
+            {/* Close */}
+            <button
+              onClick={close}
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full glass-strong flex items-center justify-center text-slate-400 hover:text-white transition-colors"
+            >
+              <FaTimes size={14} />
+            </button>
 
-          {/* Project image */}
-          {project.image && (
-            <div className="relative h-52 rounded-t-3xl overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/80 via-transparent to-transparent" />
-            </div>
-          )}
-
-          {/* Content */}
-          <div className="p-6 sm:p-8">
-            <h2 className="text-2xl font-black text-white mb-1">{project.title}</h2>
-            <p className="text-slate-500 text-sm mb-4">{project.date}</p>
-
-            <p className="text-slate-300 text-sm leading-relaxed mb-6 whitespace-pre-line">
-              {project.description}
-            </p>
-
-            {/* Tags */}
-            {project.tags && project.tags.length > 0 && (
-              <div className="mb-6">
-                <h4 className="text-slate-400 text-xs font-semibold uppercase tracking-widest mb-3">Tech Stack</h4>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, i) => (
-                    <span
-                      key={i}
-                      className="text-xs px-3 py-1 bg-violet-500/10 border border-violet-500/20 text-violet-400 rounded-full"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+            {/* Image */}
+            {project.image && (
+              <div className="h-52 sm:h-60 overflow-hidden flex-shrink-0">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 h-52 sm:h-60" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(13,13,32,0.97) 100%)" }} />
               </div>
             )}
 
-            {/* Links */}
-            <div className="flex flex-wrap gap-3">
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white rounded-xl text-sm font-semibold transition-all duration-200"
-                >
-                  <FaGithub size={16} /> View Code
-                </a>
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <h2 className="text-xl font-bold text-white">{project.title}</h2>
+                  {project.date && <p className="text-slate-500 text-sm mt-0.5">{project.date}</p>}
+                </div>
+                <span className="tag capitalize flex-shrink-0">{project.category}</span>
+              </div>
+
+              <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">{project.description}</p>
+
+              {/* Tags */}
+              {project.tags && (
+                <div>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Tech Stack</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((t) => (
+                      <span key={t} className="tag">{t}</span>
+                    ))}
+                  </div>
+                </div>
               )}
-              {project.webapp && (
-                <a
-                  href={project.webapp}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white rounded-xl text-sm font-semibold transition-all duration-200 shadow-lg shadow-violet-500/25"
-                >
-                  <FaExternalLinkAlt size={14} /> Live Demo
-                </a>
-              )}
+
+              {/* Links */}
+              <div className="flex gap-3 pt-2">
+                {project.github && (
+                  <a
+                    href={project.github} target="_blank" rel="noopener noreferrer"
+                    className="btn-outline flex-1 justify-center text-sm py-2.5"
+                  >
+                    <FaGithub size={15} /> GitHub
+                  </a>
+                )}
+                {project.webapp && (
+                  <a
+                    href={project.webapp} target="_blank" rel="noopener noreferrer"
+                    className="btn-primary flex-1 justify-center text-sm py-2.5"
+                  >
+                    <span className="flex items-center gap-2">
+                      <FaExternalLinkAlt size={12} /> Live Demo
+                    </span>
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </AnimatePresence>
   );
 };

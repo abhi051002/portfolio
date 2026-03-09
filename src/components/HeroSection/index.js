@@ -1,23 +1,122 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { gsap } from "gsap";
 import Typewriter from "typewriter-effect";
 import HeroImg from "../../Image/HeroImage.jpeg";
 import HeroBgAnimation from "../HeroBgAnimation";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaDownload } from "react-icons/fa";
+import {
+  SiReact, SiNodedotjs, SiLaravel, SiPhp, SiNextdotjs,
+  SiPostgresql, SiMongodb, SiDocker, SiTailwindcss,
+} from "react-icons/si";
+import useCounter from "../../hooks/useCounter";
 
-const fadeUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
+// Floating tech icons positioned around the hero image
+const floatingIcons = [
+  { icon: SiReact,      color: "#61dafb", top: "8%",  left: "70%", size: 28, delay: 0 },
+  { icon: SiNodedotjs,  color: "#68a063", top: "20%", left: "90%", size: 24, delay: 1.2 },
+  { icon: SiLaravel,    color: "#ff2d20", top: "70%", left: "88%", size: 26, delay: 0.6 },
+  { icon: SiPhp,        color: "#777bb3", top: "85%", left: "65%", size: 22, delay: 1.8 },
+  { icon: SiNextdotjs,  color: "#ffffff", top: "85%", left: "15%", size: 24, delay: 0.9 },
+  { icon: SiPostgresql, color: "#336791", top: "70%", left: "5%",  size: 22, delay: 1.5 },
+  { icon: SiMongodb,    color: "#4db33d", top: "20%", left: "2%",  size: 24, delay: 0.3 },
+  { icon: SiTailwindcss,color: "#38bdf8", top: "5%",  left: "25%", size: 24, delay: 2.1 },
+  { icon: SiDocker,     color: "#0db7ed", top: "5%",  left: "50%", size: 22, delay: 1 },
+];
+
+// Stat counter item
+const StatItem = ({ value, label, suffix = "+", inView }) => {
+  const count = useCounter(value, 2000, inView);
+  return (
+    <div className="text-center">
+      <div className="text-2xl sm:text-3xl font-bold gradient-text-static">
+        {count}{suffix}
+      </div>
+      <div className="text-xs text-slate-500 mt-0.5 font-medium">{label}</div>
+    </div>
+  );
 };
 
 const Hero = () => {
   const { bioData, loading } = usePortfolio();
+  const containerRef = useRef(null);
+  const textRef = useRef(null);
+  const imageRef = useRef(null);
+  const statsRef = useRef(null);
+  const statsInView = useInView(statsRef, { once: true });
+
+  // GSAP in/out reveal
+  useEffect(() => {
+    if (!bioData) return;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl.fromTo(
+        ".hero-text-reveal",
+        { opacity: 0, y: 50, filter: "blur(8px)" },
+        {
+          opacity: 1, y: 0, filter: "blur(0px)",
+          duration: 0.9, stagger: 0.12,
+        }
+      );
+
+      tl.fromTo(
+        ".hero-cta",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
+        "-=0.4"
+      );
+
+      tl.fromTo(
+        ".hero-socials",
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.5 },
+        "-=0.3"
+      );
+
+      // Image
+      tl.fromTo(
+        imageRef.current,
+        { opacity: 0, scale: 0.85, x: 40 },
+        { opacity: 1, scale: 1, x: 0, duration: 1.1, ease: "expo.out" },
+        0.2
+      );
+
+      // Floating icons
+      gsap.fromTo(
+        ".float-icon",
+        { opacity: 0, scale: 0 },
+        {
+          opacity: 1, scale: 1,
+          duration: 0.6, stagger: 0.08,
+          ease: "back.out(1.7)",
+          delay: 0.8,
+        }
+      );
+
+      // Continuous float on icons
+      gsap.to(".float-icon", {
+        y: "random(-12, 12)",
+        x: "random(-8, 8)",
+        duration: "random(4, 7)",
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+        stagger: {
+          each: 0.3,
+          from: "random",
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [bioData]);
 
   if (loading.bio) {
     return (
-      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030712]">
+      <div id="about" className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0"><HeroBgAnimation /></div>
         <Loader text="Loading profile..." size="70px" minHeight="100vh" />
       </div>
@@ -26,7 +125,7 @@ const Hero = () => {
 
   if (!bioData) {
     return (
-      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030712]">
+      <div id="about" className="relative min-h-screen flex items-center justify-center">
         <div className="absolute inset-0"><HeroBgAnimation /></div>
         <p className="text-white text-center px-8">Profile data not available</p>
       </div>
@@ -34,153 +133,169 @@ const Hero = () => {
   }
 
   return (
-    <div
-      id="about"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#030712]"
-    >
-      {/* Animated background */}
+    <div ref={containerRef} id="about" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0">
         <HeroBgAnimation />
       </div>
 
-      {/* Glow orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-700/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/8 rounded-full blur-3xl pointer-events-none" />
+      {/* Noise overlay */}
+      <div className="noise-overlay" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 pt-28 w-full">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
-          {/* Left: Text content */}
-          <motion.div
-            className="flex-1 text-center lg:text-left"
-            initial="initial"
-            animate="animate"
-            transition={{ staggerChildren: 0.15 }}
-          >
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="text-violet-400 font-semibold text-sm tracking-widest uppercase mb-3"
-            >
-              Welcome to my portfolio
-            </motion.p>
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
 
-            <motion.h1
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-4"
-            >
+          {/* ── Left: Text ─────────────────────────────────── */}
+          <div ref={textRef} className="flex-1 text-center lg:text-left">
+
+            {/* Eyebrow */}
+            <div className="hero-text-reveal opacity-0 mb-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/25 text-violet-400 text-xs font-semibold tracking-widest uppercase">
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+              Available for work
+            </div>
+
+            {/* Name */}
+            <h1 className="hero-text-reveal opacity-0 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-[1.08] tracking-tight mb-4">
               Hi, I'm{" "}
               <span className="gradient-text">{bioData.name}</span>
-            </motion.h1>
+            </h1>
 
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center justify-center lg:justify-start gap-3 text-xl sm:text-2xl font-semibold text-slate-300 mb-6 h-8"
-            >
+            {/* Role typewriter */}
+            <div className="hero-text-reveal opacity-0 flex items-center justify-center lg:justify-start gap-2 text-xl sm:text-2xl font-semibold text-slate-300 mb-6 h-9">
               <span>I'm a</span>
-              <span className="text-violet-400">
+              <span className="text-violet-400 min-w-[220px]">
                 <Typewriter
                   options={{
-                    strings: bioData.roles || [],
+                    strings: bioData.roles || ["Full-Stack Developer", "Backend Engineer"],
                     autoStart: true,
                     loop: true,
+                    delay: 60,
+                    deleteSpeed: 40,
                   }}
                 />
               </span>
-            </motion.div>
+            </div>
 
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8"
-            >
+            {/* Description */}
+            <p className="hero-text-reveal opacity-0 text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8 text-balance">
               {bioData.description}
-            </motion.p>
+            </p>
 
-            {/* CTA Buttons */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-8"
-            >
+            {/* CTAs */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8">
               <a
                 href={bioData.resume}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-semibold rounded-xl shadow-lg shadow-violet-500/30 hover:shadow-violet-500/50 transition-all duration-300 hover:-translate-y-0.5"
+                className="hero-cta btn-primary opacity-0"
               >
-                📄 Check My Resume
+                <span className="flex items-center gap-2">
+                  <FaDownload size={13} />
+                  Download Resume
+                </span>
               </a>
-              <a
-                href="#contact"
-                className="px-6 py-3 border border-violet-500/50 hover:border-violet-400 text-violet-400 hover:text-violet-300 hover:bg-violet-500/10 font-semibold rounded-xl transition-all duration-300"
-              >
-                💬 Contact Me
+              <a href="#apps" className="hero-cta btn-outline opacity-0">
+                <span>View My Work</span>
               </a>
-            </motion.div>
+              <a href="#contact" className="hero-cta btn-outline opacity-0">
+                Contact Me
+              </a>
+            </div>
 
             {/* Social links */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex items-center justify-center lg:justify-start gap-4"
-            >
-              {bioData.github && (
-                <a href={bioData.github} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-violet-600/30 hover:border-violet-500/50 transition-all duration-300">
-                  <FaGithub size={18} />
+            <div className="hero-socials opacity-0 flex items-center justify-center lg:justify-start gap-3">
+              {[
+                { href: bioData.github, Icon: FaGithub, color: "hover:bg-slate-700/50 hover:border-slate-500/50" },
+                { href: bioData.linkedin, Icon: FaLinkedin, color: "hover:bg-blue-600/20 hover:border-blue-500/50 hover:text-blue-400" },
+                { href: bioData.twitter, Icon: FaTwitter, color: "hover:bg-sky-600/20 hover:border-sky-500/50 hover:text-sky-400" },
+                { href: `mailto:${bioData.email}`, Icon: FaEnvelope, color: "hover:bg-violet-600/20 hover:border-violet-500/50 hover:text-violet-400" },
+              ].filter(s => s.href).map(({ href, Icon, color }, i) => (
+                <a
+                  key={i} href={href} target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className={`w-10 h-10 flex items-center justify-center rounded-xl glass border border-white/8 text-slate-400 transition-all duration-300 ${color}`}
+                >
+                  <Icon size={17} />
                 </a>
-              )}
-              {bioData.linkedin && (
-                <a href={bioData.linkedin} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-blue-600/30 hover:border-blue-500/50 transition-all duration-300">
-                  <FaLinkedin size={18} />
-                </a>
-              )}
-              {bioData.twitter && (
-                <a href={bioData.twitter} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-sky-600/30 hover:border-sky-500/50 transition-all duration-300">
-                  <FaTwitter size={18} />
-                </a>
-              )}
-              {bioData.email && (
-                <a href={`mailto:${bioData.email}`}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-cyan-600/30 hover:border-cyan-500/50 transition-all duration-300">
-                  <FaEnvelope size={18} />
-                </a>
-              )}
-            </motion.div>
-          </motion.div>
+              ))}
+            </div>
+          </div>
 
-          {/* Right: Profile Image */}
-          <motion.div
-            className="flex-shrink-0"
-            initial={{ opacity: 0, scale: 0.8, x: 40 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, type: "spring", stiffness: 200 }}
-          >
-            <div className="relative">
-              {/* Outer glow ring */}
-              <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-violet-600 via-purple-600 to-cyan-500 opacity-20 blur-xl animate-pulse" />
-              {/* Spinning ring */}
-              <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-violet-600 via-transparent to-cyan-500 animate-spin-slow opacity-60" />
-              {/* Image container */}
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-2 border-violet-500/40">
+          {/* ── Right: Image + Floating Icons ─────────────── */}
+          <div ref={imageRef} className="flex-shrink-0 relative opacity-0" style={{ width: 380, height: 380 }}>
+            {/* Floating tech icons */}
+            {floatingIcons.map(({ icon: Icon, color, top, left, size, delay }, i) => (
+              <div
+                key={i}
+                className="float-icon absolute opacity-0 flex items-center justify-center w-10 h-10 rounded-xl glass-strong shadow-glass"
+                style={{ top, left, zIndex: 10 }}
+              >
+                <Icon size={size} color={color} />
+              </div>
+            ))}
+
+            {/* Image container */}
+            <div className="relative" style={{ width: 300, height: 300, margin: "40px auto" }}>
+              {/* Rotating gradient rings */}
+              <div
+                className="absolute -inset-4 rounded-full opacity-60 animate-spin-slow"
+                style={{
+                  background: "conic-gradient(from 0deg, #7c3aed, #a855f7, #06b6d4, transparent, #7c3aed)",
+                  filter: "blur(2px)",
+                }}
+              />
+              <div
+                className="absolute -inset-2 rounded-full opacity-40 animate-spin-reverse"
+                style={{
+                  background: "conic-gradient(from 180deg, #06b6d4, transparent, #7c3aed, transparent, #06b6d4)",
+                  filter: "blur(1px)",
+                }}
+              />
+
+              {/* Glow halo */}
+              <div className="absolute -inset-8 rounded-full opacity-25 blur-2xl" style={{ background: "radial-gradient(circle, #7c3aed, transparent 70%)" }} />
+
+              {/* Profile image */}
+              <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-violet-500/30 shadow-[0_0_60px_rgba(124,58,237,0.25)]">
                 <img
                   src={HeroImg}
                   alt={`${bioData.name}'s Profile`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover"
                 />
-              </div>
-              {/* Status badge */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#0a0a1a] border border-green-500/40 rounded-full px-4 py-1.5 flex items-center gap-2 whitespace-nowrap shadow-lg">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-green-400 text-xs font-semibold">Available for Work</span>
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 rounded-full" style={{ background: "radial-gradient(ellipse at 30% 30%, transparent 60%, rgba(3,2,15,0.3) 100%)" }} />
               </div>
             </div>
-          </motion.div>
+
+            {/* Stats strip */}
+            <div ref={statsRef} className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-full px-4">
+              <div className="glass-strong rounded-2xl p-4 flex items-center justify-around gap-4">
+                <StatItem value={3} label="Years Exp." inView={statsInView} />
+                <div className="w-px h-8 bg-white/10" />
+                <StatItem value={5} label="Companies" inView={statsInView} />
+                <div className="w-px h-8 bg-white/10" />
+                <StatItem value={15} label="Projects" inView={statsInView} />
+              </div>
+            </div>
+          </div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.8, duration: 0.6 }}
+        >
+          <span className="text-slate-500 text-xs font-medium tracking-widest uppercase">Scroll</span>
+          <div className="w-5 h-8 rounded-full border border-white/15 flex items-start justify-center p-1">
+            <motion.div
+              className="w-1 h-2 rounded-full bg-violet-400"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+        </motion.div>
       </div>
     </div>
   );
