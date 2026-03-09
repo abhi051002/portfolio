@@ -19,7 +19,7 @@ export const PortfolioProvider = ({ children }) => {
   const [education, setEducation] = useState([]);
   const [projects, setProjects] = useState([]);
   const [articles, setArticles] = useState([]);
-  
+
   const [loading, setLoading] = useState({
     bio: false,
     skills: false,
@@ -48,12 +48,20 @@ export const PortfolioProvider = ({ children }) => {
   // Fetch Bio Data (called once, reused everywhere)
   const fetchBioData = useCallback(async (id = portfolioId) => {
     if (!id) return;
-    
+
     try {
       setLoading(prev => ({ ...prev, bio: true }));
       const res = await axios.get(`${backendUrl}/bio/${id}`);
       localStorage.setItem('totalYearofExperience', res.data.totalYears);
-      setBioData(res.data);
+      // Replace {{total_experience}} placeholder in description with actual value
+      const processedBio = {
+        ...res.data,
+        description: (res.data.description || '').replace(
+          /\{\{total_experience\}\}/gi,
+          res.data.totalYears ?? ''
+        ),
+      };
+      setBioData(processedBio);
       return res.data;
     } catch (error) {
       console.error('Error fetching bio:', error);
@@ -66,18 +74,18 @@ export const PortfolioProvider = ({ children }) => {
   // Fetch Skills
   const fetchSkills = useCallback(async (id = portfolioId) => {
     if (!id) return;
-    
+
     try {
       setLoading(prev => ({ ...prev, skills: true }));
       const categoriesRes = await axios.get(`${backendUrl}/skills/categories/${id}`);
-      
+
       const categoriesWithItems = await Promise.all(
         categoriesRes.data.map(async (cat) => {
           const itemsRes = await axios.get(`${backendUrl}/skills/items/${cat._id}`);
           return { ...cat, items: itemsRes.data };
         })
       );
-      
+
       setSkills(categoriesWithItems);
       return categoriesWithItems;
     } catch (error) {
@@ -91,7 +99,7 @@ export const PortfolioProvider = ({ children }) => {
   // Fetch Experiences
   const fetchExperiences = useCallback(async (id = portfolioId) => {
     if (!id) return;
-    
+
     try {
       setLoading(prev => ({ ...prev, experiences: true }));
       const res = await axios.get(`${backendUrl}/experiences/${id}`);
@@ -108,7 +116,7 @@ export const PortfolioProvider = ({ children }) => {
   // Fetch Education
   const fetchEducation = useCallback(async (id = portfolioId) => {
     if (!id) return;
-    
+
     try {
       setLoading(prev => ({ ...prev, education: true }));
       const res = await axios.get(`${backendUrl}/education/${id}`);
@@ -125,7 +133,7 @@ export const PortfolioProvider = ({ children }) => {
   // Fetch Projects
   const fetchProjects = useCallback(async (id = portfolioId) => {
     if (!id) return;
-    
+
     try {
       setLoading(prev => ({ ...prev, projects: true }));
       const res = await axios.get(`${backendUrl}/projects/${id}`);
@@ -142,7 +150,7 @@ export const PortfolioProvider = ({ children }) => {
   // Fetch Articles
   const fetchArticles = useCallback(async (id = portfolioId) => {
     if (!id) return;
-    
+
     try {
       setLoading(prev => ({ ...prev, articles: true }));
       const res = await axios.get(`${backendUrl}/articles/${id}`);
@@ -160,11 +168,11 @@ export const PortfolioProvider = ({ children }) => {
   useEffect(() => {
     const initializePortfolio = async () => {
       let id = portfolioId;
-      
+
       if (!id) {
         id = await fetchPortfolioId();
       }
-      
+
       if (id) {
         // Fetch bio data immediately (needed for navbar, footer, boot screen)
         await fetchBioData(id);
@@ -185,10 +193,10 @@ export const PortfolioProvider = ({ children }) => {
     education,
     projects,
     articles,
-    
+
     // Loading states
     loading,
-    
+
     // Fetch functions (in case you need to refetch)
     fetchBioData,
     fetchSkills,
@@ -196,7 +204,7 @@ export const PortfolioProvider = ({ children }) => {
     fetchEducation,
     fetchProjects,
     fetchArticles,
-    
+
     // Utility
     backendUrl,
   };
