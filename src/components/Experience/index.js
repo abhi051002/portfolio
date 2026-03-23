@@ -31,6 +31,77 @@ const getDuration = (start, end) => {
   return rem === 0 ? `${years}y` : `${years}y ${rem}m`;
 };
 
+// ── Single role row used both for standalone cards and child sub-roles ──
+const RoleCard = ({ exp, isChild = false }) => (
+  <div className={`flex items-start gap-4 ${isChild ? "" : ""}`}>
+    {/* Company logo (only shown on parent) */}
+    {!isChild && (
+      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-black/40 border border-white/10">
+        <img
+          src={exp.img}
+          alt={exp.company}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.target.style.display = "none";
+          }}
+        />
+      </div>
+    )}
+
+    <div className="flex-1 min-w-0">
+      <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
+        <h3
+          className={`font-bold ${
+            isChild
+              ? "text-slate-200 text-sm sm:text-base"
+              : "text-white text-base sm:text-lg"
+          }`}
+        >
+          {exp.role}
+        </h3>
+        <span className="text-xs text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full whitespace-nowrap">
+          {getDuration(exp.startDate, exp.present ? null : exp.endDate)}
+        </span>
+      </div>
+
+      {!isChild && (
+        <p className="text-violet-400 font-semibold text-sm mb-0.5">
+          {exp.company}
+        </p>
+      )}
+
+      <p className="text-slate-500 text-xs mb-3">
+        {formatDate(exp.startDate)} –{" "}
+        {exp.present ? "Present" : formatDate(exp.endDate)}
+        {exp.present && (
+          <span className="ml-2 text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
+            Current
+          </span>
+        )}
+      </p>
+
+      {exp.desc && (
+        <p className="text-slate-400 text-sm leading-relaxed mb-4">
+          {exp.desc}
+        </p>
+      )}
+
+      {exp.skills && exp.skills.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {exp.skills.map((skill, si) => (
+            <span
+              key={si}
+              className="text-xs px-2.5 py-1 bg-white/5 border border-white/10 text-slate-300 rounded-lg hover:border-violet-500/40 hover:text-violet-300 transition-colors"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+);
+
 const Experience = () => {
   const { experiences, loading, fetchExperiences } = usePortfolio();
 
@@ -62,13 +133,13 @@ const Experience = () => {
           <Loader text="Loading experience..." size="60px" minHeight="400px" />
         ) : experiences && experiences.length > 0 ? (
           <div className="relative">
-            {/* Timeline line */}
+            {/* Main timeline line */}
             <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/80 via-violet-500/30 to-transparent hidden sm:block" />
 
             <div className="flex flex-col gap-8">
               {experiences.map((exp, index) => (
                 <motion.div
-                  key={index}
+                  key={exp._id || index}
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -80,56 +151,38 @@ const Experience = () => {
                     <div className="w-3 h-3 rounded-full bg-violet-500 border-2 border-violet-300 shadow-lg shadow-violet-500/50 mt-0.5" />
                   </div>
 
-                  {/* Card */}
+                  {/* Outer card */}
                   <motion.div
-                    whileHover={{ scale: 1.01, translateY: -2 }}
+                    whileHover={{ scale: 1.005, translateY: -2 }}
                     className="glass rounded-2xl p-5 sm:p-6 w-full hover:border-violet-500/30 hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300"
                   >
-                    <div className="flex items-start gap-4">
-                      {/* Company logo */}
-                      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-black/40 border border-white/10">
-                        <img
-                          src={exp.img}
-                          alt={exp.company}
-                          className="w-full h-full object-cover"
-                          onError={(e) => { e.target.style.display = "none"; }}
-                        />
-                      </div>
+                    {/* Parent role */}
+                    <RoleCard exp={exp} isChild={false} />
 
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
-                          <h3 className="text-white font-bold text-base sm:text-lg">{exp.role}</h3>
-                          <span className="text-xs text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full whitespace-nowrap">
-                            {getDuration(exp.startDate, exp.present ? null : exp.endDate)}
-                          </span>
-                        </div>
-                        <p className="text-violet-400 font-semibold text-sm mb-0.5">{exp.company}</p>
-                        <p className="text-slate-500 text-xs mb-3">
-                          {formatDate(exp.startDate)} – {exp.present ? "Present" : formatDate(exp.endDate)}
-                          {exp.present && (
-                            <span className="ml-2 text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
-                              Current
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-slate-400 text-sm leading-relaxed mb-4">{exp.desc}</p>
+                    {/* ── Children (sub-roles / promotions) ── */}
+                    {exp.children && exp.children.length > 0 && (
+                      <div className="mt-5 ml-4 sm:ml-16 border-l-2 border-violet-500/30 pl-4 flex flex-col gap-4">
+                        {exp.children.map((child, ci) => (
+                          <motion.div
+                            key={child._id || ci}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: ci * 0.08 }}
+                            className="relative"
+                          >
+                            {/* Horizontal connector */}
+                            <div className="absolute -left-4 top-4 w-3 h-px bg-violet-500/40" />
+                            {/* Small dot on the vertical line */}
+                            <div className="absolute -left-[18px] top-[13px] w-2 h-2 rounded-full bg-violet-400/60 border border-violet-300/40" />
 
-                        {/* Skills */}
-                        {exp.skills && exp.skills.length > 0 && (
-                          <div className="flex flex-wrap gap-2">
-                            {exp.skills.map((skill, si) => (
-                              <span
-                                key={si}
-                                className="text-xs px-2.5 py-1 bg-white/5 border border-white/10 text-slate-300 rounded-lg hover:border-violet-500/40 hover:text-violet-300 transition-colors"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        )}
+                            <div className="bg-white/[0.03] border border-white/5 rounded-xl p-4">
+                              <RoleCard exp={child} isChild={true} />
+                            </div>
+                          </motion.div>
+                        ))}
                       </div>
-                    </div>
+                    )}
                   </motion.div>
                 </motion.div>
               ))}
