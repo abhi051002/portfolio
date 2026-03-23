@@ -746,7 +746,7 @@ const AiChat = () => {
       }
       setTimeout(() => inputRef.current?.focus(), 220);
     }
-  }, [open]);
+  }, [open, showNotif, greetingShown, handleDismissNotif]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
