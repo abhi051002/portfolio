@@ -12,6 +12,8 @@ import ProjectDetails from "./components/ProjectDetails";
 import { useState } from "react";
 import Article from "./components/Article";
 import MouseBackground from "./components/MouseBackground";
+import AiChat from "./components/AiChat";
+
 
 function App() {
   const [openModal, setOpenModal] = useState({ state: false, project: null });
@@ -35,6 +37,8 @@ function App() {
           <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />
         )}
       </div>
+      {/* AI Chat — fixed floating overlay */}
+      <AiChat />
     </Router>
   );
 }
