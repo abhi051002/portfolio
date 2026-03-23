@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
-import HeroImg from "../../Image/HeroImage.jpeg";
+import HeroImg from "../../Image/HeroImage.png";
 import HeroBgAnimation from "../HeroBgAnimation";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
