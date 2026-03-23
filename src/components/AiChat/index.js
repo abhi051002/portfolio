@@ -7,9 +7,11 @@ import { usePortfolio } from "../../context/PortfolioContext";
 //   #3 Smart thinking status while loading
 //   #7 Persist chat to localStorage
 //   #8 "Surprise Me" button
+//   #9 Attention-grabbing notification bubble on page load
 // ─────────────────────────────────────────────
 
 const LS_KEY = "abhi-chat-messages";
+const LS_NOTIF_KEY = "abhi-notif-dismissed";
 
 const INITIAL_MESSAGE = {
   role: "ai",
@@ -47,6 +49,15 @@ const THINKING_PHASES = [
   "Checking skills…",
   "Crafting response…",
   "Finalising answer…",
+];
+
+// #9 — Rotating teaser messages in the notification bubble
+const TEASER_MESSAGES = [
+  { emoji: "👀", text: "Psst — want to know if Abhijit is a good hire?" },
+  { emoji: "🚀", text: "Ask me about Abhijit's coolest projects!" },
+  { emoji: "💡", text: "Curious what tech stack he uses?" },
+  { emoji: "🤝", text: "I can connect you with Abhijit instantly!" },
+  { emoji: "⚡", text: "Get answers about Abhijit in seconds." },
 ];
 
 /* ── Icons ── */
@@ -94,6 +105,11 @@ const IconSparkle = () => (
     <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
   </svg>
 );
+const IconArrow = () => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+  </svg>
+);
 
 /* ── Keyframes injected once ── */
 const STYLES = `
@@ -124,6 +140,48 @@ const STYLES = `
   @keyframes slide-up  { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
   @keyframes pulse-glow{ 0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,0.5)} 50%{box-shadow:0 0 0 10px rgba(124,58,237,0)} }
 
+  /* #9 — Notification bubble animations */
+  @keyframes notif-slide-in {
+    0%  { opacity:0; transform: translateY(16px) scale(0.88); }
+    65% { transform: translateY(-4px) scale(1.02); }
+    100%{ opacity:1; transform: translateY(0) scale(1); }
+  }
+  @keyframes notif-slide-out {
+    from{ opacity:1; transform: translateY(0) scale(1); }
+    to  { opacity:0; transform: translateY(12px) scale(0.9); }
+  }
+  @keyframes notif-msg-swap {
+    0%  { opacity:0; transform: translateY(6px); }
+    100%{ opacity:1; transform: translateY(0); }
+  }
+  @keyframes notif-dot-ping {
+    0%  { transform: scale(1); opacity: 1; }
+    75%,100%{ transform: scale(2.2); opacity: 0; }
+  }
+  @keyframes notif-shimmer {
+    0%  { background-position: -200% center; }
+    100%{ background-position: 200% center; }
+  }
+  @keyframes notif-arrow-nudge {
+    0%,100%{ transform: translateX(0); }
+    50%    { transform: translateX(3px); }
+  }
+  @keyframes notif-glow-pulse {
+    0%,100%{ box-shadow: 0 0 0 0 rgba(124,58,237,0.0), 0 8px 32px rgba(0,0,0,0.55); }
+    50%    { box-shadow: 0 0 0 6px rgba(124,58,237,0.18), 0 8px 32px rgba(0,0,0,0.55); }
+  }
+  @keyframes notif-tail-wiggle {
+    0%,100%{ transform: rotate(45deg) scale(1); }
+    50%    { transform: rotate(45deg) scale(1.2); }
+  }
+  @keyframes shake {
+    0%,100%{ transform:translateX(0); }
+    20%    { transform:translateX(-4px); }
+    40%    { transform:translateX(4px); }
+    60%    { transform:translateX(-3px); }
+    80%    { transform:translateX(3px); }
+  }
+
   .antenna-dot { animation: blink 2.8s ease-in-out infinite; }
   .fab-ring-anim { animation: fab-ring 2.5s ease-out infinite; }
   .av-pulse-ring { animation: av-spin 3s linear infinite; opacity: 0.6; }
@@ -150,6 +208,25 @@ const STYLES = `
   .slide-up-1 { animation: slide-up 0.4s 0.2s ease both; }
   .slide-up-2 { animation: slide-up 0.4s 0.4s ease both; }
 
+  /* #9 — notification */
+  .notif-enter { animation: notif-slide-in 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+  .notif-exit  { animation: notif-slide-out 0.35s ease forwards; }
+  .notif-msg-enter { animation: notif-msg-swap 0.3s ease forwards; }
+  .notif-dot-ping  { animation: notif-dot-ping 1.4s cubic-bezier(0,0,0.2,1) infinite; }
+  .notif-glow      { animation: notif-glow-pulse 2.5s ease-in-out infinite; }
+  .notif-arrow     { animation: notif-arrow-nudge 1.2s ease-in-out infinite; }
+  .notif-tail      { animation: notif-tail-wiggle 2s ease-in-out infinite; }
+  .notif-shake     { animation: shake 0.5s ease; }
+
+  .notif-shimmer-text {
+    background: linear-gradient(90deg, #e0e7ff 0%, #a78bfa 40%, #67e8f9 60%, #e0e7ff 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: notif-shimmer 2.8s linear infinite;
+  }
+
   .scrollbar-custom::-webkit-scrollbar { width: 3px; }
   .scrollbar-custom::-webkit-scrollbar-thumb { background: rgba(124,58,237,0.3); border-radius: 4px; }
   .scrollbar-custom { scrollbar-width: thin; scrollbar-color: rgba(124,58,237,0.25) transparent; }
@@ -160,8 +237,15 @@ const STYLES = `
   .surprise-chip:hover { background: rgba(251,191,36,0.15); border-color: rgba(251,191,36,0.6); color: #fde68a; }
   .copy-btn-hover { opacity: 0; transition: opacity 0.15s; }
   .msg-body:hover .copy-btn-hover { opacity: 1; }
-
   .pulse-ring { animation: pulse-glow 2s ease-in-out infinite; }
+
+  .notif-cta-btn {
+    transition: background 0.18s, transform 0.15s;
+  }
+  .notif-cta-btn:hover {
+    background: rgba(124,58,237,0.35) !important;
+    transform: scale(1.04);
+  }
 `;
 
 /* ── Bot Avatar ── */
@@ -197,6 +281,188 @@ const BotAvatar = ({ size = 28, pulse = false }) => (
     </svg>
   </div>
 );
+
+/* ── #9 Attention-Grabbing Notification Bubble ── */
+const NotificationBubble = ({ onOpen, onDismiss }) => {
+  const [phase, setPhase] = useState("enter");      // enter | idle | exit
+  const [msgIndex, setMsgIndex] = useState(0);
+  const [msgAnim, setMsgAnim] = useState(true);
+  const [shaking, setShaking] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  // Auto-dismiss after 12 s (unless hovered)
+  useEffect(() => {
+    const t = setTimeout(() => {
+      if (!hovered) setPhase("exit");
+    }, 12000);
+    return () => clearTimeout(t);
+  }, [hovered]);
+
+  useEffect(() => {
+    if (phase === "exit") {
+      const t = setTimeout(onDismiss, 380);
+      return () => clearTimeout(t);
+    }
+  }, [phase, onDismiss]);
+
+  // Rotate messages every 3.2 s
+  useEffect(() => {
+    const t = setInterval(() => {
+      setMsgAnim(false);
+      setTimeout(() => {
+        setMsgIndex((i) => (i + 1) % TEASER_MESSAGES.length);
+        setMsgAnim(true);
+      }, 180);
+    }, 3200);
+    return () => clearInterval(t);
+  }, []);
+
+  // Shake the bubble every 5 s to re-grab attention
+  useEffect(() => {
+    const t = setInterval(() => {
+      setShaking(true);
+      setTimeout(() => setShaking(false), 550);
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
+
+  const msg = TEASER_MESSAGES[msgIndex];
+
+  return (
+    <div
+      className={`
+        fixed z-[999] bottom-[108px] right-[84px]
+        ${phase === "enter" ? "notif-enter" : ""}
+        ${phase === "exit"  ? "notif-exit"  : ""}
+        ${shaking ? "notif-shake" : ""}
+        notif-glow
+      `}
+      style={{ transformOrigin: "bottom right" }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Main bubble card */}
+      <div
+        className="relative rounded-[18px] overflow-hidden cursor-pointer select-none"
+        style={{
+          width: 248,
+          background: "linear-gradient(145deg, rgba(15,10,35,0.97) 0%, rgba(20,14,48,0.97) 100%)",
+          border: "1px solid rgba(124,58,237,0.45)",
+          boxShadow: "0 12px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)",
+        }}
+        onClick={() => { setPhase("exit"); onOpen(); }}
+      >
+        {/* Top shimmer bar */}
+        <div style={{
+          height: 2,
+          background: "linear-gradient(90deg, transparent, #7c3aed, #3b82f6, #7c3aed, transparent)",
+          backgroundSize: "200% auto",
+          animation: "notif-shimmer 2s linear infinite",
+        }} />
+
+        {/* Body */}
+        <div className="px-4 pt-3 pb-3.5">
+          {/* Top row: live dot + label + close */}
+          <div className="flex items-center justify-between mb-2.5">
+            <div className="flex items-center gap-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="notif-dot-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              <span className="text-[10px] font-bold tracking-[0.08em] uppercase text-emerald-400">
+                AI Online
+              </span>
+            </div>
+            <button
+              onClick={(e) => { e.stopPropagation(); setPhase("exit"); }}
+              className="flex items-center justify-center w-5 h-5 rounded-full bg-white/[0.06] border border-white/10 text-white/30 hover:text-white/70 hover:bg-white/10 transition-all"
+              style={{ fontSize: 9, lineHeight: 1 }}
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Rotating message */}
+          <div className="flex items-start gap-2.5 mb-3">
+            <div
+              className="flex-shrink-0 flex items-center justify-center rounded-xl text-lg"
+              style={{
+                width: 38,
+                height: 38,
+                background: "linear-gradient(135deg, rgba(124,58,237,0.25), rgba(59,130,246,0.2))",
+                border: "1px solid rgba(124,58,237,0.3)",
+              }}
+            >
+              {msg.emoji}
+            </div>
+            <div className="flex-1 min-w-0 pt-0.5">
+              <div
+                key={msgIndex}
+                className={msgAnim ? "notif-msg-enter" : ""}
+                style={{ opacity: msgAnim ? undefined : 0 }}
+              >
+                <p className="notif-shimmer-text m-0 text-[13px] font-bold leading-[1.4]">
+                  {msg.text}
+                </p>
+              </div>
+              <p className="m-0 mt-1 text-[11px] text-white/35 leading-tight">
+                Powered by Abhi's personal AI
+              </p>
+            </div>
+          </div>
+
+          {/* CTA button */}
+          <div
+            className="notif-cta-btn flex items-center justify-between px-3.5 py-2.5 rounded-xl"
+            style={{
+              background: "rgba(124,58,237,0.2)",
+              border: "1px solid rgba(124,58,237,0.4)",
+            }}
+          >
+            <span className="text-[12.5px] font-bold text-violet-200">
+              Ask me anything →
+            </span>
+            <span className="notif-arrow text-violet-400">
+              <IconArrow />
+            </span>
+          </div>
+
+          {/* Dots row - message index indicator */}
+          <div className="flex items-center justify-center gap-1 mt-2.5">
+            {TEASER_MESSAGES.map((_, i) => (
+              <span
+                key={i}
+                style={{
+                  width: i === msgIndex ? 14 : 4,
+                  height: 4,
+                  borderRadius: 9999,
+                  background: i === msgIndex ? "#7c3aed" : "rgba(255,255,255,0.15)",
+                  transition: "width 0.3s ease, background 0.3s ease",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Pointer tail toward FAB */}
+      <div
+        className="notif-tail absolute"
+        style={{
+          bottom: -6,
+          right: 22,
+          width: 12,
+          height: 12,
+          background: "rgba(20,14,48,0.97)",
+          border: "1px solid rgba(124,58,237,0.45)",
+          borderTop: "none",
+          borderLeft: "none",
+          transform: "rotate(45deg)",
+        }}
+      />
+    </div>
+  );
+};
 
 /* ── Greeting Mascot (shown on first open) ── */
 const GreetingOverlay = ({ onDone }) => {
@@ -412,7 +678,6 @@ const loadPersistedMessages = () => {
 
 const persistMessages = (msgs) => {
   try {
-    // Don't persist a chat that only has the initial AI greeting
     if (msgs.length <= 1) { localStorage.removeItem(LS_KEY); return; }
     localStorage.setItem(LS_KEY, JSON.stringify(msgs));
   } catch { /* storage full — ignore */ }
@@ -422,7 +687,6 @@ const persistMessages = (msgs) => {
 const AiChat = () => {
   const { portfolioId, backendUrl } = usePortfolio();
 
-  // #7 — load persisted messages on mount
   const [messages, setMessages] = useState(() => {
     const saved = loadPersistedMessages();
     return saved || [INITIAL_MESSAGE];
@@ -434,12 +698,14 @@ const AiChat = () => {
   const [loading, setLoading] = useState(false);
   const [streamingId, setStreamingId] = useState(null);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipDismissed, setTooltipDismissed] = useState(
-    () => !!localStorage.getItem("abhi-chat-visited")
-  );
   const [showGreeting, setShowGreeting] = useState(false);
   const [greetingShown, setGreetingShown] = useState(false);
+
+  // #9 — notification bubble state
+  const [showNotif, setShowNotif] = useState(false);
+  const [notifDismissed, setNotifDismissed] = useState(
+    () => !!sessionStorage.getItem(LS_NOTIF_KEY)   // once per session
+  );
 
   // #3 — thinking status
   const [thinkingStatus, setThinkingStatus] = useState("");
@@ -447,26 +713,33 @@ const AiChat = () => {
 
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
-  const abortRef = useRef(null); // abort controller for SSE
+  const abortRef = useRef(null);
 
-  // #7 — persist messages whenever they change
-  useEffect(() => {
-    persistMessages(messages);
-  }, [messages]);
+  // #7 — persist messages
+  useEffect(() => { persistMessages(messages); }, [messages]);
 
+  // #9 — show notification bubble 2.5 s after mount (if not dismissed this session)
   useEffect(() => {
-    if (tooltipDismissed || open) return;
-    const t = setTimeout(() => setShowTooltip(true), 9000);
+    if (notifDismissed || open) return;
+    const t = setTimeout(() => setShowNotif(true), 2500);
     return () => clearTimeout(t);
-  }, [tooltipDismissed, open]);
+  }, [notifDismissed, open]);
+
+  const handleDismissNotif = useCallback(() => {
+    setShowNotif(false);
+    setNotifDismissed(true);
+    sessionStorage.setItem(LS_NOTIF_KEY, "1");
+  }, []);
+
+  const handleNotifOpen = useCallback(() => {
+    handleDismissNotif();
+    setOpen(true);
+  }, [handleDismissNotif]);
 
   useEffect(() => {
     if (open) {
-      setShowTooltip(false);
-      if (!tooltipDismissed) {
-        localStorage.setItem("abhi-chat-visited", "1");
-        setTooltipDismissed(true);
-      }
+      // Hide notif when chat opens
+      if (showNotif) handleDismissNotif();
       if (!greetingShown) {
         setShowGreeting(true);
         setGreetingShown(true);
@@ -489,7 +762,6 @@ const AiChat = () => {
     return () => document.removeEventListener("mousedown", h);
   }, [showClearConfirm]);
 
-  // #3 — start/stop thinking status cycling
   const startThinking = () => {
     let idx = 0;
     setThinkingStatus(THINKING_PHASES[0]);
@@ -506,18 +778,16 @@ const AiChat = () => {
 
   const clearChat = () => {
     setMessages([INITIAL_MESSAGE]);
-    localStorage.removeItem(LS_KEY); // #7 — clear persistence
+    localStorage.removeItem(LS_KEY);
     setShowClearConfirm(false);
     setInput("");
   };
 
-  // #8 — Surprise Me
   const surpriseMe = useCallback(() => {
     const q = SURPRISE_QUESTIONS[Math.floor(Math.random() * SURPRISE_QUESTIONS.length)];
     sendMessage(q);
-  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // #2 — Real SSE streaming
   const sendMessage = useCallback(async (text) => {
     const msg = (text || input).trim();
     if (!msg || loading) return;
@@ -525,19 +795,17 @@ const AiChat = () => {
 
     setMessages((prev) => [...prev, { role: "user", content: msg }]);
     setLoading(true);
-    startThinking(); // #3
+    startThinking();
 
     const aiId = Date.now();
     setMessages((prev) => [...prev, { role: "ai", content: "", id: aiId }]);
     setStreamingId(aiId);
 
-    // Abort any in-flight request
     if (abortRef.current) abortRef.current.abort();
     const controller = new AbortController();
     abortRef.current = controller;
 
     try {
-      // Build history excluding initial greeting and the empty AI placeholder we just added
       const history = messages
         .filter((m, idx) => !(m.role === "ai" && idx === 0))
         .map((m) => ({ role: m.role === "ai" ? "assistant" : "user", content: m.content }));
@@ -551,9 +819,7 @@ const AiChat = () => {
         signal: controller.signal,
       });
 
-      if (!res.ok) {
-        throw new Error(`Server error ${res.status}`);
-      }
+      if (!res.ok) throw new Error(`Server error ${res.status}`);
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -566,7 +832,7 @@ const AiChat = () => {
 
         buffer += decoder.decode(value, { stream: true });
         const lines = buffer.split("\n");
-        buffer = lines.pop(); // keep incomplete line in buffer
+        buffer = lines.pop();
 
         for (const line of lines) {
           if (!line.startsWith("data: ")) continue;
@@ -581,7 +847,7 @@ const AiChat = () => {
             setMessages((prev) =>
               prev.map((m) => (m.id === aiId ? { ...m, content: snap } : m))
             );
-          } catch { /* malformed chunk — skip */ }
+          } catch { /* malformed chunk */ }
         }
       }
     } catch (err) {
@@ -595,7 +861,7 @@ const AiChat = () => {
     } finally {
       setStreamingId(null);
       setLoading(false);
-      stopThinking(); // #3
+      stopThinking();
     }
   }, [input, loading, messages, backendUrl, portfolioId]);
 
@@ -609,17 +875,12 @@ const AiChat = () => {
     <div className="aichat-root">
       <style>{STYLES}</style>
 
-      {/* Tooltip */}
-      {showTooltip && !open && (
-        <div className="tooltip-anim fixed bottom-[104px] right-8 z-[999] w-[210px] rounded-[14px] p-3 shadow-[0_8px_32px_rgba(0,0,0,0.45)]"
-          style={{ background: "linear-gradient(135deg,#1e1b4b,#1e3a5f)", border: "1px solid rgba(124,58,237,0.4)", transformOrigin: "bottom right" }}>
-          <div className="absolute -bottom-1.5 right-5 w-3 h-3 rotate-45" style={{ background: "#1e3a5f", borderRight: "1px solid rgba(124,58,237,0.4)", borderBottom: "1px solid rgba(124,58,237,0.4)" }} />
-          <button onClick={() => setShowTooltip(false)} className="absolute top-2 right-2 bg-transparent border-none text-white/40 cursor-pointer flex rounded p-0.5 hover:text-white transition-colors">
-            <IconClose />
-          </button>
-          <p className="m-0 mb-0.5 text-[13.5px] font-semibold text-[#e0e7ff]">👋 Curious about Abhijit?</p>
-          <span className="text-xs text-[#a5b4fc]">Ask his AI anything →</span>
-        </div>
+      {/* #9 — Attention-grabbing notification bubble */}
+      {showNotif && !open && (
+        <NotificationBubble
+          onOpen={handleNotifOpen}
+          onDismiss={handleDismissNotif}
+        />
       )}
 
       {/* FAB */}
@@ -635,13 +896,7 @@ const AiChat = () => {
         <span className="fab-ring-anim absolute inset-[-6px] rounded-full border-2 border-violet-500/40 pointer-events-none" />
         {open
           ? <IconClose />
-          : <>
-            <BotAvatar size={30} pulse />
-            {!tooltipDismissed && (
-              <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full bg-pink-400 border-2 border-[#1e1b4b]"
-                style={{ animation: "badge-pop 0.3s cubic-bezier(0.34,1.56,0.64,1)" }} />
-            )}
-          </>
+          : <BotAvatar size={30} pulse />
         }
       </button>
 
@@ -652,10 +907,7 @@ const AiChat = () => {
           style={{ background: "rgba(10,8,28,0.95)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", transformOrigin: "bottom right" }}
           role="dialog"
         >
-          {/* Greeting mascot overlay */}
-          {showGreeting && (
-            <GreetingOverlay onDone={() => setShowGreeting(false)} />
-          )}
+          {showGreeting && <GreetingOverlay onDone={() => setShowGreeting(false)} />}
 
           {/* Header */}
           <div className="flex items-center gap-2.5 px-3.5 py-3.5 flex-shrink-0 border-b border-violet-500/[0.18]"
@@ -706,7 +958,6 @@ const AiChat = () => {
               )
             )}
 
-            {/* #8 Suggestions + Surprise Me */}
             {isFirstMessage && (
               <div className="mt-1">
                 <p className="text-[11px] text-[#4b5563] mb-1.5 ml-0.5">Try asking</p>
@@ -718,7 +969,6 @@ const AiChat = () => {
                       {s}
                     </button>
                   ))}
-                  {/* ✨ Surprise Me */}
                   <button
                     onClick={surpriseMe}
                     className="surprise-chip flex items-center gap-1.5 text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-amber-300 font-semibold"
@@ -730,7 +980,6 @@ const AiChat = () => {
               </div>
             )}
 
-            {/* #3 Smart thinking indicator */}
             {loading && messages[messages.length - 1]?.content === "" && (
               <ThinkingIndicator status={thinkingStatus} />
             )}
