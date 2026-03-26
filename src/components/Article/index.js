@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation, Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
 import { FaExternalLinkAlt, FaCalendarAlt } from "react-icons/fa";
 
 const Article = () => {
   const { articles, loading, fetchArticles } = usePortfolio();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     if (articles.length === 0) fetchArticles();
@@ -36,8 +39,9 @@ const Article = () => {
         {loading.articles ? (
           <Loader text="Loading articles..." size="60px" minHeight="400px" />
         ) : articles && articles.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
-            {articles.map((article, index) => (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {articles.slice(0, isHome ? 3 : articles.length).map((article, index) => (
               <motion.a
                 key={article.id || index}
                 href={article.link}
@@ -84,8 +88,21 @@ const Article = () => {
                   </div>
                 </div>
               </motion.a>
-            ))}
-          </div>
+              ))}
+            </div>
+
+            {isHome && articles.length > 2 && (
+              <div className="mt-12 flex justify-center">
+                <Link
+                  to="/articles"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="px-8 py-3 bg-white/5 border border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500 text-violet-400 hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
+                >
+                  Show All Articles
+                </Link>
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-slate-400 text-center py-10">No articles found</p>
         )}

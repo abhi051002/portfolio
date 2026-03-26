@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { usePortfolio } from "../../context/PortfolioContext";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // ─────────────────────────────────────────────
 //  Unique features:
@@ -19,6 +21,7 @@ const INITIAL_MESSAGE = {
 };
 
 const SUGGESTIONS = [
+  "Why should we hire him?",
   "Where did Abhijit work recently?",
   "What tech stack does he use?",
   "Tell me about his projects",
@@ -29,6 +32,7 @@ const SUGGESTIONS = [
 // #8 — Surprise Me question pool
 const SURPRISE_QUESTIONS = [
   "What's his most challenging project ever?",
+  "What technologies does Abhijit use?",
   "What makes him stand out from other developers?",
   "What's his biggest career achievement so far?",
   "Which technology is he most passionate about?",
@@ -239,13 +243,22 @@ const STYLES = `
   .msg-body:hover .copy-btn-hover { opacity: 1; }
   .pulse-ring { animation: pulse-glow 2s ease-in-out infinite; }
 
-  .notif-cta-btn {
-    transition: background 0.18s, transform 0.15s;
-  }
   .notif-cta-btn:hover {
     background: rgba(124,58,237,0.35) !important;
     transform: scale(1.04);
   }
+
+  /* Markdown body styles to override Tailwind reset */
+  .aichat-md p { margin-bottom: 0.6em; }
+  .aichat-md p:last-child { margin-bottom: 0; }
+  .aichat-md ul { list-style-type: disc; margin-left: 1.5em; margin-bottom: 0.6em; }
+  .aichat-md ol { list-style-type: decimal; margin-left: 1.5em; margin-bottom: 0.6em; }
+  .aichat-md li { margin-bottom: 0.25em; padding-left: 0.25em; }
+  .aichat-md h1, .aichat-md h2, .aichat-md h3, .aichat-md h4 { font-weight: 800; margin-top: 1em; margin-bottom: 0.5em; color: #fff; }
+  .aichat-md h3 { font-size: 1.15em; }
+  .aichat-md strong { font-weight: 700; color: #fff; }
+  .aichat-md a { color: #a5b4fc; text-decoration: underline; text-underline-offset: 4px; border-radius: 2px; transition: color 0.15s; }
+  .aichat-md a:hover { color: #e0e7ff; background: rgba(124,58,237,0.2); }
 `;
 
 /* ── Bot Avatar ── */
@@ -333,7 +346,7 @@ const NotificationBubble = ({ onOpen, onDismiss }) => {
       className={`
         fixed z-[999] bottom-[108px] right-[84px]
         ${phase === "enter" ? "notif-enter" : ""}
-        ${phase === "exit"  ? "notif-exit"  : ""}
+        ${phase === "exit" ? "notif-exit" : ""}
         ${shaking ? "notif-shake" : ""}
         notif-glow
       `}
@@ -557,33 +570,13 @@ const GreetingOverlay = ({ onDone }) => {
   );
 };
 
-/* ── Linkify ── */
-const URL_REGEX = /https?:\/\/[^\s]+/g;
-const linkify = (text) => {
-  const parts = text.split(URL_REGEX);
-  const urls = text.match(URL_REGEX) || [];
-  return parts.reduce((acc, part, i) => {
-    acc.push(part);
-    if (urls[i]) {
-      const href = urls[i].replace(/[.,)]+$/, "");
-      let label = href.replace(/^https?:\/\/(www\.)?/, "");
-      if (label.startsWith("linkedin.com")) label = "LinkedIn ↗";
-      else if (label.startsWith("github.com")) label = "GitHub ↗";
-      else if (label.length > 38) label = label.slice(0, 38) + "…";
-      acc.push(
-        <a key={i} href={href} target="_blank" rel="noopener noreferrer"
-          className="text-indigo-300 underline underline-offset-2 hover:text-indigo-100 transition-colors">
-          {label}
-        </a>
-      );
-    }
-    return acc;
-  }, []);
-};
-
-/* ── Streaming text ── */
+/* ── Streaming text / Markdown renderer ── */
 const StreamingText = ({ text }) => (
-  <span>{linkify(text)}</span>
+  <div className="aichat-md">
+    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      {text}
+    </ReactMarkdown>
+  </div>
 );
 
 /* ── Message ── */
@@ -704,7 +697,7 @@ const AiChat = () => {
   // #9 — notification bubble state
   const [showNotif, setShowNotif] = useState(false);
   const [notifDismissed, setNotifDismissed] = useState(
-    () => !!sessionStorage.getItem(LS_NOTIF_KEY)   // once per session
+    () => !!sessionStorage.getItem(LS_NOTIF_KEY)
   );
 
   // #3 — thinking status
@@ -718,12 +711,19 @@ const AiChat = () => {
   // #7 — persist messages
   useEffect(() => { persistMessages(messages); }, [messages]);
 
+  // #10 — listen for external open commands (e.g. from Navbar)
+  useEffect(() => {
+    const handleOpenChat = () => setOpen(true);
+    window.addEventListener("open-ai-chat", handleOpenChat);
+    return () => window.removeEventListener("open-ai-chat", handleOpenChat);
+  }, []);
+
   // #9 — show notification bubble 2.5 s after mount (if not dismissed this session)
   useEffect(() => {
     if (notifDismissed || open) return;
-    const t = setTimeout(() => setShowNotif(true), 2500);
+    const t = setTimeout(() => setShowNotif(true), 1500);
     return () => clearTimeout(t);
-  }, [notifDismissed, open]);
+  }, [open, notifDismissed]);
 
   const handleDismissNotif = useCallback(() => {
     setShowNotif(false);
@@ -785,7 +785,8 @@ const AiChat = () => {
 
   const surpriseMe = useCallback(() => {
     const q = SURPRISE_QUESTIONS[Math.floor(Math.random() * SURPRISE_QUESTIONS.length)];
-    sendMessage(q);
+    setInput(q);
+    inputRef.current?.focus();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const sendMessage = useCallback(async (text) => {
@@ -869,8 +870,6 @@ const AiChat = () => {
     if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   };
 
-  const isFirstMessage = messages.length === 1 && !loading;
-
   return (
     <div className="aichat-root">
       <style>{STYLES}</style>
@@ -903,7 +902,7 @@ const AiChat = () => {
       {/* Panel */}
       {open && (
         <div
-          className={`panel-anim fixed z-[1000] flex flex-col overflow-hidden rounded-[22px] border border-violet-500/25 shadow-[0_16px_56px_rgba(0,0,0,0.6),0_0_0_1px_rgba(124,58,237,0.1),inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${maximized ? "bottom-[108px] right-8 w-[min(740px,calc(100vw-48px))] h-[min(86vh,820px)]" : "bottom-[108px] right-8 w-[375px] max-w-[calc(100vw-48px)] h-[530px] max-h-[calc(100vh-148px)]"}`}
+          className={`panel-anim fixed z-[1000] flex flex-col overflow-hidden rounded-[22px] border border-violet-500/25 shadow-[0_16px_56px_rgba(0,0,0,0.6),0_0_0_1px_rgba(124,58,237,0.1),inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${maximized ? "top-4 bottom-4 right-4 sm:top-8 sm:bottom-8 sm:right-8 w-[calc(100vw-32px)] sm:w-[700px] lg:w-[850px]" : "bottom-[108px] right-8 w-[375px] max-w-[calc(100vw-48px)] h-[530px] max-h-[calc(100vh-148px)]"}`}
           style={{ background: "rgba(10,8,28,0.95)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", transformOrigin: "bottom right" }}
           role="dialog"
         >
@@ -950,34 +949,59 @@ const AiChat = () => {
             </div>
           </div>
 
+          {/* Pinned Try Asking Suggestions */}
+          <div className="flex-shrink-0 px-3 py-2 border-b border-violet-500/[0.1] bg-[rgba(79,31,189,0.03)] hidden sm:block">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-custom pb-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#4b5563] flex-shrink-0 mr-1 pl-0.5">Ask:</span>
+              <button
+                onClick={surpriseMe}
+                className="surprise-chip flex-shrink-0 flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full cursor-pointer whitespace-nowrap text-amber-300 font-semibold"
+                style={{ border: "1px solid rgba(251,191,36,0.4)", background: "rgba(251,191,36,0.07)" }}
+              >
+                <IconSparkle /> Surprise Me
+              </button>
+              {SUGGESTIONS.map((s) => (
+                <button key={s} onClick={() => { setInput(s); inputRef.current?.focus(); }}
+                  className="chip-btn flex-shrink-0 text-[11px] px-2.5 py-1 rounded-full cursor-pointer whitespace-nowrap text-[#a5b4fc]"
+                  style={{ border: "1px solid rgba(124,58,237,0.35)", background: "rgba(79,31,189,0.08)" }}>
+                  {s}
+                </button>
+              ))}
+            </div>
+            <style>
+              {`
+                /* Hide scrollbar for Chrome, Safari and Opera */
+                .scrollbar-custom::-webkit-scrollbar { display: none; }
+              `}
+            </style>
+          </div>
+
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-3 pt-3.5 pb-2 flex flex-col gap-3 scrollbar-custom">
+          <div className="flex-1 overflow-y-auto px-3 pt-3 pb-2 flex flex-col gap-3 scrollbar-custom">
+            <div className="sm:hidden mb-2">
+              <p className="text-[11px] text-[#4b5563] mb-1.5 ml-0.5">Try asking</p>
+              <div className="flex flex-wrap gap-1.5">
+                {SUGGESTIONS.map((s) => (
+                  <button key={s} onClick={() => { setInput(s); inputRef.current?.focus(); }}
+                    className="chip-btn text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-[#a5b4fc]"
+                    style={{ border: "1px solid rgba(124,58,237,0.35)", background: "rgba(79,31,189,0.08)" }}>
+                    {s}
+                  </button>
+                ))}
+                <button
+                  onClick={surpriseMe}
+                  className="surprise-chip flex items-center gap-1.5 text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-amber-300 font-semibold"
+                  style={{ border: "1px solid rgba(251,191,36,0.4)", background: "rgba(251,191,36,0.07)" }}
+                >
+                  <IconSparkle /> Surprise Me
+                </button>
+              </div>
+            </div>
+
             {messages.map((msg, i) =>
               msg.content === "" ? null : (
                 <Message key={msg.id || i} role={msg.role} content={msg.content} streaming={msg.id === streamingId} />
               )
-            )}
-
-            {isFirstMessage && (
-              <div className="mt-1">
-                <p className="text-[11px] text-[#4b5563] mb-1.5 ml-0.5">Try asking</p>
-                <div className="flex flex-wrap gap-1.5">
-                  {SUGGESTIONS.map((s) => (
-                    <button key={s} onClick={() => sendMessage(s)}
-                      className="chip-btn text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-[#a5b4fc]"
-                      style={{ border: "1px solid rgba(124,58,237,0.35)", background: "rgba(79,31,189,0.08)" }}>
-                      {s}
-                    </button>
-                  ))}
-                  <button
-                    onClick={surpriseMe}
-                    className="surprise-chip flex items-center gap-1.5 text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-amber-300 font-semibold"
-                    style={{ border: "1px solid rgba(251,191,36,0.4)", background: "rgba(251,191,36,0.07)" }}
-                  >
-                    <IconSparkle /> Surprise Me
-                  </button>
-                </div>
-              </div>
             )}
 
             {loading && messages[messages.length - 1]?.content === "" && (

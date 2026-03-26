@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation, Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
@@ -88,6 +89,8 @@ const ProjectCard = ({ project, onClick }) => (
 
 const Project = ({ openModal, setOpenModal }) => {
   const { projects, loading, fetchProjects } = usePortfolio();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     if (projects.length === 0) fetchProjects();
@@ -116,17 +119,31 @@ const Project = ({ openModal, setOpenModal }) => {
         {loading.projects ? (
           <Loader text="Loading projects..." size="60px" minHeight="400px" />
         ) : projects && projects.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...projects]
-              .sort((a, b) => b.id - a.id)
-              .map((project, index) => (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...projects]
+                .sort((a, b) => b.id - a.id)
+                .slice(0, isHome ? 3 : projects.length)
+                .map((project, index) => (
                 <ProjectCard
                   key={project._id || index}
                   project={project}
                   onClick={() => setOpenModal({ state: true, project })}
                 />
               ))}
-          </div>
+            </div>
+            {isHome && projects.length > 3 && (
+              <div className="mt-12 flex justify-center">
+                <Link
+                  to="/projects"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="px-8 py-3 bg-white/5 border border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500 text-violet-400 hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
+                >
+                  Show All Projects
+                </Link>
+              </div>
+            )}
+          </>
         ) : (
           <p className="text-slate-400 text-center py-10">No projects found</p>
         )}

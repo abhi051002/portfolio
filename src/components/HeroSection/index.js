@@ -2,7 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
 import HeroImg from "../../Image/HeroImage.png";
-import HeroBgAnimation from "../HeroBgAnimation";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
@@ -17,8 +16,7 @@ const Hero = () => {
 
   if (loading.bio) {
     return (
-      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030712]">
-        <div className="absolute inset-0"><HeroBgAnimation /></div>
+      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
         <Loader text="Loading profile..." size="70px" minHeight="100vh" />
       </div>
     );
@@ -26,8 +24,7 @@ const Hero = () => {
 
   if (!bioData) {
     return (
-      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#030712]">
-        <div className="absolute inset-0"><HeroBgAnimation /></div>
+      <div id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
         <p className="text-white text-center px-8">Profile data not available</p>
       </div>
     );
@@ -36,12 +33,8 @@ const Hero = () => {
   return (
     <div
       id="about"
-      className="relative min-h-screen flex items-center overflow-hidden bg-[#030712]"
+      className="relative min-h-screen flex items-center overflow-hidden bg-transparent"
     >
-      {/* Animated background */}
-      <div className="absolute inset-0">
-        <HeroBgAnimation />
-      </div>
 
       {/* Glow orbs */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-700/10 rounded-full blur-3xl pointer-events-none" />

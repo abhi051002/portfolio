@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation, Link } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import { usePortfolio } from "../../context/PortfolioContext";
 
@@ -51,11 +52,10 @@ const RoleCard = ({ exp, isChild = false }) => (
     <div className="flex-1 min-w-0">
       <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
         <h3
-          className={`font-bold ${
-            isChild
+          className={`font-bold ${isChild
               ? "text-slate-200 text-sm sm:text-base"
               : "text-white text-base sm:text-lg"
-          }`}
+            }`}
         >
           {exp.role}
         </h3>
@@ -104,6 +104,8 @@ const RoleCard = ({ exp, isChild = false }) => (
 
 const Experience = () => {
   const { experiences, loading, fetchExperiences } = usePortfolio();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     if (experiences.length === 0) fetchExperiences();
@@ -137,7 +139,7 @@ const Experience = () => {
             <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/80 via-violet-500/30 to-transparent hidden sm:block" />
 
             <div className="flex flex-col gap-8">
-              {experiences.map((exp, index) => (
+              {experiences.slice(0, isHome ? 3 : experiences.length).map((exp, index) => (
                 <motion.div
                   key={exp._id || index}
                   initial={{ opacity: 0, x: -30 }}
@@ -187,6 +189,18 @@ const Experience = () => {
                 </motion.div>
               ))}
             </div>
+
+            {isHome && experiences.length > 3 && (
+              <div className="mt-12 flex justify-center relative z-20">
+                <Link
+                  to="/experience"
+                  onClick={() => window.scrollTo(0, 0)}
+                  className="px-8 py-3 bg-white/5 border border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500 text-violet-400 hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
+                >
+                  Show All Experience
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
           <p className="text-slate-400 text-center py-10">No experience found</p>

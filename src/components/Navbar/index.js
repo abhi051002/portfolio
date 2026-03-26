@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes, FaGithub } from "react-icons/fa";
 import { usePortfolio } from "../../context/PortfolioContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -16,6 +16,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { bioData } = usePortfolio();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 80);
@@ -53,7 +55,18 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={"/" + link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (location.pathname === "/") {
+                      document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                      navigate("/" + link.href);
+                      setTimeout(() => {
+                        document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+                      }, 100);
+                    }
+                  }}
                   className="text-slate-400 hover:text-white text-sm font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-violet-500 after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {link.label}
@@ -62,8 +75,15 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* GitHub Button */}
+          {/* Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => window.dispatchEvent(new Event('open-ai-chat'))}
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20 hover:text-white border border-indigo-500/20 hover:border-indigo-400/40 text-sm font-semibold transition-all duration-200"
+            >
+              <span className="text-[9px] bg-indigo-500 text-white px-1.5 py-0.5 rounded leading-none mr-0.5">AI</span>
+              Ask AI
+            </button>
             <a
               href={bioData?.github || "#"}
               target="_blank"
@@ -97,8 +117,19 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
-                  onClick={handleClose}
+                  href={"/" + link.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (location.pathname === "/") {
+                      document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+                    } else {
+                      navigate("/" + link.href);
+                      setTimeout(() => {
+                        document.querySelector(link.href)?.scrollIntoView({ behavior: "smooth" });
+                      }, 100);
+                    }
+                    handleClose();
+                  }}
                   className="block px-3 py-2.5 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg text-sm font-medium transition-all duration-200"
                 >
                   {link.label}
@@ -106,7 +137,17 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <div className="mt-3 pt-3 border-t border-white/5">
+          <div className="mt-3 pt-3 border-t border-white/5 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                window.dispatchEvent(new Event('open-ai-chat'));
+                handleClose();
+              }}
+              className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-lg bg-indigo-500/10 text-indigo-300 hover:bg-indigo-500/20 hover:text-white border border-indigo-500/20 text-sm font-semibold transition-colors duration-200"
+            >
+              <span className="text-[9px] bg-indigo-500 text-white px-1.5 py-0.5 rounded leading-none">AI</span>
+              Ask AI
+            </button>
             <a
               href={bioData?.github || "#"}
               target="_blank"

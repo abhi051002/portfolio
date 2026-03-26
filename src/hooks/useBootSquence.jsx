@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 
 export const useBootSequence = () => {
-  const [showBootScreen, setShowBootScreen] = useState(true);
+  const validSubpages = ["/projects", "/articles", "/experience"];
+  const showInitialBoot = !validSubpages.includes(window.location.pathname);
+  const [showBootScreen, setShowBootScreen] = useState(showInitialBoot);
   const [bootAnimation, setBootAnimation] = useState(false);
   const [shutterAnimation, setShutterAnimation] = useState(false);
   const [loadingText, setLoadingText] = useState("Initializing system...");
