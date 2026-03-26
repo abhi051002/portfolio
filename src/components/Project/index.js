@@ -26,11 +26,11 @@ const ProjectCard = ({ project, onClick }) => (
           e.target.style.display = "none";
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/90 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-[#030712]/90 via-transparent to-transparent" />
 
       {/* Hover overlay */}
-      <div className="absolute inset-0 bg-violet-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-        <span className="text-white font-semibold text-sm bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30">
+      <div className="absolute inset-0 bg-violet-600/10 dark:bg-violet-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <span className="text-slate-900 dark:text-white font-semibold text-sm bg-white/60 dark:bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50 dark:border-white/30">
           View Details
         </span>
       </div>
@@ -38,23 +38,23 @@ const ProjectCard = ({ project, onClick }) => (
 
     {/* Content */}
     <div className="p-5">
-      <h3 className="text-white font-bold text-lg mb-2 group-hover:text-violet-300 transition-colors">
+      <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-300 transition-colors">
         {project.title}
       </h3>
-      <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">{project.description}</p>
+      <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3">{project.description}</p>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-1.5 mb-4">
         {project.tags?.slice(0, 4).map((tag, i) => (
           <span
             key={i}
-            className="text-xs px-2 py-0.5 bg-violet-500/10 border border-violet-500/20 text-violet-400 rounded-md"
+            className="text-xs px-2 py-0.5 bg-violet-100 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 text-violet-600 dark:text-violet-400 rounded-md"
           >
             {tag}
           </span>
         ))}
         {project.tags?.length > 4 && (
-          <span className="text-xs px-2 py-0.5 bg-white/5 border border-white/10 text-slate-400 rounded-md">
+          <span className="text-xs px-2 py-0.5 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 rounded-md">
             +{project.tags.length - 4}
           </span>
         )}
@@ -67,7 +67,7 @@ const ProjectCard = ({ project, onClick }) => (
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
+            className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
           >
             <FaGithub size={14} /> Code
           </a>
@@ -77,7 +77,7 @@ const ProjectCard = ({ project, onClick }) => (
             href={project.webapp}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs text-violet-400 hover:text-violet-300 transition-colors"
+            className="flex items-center gap-1.5 text-xs text-violet-600 dark:text-violet-400 hover:text-violet-500 dark:hover:text-violet-300 transition-colors"
           >
             <FaExternalLinkAlt size={12} /> Live Demo
           </a>
@@ -107,10 +107,10 @@ const Project = ({ openModal, setOpenModal }) => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-3">
             My <span className="gradient-text">Projects</span>
           </h2>
-          <p className="text-slate-400 text-base max-w-lg mx-auto">
+          <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg mx-auto">
             A showcase of the things I've built
           </p>
           <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
@@ -137,7 +137,7 @@ const Project = ({ openModal, setOpenModal }) => {
                 <Link
                   to="/projects"
                   onClick={() => window.scrollTo(0, 0)}
-                  className="px-8 py-3 bg-white/5 border border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500 text-violet-400 hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
+                  className="px-8 py-3 bg-slate-100 dark:bg-white/5 border border-violet-500/30 hover:bg-violet-100 dark:hover:bg-violet-500/10 hover:border-violet-500 text-violet-600 dark:text-violet-400 hover:text-slate-900 dark:hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
                 >
                   Show All Projects
                 </Link>

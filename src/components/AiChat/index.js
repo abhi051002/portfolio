@@ -254,11 +254,18 @@ const STYLES = `
   .aichat-md ul { list-style-type: disc; margin-left: 1.5em; margin-bottom: 0.6em; }
   .aichat-md ol { list-style-type: decimal; margin-left: 1.5em; margin-bottom: 0.6em; }
   .aichat-md li { margin-bottom: 0.25em; padding-left: 0.25em; }
-  .aichat-md h1, .aichat-md h2, .aichat-md h3, .aichat-md h4 { font-weight: 800; margin-top: 1em; margin-bottom: 0.5em; color: #fff; }
+  
+  .aichat-md h1, .aichat-md h2, .aichat-md h3, .aichat-md h4 { font-weight: 800; margin-top: 1em; margin-bottom: 0.5em; color: #0f172a; }
+  .dark .aichat-md h1, .dark .aichat-md h2, .dark .aichat-md h3, .dark .aichat-md h4 { color: #fff; }
   .aichat-md h3 { font-size: 1.15em; }
-  .aichat-md strong { font-weight: 700; color: #fff; }
-  .aichat-md a { color: #a5b4fc; text-decoration: underline; text-underline-offset: 4px; border-radius: 2px; transition: color 0.15s; }
-  .aichat-md a:hover { color: #e0e7ff; background: rgba(124,58,237,0.2); }
+  
+  .aichat-md strong { font-weight: 700; color: #0f172a; }
+  .dark .aichat-md strong { color: #fff; }
+  
+  .aichat-md a { color: #6366f1; text-decoration: underline; text-underline-offset: 4px; border-radius: 2px; transition: color 0.15s; }
+  .dark .aichat-md a { color: #a5b4fc; }
+  .aichat-md a:hover { color: #4f46e5; background: rgba(124,58,237,0.1); }
+  .dark .aichat-md a:hover { color: #e0e7ff; background: rgba(124,58,237,0.2); }
 `;
 
 /* ── Bot Avatar ── */
@@ -596,27 +603,22 @@ const Message = ({ role, content, streaming = false }) => {
         <div
           className={`px-3.5 py-2.5 text-[13.5px] leading-[1.55] break-words word-break
             ${role === "ai"
-              ? "rounded-[18px] rounded-bl-[4px] text-[#d1d5f0] border border-violet-500/20"
-              : "rounded-[18px] rounded-br-[4px] text-white shadow-[0_2px_12px_rgba(79,31,189,0.3)]"
+              ? "rounded-[18px] rounded-bl-[4px] text-slate-800 dark:text-[#d1d5f0] border border-violet-200 dark:border-violet-500/20 bg-violet-50 dark:bg-violet-500/10"
+              : "rounded-[18px] rounded-br-[4px] text-white shadow-md bg-gradient-to-br from-violet-600 to-blue-600"
             }`}
-          style={role === "ai"
-            ? { background: "rgba(79,31,189,0.12)" }
-            : { background: "linear-gradient(135deg,#5b21b6,#1d4ed8)" }
-          }
         >
           {role === "ai" ? <StreamingText text={content} streaming={streaming} /> : content}
         </div>
         {role === "ai" && !streaming && (
           <button onClick={copy} title="Copy"
-            className="copy-btn-hover flex items-center gap-1 px-1.5 py-0.5 rounded-md border border-violet-500/20 text-white/30 text-[11px] cursor-pointer hover:text-violet-400 hover:bg-violet-500/10 transition-colors">
+            className="copy-btn-hover flex items-center gap-1 px-1.5 py-0.5 rounded-md border border-slate-200 dark:border-violet-500/20 text-slate-500 dark:text-white/30 text-[11px] cursor-pointer hover:text-violet-600 dark:hover:text-violet-400 hover:bg-slate-100 dark:hover:bg-violet-500/10 transition-colors">
             {copied ? <IconCheck /> : <IconCopy />}
             {copied ? "Copied" : "Copy"}
           </button>
         )}
       </div>
       {role === "user" && (
-        <div className="w-[26px] h-[26px] rounded-full flex items-center justify-center text-[9px] font-bold text-white/70 uppercase tracking-wider flex-shrink-0"
-          style={{ background: "linear-gradient(135deg,#1d4ed8,#5b21b6)" }}>
+        <div className="w-[26px] h-[26px] rounded-full flex items-center justify-center text-[9px] font-bold text-white/90 uppercase tracking-wider flex-shrink-0 bg-gradient-to-br from-blue-600 to-violet-700">
           you
         </div>
       )}
@@ -629,8 +631,7 @@ const ThinkingIndicator = ({ status }) => (
   <div className="flex gap-2 items-end">
     <BotAvatar size={28} />
     <div className="flex flex-col gap-1.5">
-      <div className="px-4 py-3 rounded-[18px] rounded-bl-[4px] border border-violet-500/20"
-        style={{ background: "rgba(79,31,189,0.12)" }}>
+      <div className="px-4 py-3 rounded-[18px] rounded-bl-[4px] border border-violet-200 dark:border-violet-500/20 bg-violet-50 dark:bg-violet-500/10">
         <div className="flex items-center gap-2">
           <span className="dot1 w-[6px] h-[6px] rounded-full bg-violet-500 flex-shrink-0" />
           <span className="dot2 w-[6px] h-[6px] rounded-full bg-violet-400 flex-shrink-0" />
@@ -638,7 +639,7 @@ const ThinkingIndicator = ({ status }) => (
           {status && (
             <span
               key={status}
-              className="thinking-status-anim text-[11.5px] text-violet-300/80 ml-1 font-medium"
+              className="thinking-status-anim text-[11.5px] text-violet-600 dark:text-violet-300/80 ml-1 font-medium"
             >
               {status}
             </span>
@@ -652,7 +653,7 @@ const ThinkingIndicator = ({ status }) => (
 /* ── Header button ── */
 const HBtn = ({ onClick, title, children }) => (
   <button onClick={onClick} title={title}
-    className="flex items-center justify-center w-7 h-7 rounded-lg border-none bg-transparent text-white/50 cursor-pointer hover:bg-white/[0.08] hover:text-[#e0e7ff] transition-colors">
+    className="flex items-center justify-center w-7 h-7 rounded-lg border-none bg-transparent text-slate-500 dark:text-white/50 cursor-pointer hover:bg-slate-200 dark:hover:bg-white/[0.08] hover:text-slate-900 dark:hover:text-[#e0e7ff] transition-colors">
     {children}
   </button>
 );
@@ -902,22 +903,21 @@ const AiChat = () => {
       {/* Panel */}
       {open && (
         <div
-          className={`panel-anim fixed z-[1000] flex flex-col overflow-hidden rounded-[22px] border border-violet-500/25 shadow-[0_16px_56px_rgba(0,0,0,0.6),0_0_0_1px_rgba(124,58,237,0.1),inset_0_1px_0_rgba(255,255,255,0.04)] transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${maximized ? "top-4 bottom-4 right-4 sm:top-8 sm:bottom-8 sm:right-8 w-[calc(100vw-32px)] sm:w-[700px] lg:w-[850px]" : "bottom-[108px] right-8 w-[375px] max-w-[calc(100vw-48px)] h-[530px] max-h-[calc(100vh-148px)]"}`}
-          style={{ background: "rgba(10,8,28,0.95)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", transformOrigin: "bottom right" }}
+          className={`panel-anim fixed z-[1000] flex flex-col overflow-hidden rounded-[22px] border border-violet-500/25 shadow-[0_16px_56px_rgba(0,0,0,0.1)] dark:shadow-[0_16px_56px_rgba(0,0,0,0.6)] bg-white/95 dark:bg-[#0a081c]/95 backdrop-blur-xl transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${maximized ? "top-4 bottom-4 right-4 sm:top-8 sm:bottom-8 sm:right-8 w-[calc(100vw-32px)] sm:w-[700px] lg:w-[850px]" : "bottom-[108px] right-8 w-[375px] max-w-[calc(100vw-48px)] h-[530px] max-h-[calc(100vh-148px)]"}`}
+          style={{ transformOrigin: "bottom right" }}
           role="dialog"
         >
           {showGreeting && <GreetingOverlay onDone={() => setShowGreeting(false)} />}
 
           {/* Header */}
-          <div className="flex items-center gap-2.5 px-3.5 py-3.5 flex-shrink-0 border-b border-violet-500/[0.18]"
-            style={{ background: "linear-gradient(90deg,rgba(79,31,189,0.22) 0%,rgba(30,64,175,0.14) 100%)" }}>
+          <div className="flex items-center gap-2.5 px-3.5 py-3.5 flex-shrink-0 border-b border-violet-500/20 bg-gradient-to-r from-violet-500/5 dark:from-violet-500/20 to-blue-500/5 dark:to-blue-500/10">
             <BotAvatar size={34} pulse />
             <div className="flex-1 min-w-0">
-              <h4 className="m-0 text-[13.5px] font-bold text-[#e0e7ff] flex items-center gap-1.5">
+              <h4 className="m-0 text-[13.5px] font-bold text-slate-900 dark:text-[#e0e7ff] flex items-center gap-1.5">
                 Ask Abhi
                 <span className="text-[9px] font-extrabold tracking-[0.05em] px-1.5 py-0.5 rounded text-white uppercase" style={{ background: "linear-gradient(90deg,#7c3aed,#3b82f6)" }}>AI</span>
               </h4>
-              <span className="text-[11px] text-[#6b7280] flex items-center gap-1.5">
+              <span className="text-[11px] text-slate-500 dark:text-[#6b7280] flex items-center gap-1.5">
                 <span className="online-dot-anim w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 {loading ? (
                   <span className="text-violet-400/80 transition-all">{thinkingStatus || "Thinking…"}</span>
@@ -930,12 +930,11 @@ const AiChat = () => {
                   <IconTrash />
                 </HBtn>
                 {showClearConfirm && (
-                  <div className="clear-confirm absolute top-[calc(100%+8px)] right-0 w-44 rounded-xl p-3 z-[1100] shadow-[0_8px_28px_rgba(0,0,0,0.5)] tooltip-anim"
-                    style={{ background: "#13102b", border: "1px solid rgba(124,58,237,0.3)" }}>
-                    <p className="m-0 mb-2.5 text-[12.5px] text-white/80">Clear conversation?</p>
+                  <div className="clear-confirm absolute top-[calc(100%+8px)] right-0 w-44 rounded-xl p-3 z-[1100] shadow-xl tooltip-anim bg-white dark:bg-[#13102b] border border-violet-500/20 dark:border-violet-500/30">
+                    <p className="m-0 mb-2.5 text-[12.5px] text-slate-700 dark:text-white/80">Clear conversation?</p>
                     <div className="flex gap-1.5">
                       <button onClick={clearChat} className="flex-1 py-1 rounded-lg text-xs font-semibold bg-red-600 text-white border-none cursor-pointer hover:opacity-80 transition-opacity">Clear</button>
-                      <button onClick={() => setShowClearConfirm(false)} className="flex-1 py-1 rounded-lg text-xs font-semibold border-none cursor-pointer hover:opacity-80 transition-opacity text-white/70" style={{ background: "rgba(255,255,255,0.09)" }}>Cancel</button>
+                      <button onClick={() => setShowClearConfirm(false)} className="flex-1 py-1 rounded-lg text-xs font-semibold border-none cursor-pointer hover:bg-slate-200 dark:hover:bg-white/10 transition-colors text-slate-600 dark:text-white/70 bg-slate-100 dark:bg-white/5">Cancel</button>
                     </div>
                   </div>
                 )}
@@ -950,20 +949,18 @@ const AiChat = () => {
           </div>
 
           {/* Pinned Try Asking Suggestions */}
-          <div className="flex-shrink-0 px-3 py-2 border-b border-violet-500/[0.1] bg-[rgba(79,31,189,0.03)] hidden sm:block">
+          <div className="flex-shrink-0 px-3 py-2 border-b border-violet-500/10 bg-violet-50/50 dark:bg-violet-900/10 hidden sm:block">
             <div className="flex items-center gap-2 overflow-x-auto scrollbar-custom pb-0.5" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#4b5563] flex-shrink-0 mr-1 pl-0.5">Ask:</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-[#4b5563] flex-shrink-0 mr-1 pl-0.5">Ask:</span>
               <button
                 onClick={surpriseMe}
-                className="surprise-chip flex-shrink-0 flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full cursor-pointer whitespace-nowrap text-amber-300 font-semibold"
-                style={{ border: "1px solid rgba(251,191,36,0.4)", background: "rgba(251,191,36,0.07)" }}
+                className="surprise-chip flex-shrink-0 flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-full cursor-pointer whitespace-nowrap text-amber-600 dark:text-amber-300 font-semibold bg-amber-100 dark:bg-amber-400/10 border border-amber-300 dark:border-amber-400/40"
               >
                 <IconSparkle /> Surprise Me
               </button>
               {SUGGESTIONS.map((s) => (
                 <button key={s} onClick={() => { setInput(s); inputRef.current?.focus(); }}
-                  className="chip-btn flex-shrink-0 text-[11px] px-2.5 py-1 rounded-full cursor-pointer whitespace-nowrap text-[#a5b4fc]"
-                  style={{ border: "1px solid rgba(124,58,237,0.35)", background: "rgba(79,31,189,0.08)" }}>
+                  className="chip-btn flex-shrink-0 text-[11px] px-2.5 py-1 rounded-full cursor-pointer whitespace-nowrap text-violet-700 dark:text-violet-300 bg-violet-100 dark:bg-violet-500/10 border border-violet-300 dark:border-violet-500/30">
                   {s}
                 </button>
               ))}
@@ -979,19 +976,17 @@ const AiChat = () => {
           {/* Messages */}
           <div className="flex-1 overflow-y-auto px-3 pt-3 pb-2 flex flex-col gap-3 scrollbar-custom">
             <div className="sm:hidden mb-2">
-              <p className="text-[11px] text-[#4b5563] mb-1.5 ml-0.5">Try asking</p>
+              <p className="text-[11px] text-slate-500 dark:text-[#4b5563] mb-1.5 ml-0.5">Try asking</p>
               <div className="flex flex-wrap gap-1.5">
                 {SUGGESTIONS.map((s) => (
                   <button key={s} onClick={() => { setInput(s); inputRef.current?.focus(); }}
-                    className="chip-btn text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-[#a5b4fc]"
-                    style={{ border: "1px solid rgba(124,58,237,0.35)", background: "rgba(79,31,189,0.08)" }}>
+                    className="chip-btn text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-violet-700 dark:text-violet-300 bg-violet-100 dark:bg-violet-500/10 border border-violet-300 dark:border-violet-500/30">
                     {s}
                   </button>
                 ))}
                 <button
                   onClick={surpriseMe}
-                  className="surprise-chip flex items-center gap-1.5 text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-amber-300 font-semibold"
-                  style={{ border: "1px solid rgba(251,191,36,0.4)", background: "rgba(251,191,36,0.07)" }}
+                  className="surprise-chip flex items-center gap-1.5 text-[11.5px] px-3 py-1.5 rounded-full cursor-pointer whitespace-nowrap text-amber-600 dark:text-amber-300 font-semibold bg-amber-100 dark:bg-amber-400/10 border border-amber-300 dark:border-amber-400/40"
                 >
                   <IconSparkle /> Surprise Me
                 </button>
@@ -1011,7 +1006,7 @@ const AiChat = () => {
           </div>
 
           {/* Input bar */}
-          <div className="flex items-center gap-2 px-3 py-2.5 flex-shrink-0 border-t border-violet-500/[0.14]" style={{ background: "rgba(0,0,0,0.25)" }}>
+          <div className="flex items-center gap-2 px-3 py-2.5 flex-shrink-0 border-t border-violet-200 dark:border-violet-500/20 bg-slate-50 dark:bg-black/20">
             <textarea
               ref={inputRef}
               placeholder="Ask anything about Abhijit…"
@@ -1020,14 +1015,10 @@ const AiChat = () => {
               onKeyDown={handleKeyDown}
               rows={1}
               disabled={loading}
-              className="flex-1 rounded-[13px] px-3.5 py-2 text-[13.5px] text-[#e0e7ff] resize-none outline-none font-[inherit] leading-[1.45] max-h-24 transition-colors disabled:opacity-40"
+              className="flex-1 rounded-[13px] px-3.5 py-2 text-[13.5px] text-slate-900 dark:text-[#e0e7ff] resize-none outline-none font-[inherit] leading-[1.45] max-h-24 transition-colors disabled:opacity-40 bg-white dark:bg-white/5 border border-slate-300 dark:border-violet-500/20 focus:border-violet-500 dark:focus:border-violet-500/50"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(124,58,237,0.2)",
                 caretColor: "#a78bfa",
               }}
-              onFocus={e => e.target.style.borderColor = "rgba(124,58,237,0.5)"}
-              onBlur={e => e.target.style.borderColor = "rgba(124,58,237,0.2)"}
             />
             <button
               onClick={() => sendMessage()}

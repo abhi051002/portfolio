@@ -45,13 +45,15 @@ const MouseBackground = () => {
         // Draw soft double spotlight
         const radius = 600; // Large, very soft radius
         
+        const isDark = document.documentElement.classList.contains("dark");
+
         // Inner subtle glow
         const innerRadius = 200;
         const innerGradient = ctx.createRadialGradient(
           mouse.x, mouse.y, 0,
           mouse.x, mouse.y, innerRadius
         );
-        innerGradient.addColorStop(0, "rgba(124, 58, 237, 0.07)"); // Violet
+        innerGradient.addColorStop(0, isDark ? "rgba(124, 58, 237, 0.07)" : "rgba(124, 58, 237, 0.05)");
         innerGradient.addColorStop(1, "rgba(124, 58, 237, 0)");
 
         ctx.fillStyle = innerGradient;
@@ -62,7 +64,7 @@ const MouseBackground = () => {
           mouse.x, mouse.y, 0,
           mouse.x, mouse.y, radius
         );
-        outerGradient.addColorStop(0, "rgba(255, 255, 255, 0.03)"); // Very subtle white
+        outerGradient.addColorStop(0, isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(124, 58, 237, 0.02)");
         outerGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
 
         ctx.fillStyle = outerGradient;

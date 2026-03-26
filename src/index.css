@@ -10,11 +10,26 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --bg-app: #f8fafc; /* Light slate bg */
+  --text-main: #0f172a; /* Slate 900 */
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --card-border: rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --bg-app: #030712;
+  --text-main: #f1f5f9;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.08);
+}
+
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #030712;
-  color: #f1f5f9;
+  background-color: var(--bg-app);
+  color: var(--text-main);
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom scrollbar */
@@ -42,10 +57,10 @@ body {
 
 /* Glass card utility */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--card-border);
 }
 
 /* Section wrapper */

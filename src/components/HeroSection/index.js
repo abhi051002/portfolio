@@ -60,7 +60,7 @@ const Hero = () => {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-4"
+              className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-tight mb-4"
             >
               Hi, I'm{" "}
               <span className="gradient-text">{bioData.name}</span>
@@ -69,7 +69,7 @@ const Hero = () => {
             <motion.div
               variants={fadeUp}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center justify-center lg:justify-start gap-3 text-xl sm:text-2xl font-semibold text-slate-300 mb-6 h-8"
+              className="flex items-center justify-center lg:justify-start gap-3 text-xl sm:text-2xl font-semibold text-slate-600 dark:text-slate-300 mb-6 h-8"
             >
               <span>I'm a</span>
               <span className="text-violet-400">
@@ -86,7 +86,7 @@ const Hero = () => {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8"
+              className="text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 mb-8"
             >
               {bioData.description}
             </motion.p>
@@ -121,25 +121,25 @@ const Hero = () => {
             >
               {bioData.github && (
                 <a href={bioData.github} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-violet-600/30 hover:border-violet-500/50 transition-all duration-300">
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-violet-100 dark:hover:bg-violet-600/30 transition-all duration-300">
                   <FaGithub size={18} />
                 </a>
               )}
               {bioData.linkedin && (
                 <a href={bioData.linkedin} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-blue-600/30 hover:border-blue-500/50 transition-all duration-300">
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-blue-100 dark:hover:bg-blue-600/30 transition-all duration-300">
                   <FaLinkedin size={18} />
                 </a>
               )}
               {bioData.twitter && (
                 <a href={bioData.twitter} target="_blank" rel="noopener noreferrer"
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-sky-600/30 hover:border-sky-500/50 transition-all duration-300">
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-sky-100 dark:hover:bg-sky-600/30 transition-all duration-300">
                   <FaTwitter size={18} />
                 </a>
               )}
               {bioData.email && (
                 <a href={`mailto:${bioData.email}`}
-                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-cyan-600/30 hover:border-cyan-500/50 transition-all duration-300">
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-cyan-100 dark:hover:bg-cyan-600/30 transition-all duration-300">
                   <FaEnvelope size={18} />
                 </a>
               )}
@@ -167,7 +167,7 @@ const Hero = () => {
                 />
               </div>
               {/* Status badge */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[#0a0a1a] border border-green-500/40 rounded-full px-4 py-1.5 flex items-center gap-2 whitespace-nowrap shadow-lg">
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white dark:bg-[#0a0a1a] border border-green-500/40 rounded-full px-4 py-1.5 flex items-center gap-2 whitespace-nowrap shadow-lg">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-green-400 text-xs font-semibold">Available for Work</span>
               </div>

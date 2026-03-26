@@ -27,10 +27,10 @@ const Article = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-3">
             My <span className="gradient-text">Articles</span>
           </h2>
-          <p className="text-slate-400 text-base max-w-lg mx-auto">
+          <p className="text-slate-600 dark:text-slate-400 text-base max-w-lg mx-auto">
             Thoughts, insights & technical write-ups I've published
           </p>
           <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
@@ -62,27 +62,27 @@ const Article = () => {
                       alt={article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#030712]/80 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/90 dark:from-[#030712]/80 via-transparent to-transparent" />
                   </div>
                 )}
 
                 {/* Content */}
                 <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="text-white font-bold text-base leading-snug mb-2 group-hover:text-violet-300 transition-colors line-clamp-2">
+                  <h3 className="text-slate-900 dark:text-white font-bold text-base leading-snug mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-300 transition-colors line-clamp-2">
                     {article.title}
                   </h3>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
                     {article.subTitle}
                   </p>
 
-                  <div className="flex items-center justify-between mt-auto pt-3 border-t border-white/5">
+                  <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-200 dark:border-white/5">
                     {article.publishedAt && (
                       <span className="flex items-center gap-1.5 text-slate-500 text-xs">
                         <FaCalendarAlt size={11} />
                         {article.publishedAt}
                       </span>
                     )}
-                    <span className="flex items-center gap-1.5 text-violet-400 text-xs font-semibold group-hover:gap-2 transition-all">
+                    <span className="flex items-center gap-1.5 text-violet-600 dark:text-violet-400 text-xs font-semibold group-hover:gap-2 transition-all">
                       Read on Medium <FaExternalLinkAlt size={10} />
                     </span>
                   </div>
@@ -96,7 +96,7 @@ const Article = () => {
                 <Link
                   to="/articles"
                   onClick={() => window.scrollTo(0, 0)}
-                  className="px-8 py-3 bg-white/5 border border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500 text-violet-400 hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
+                  className="px-8 py-3 bg-slate-100 dark:bg-white/5 border border-violet-500/30 hover:bg-violet-100 dark:hover:bg-violet-500/10 hover:border-violet-500 text-violet-600 dark:text-violet-400 hover:text-slate-900 dark:hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
                 >
                   Show All Articles
                 </Link>

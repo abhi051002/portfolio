@@ -37,7 +37,7 @@ const RoleCard = ({ exp, isChild = false }) => (
   <div className={`flex items-start gap-4 ${isChild ? "" : ""}`}>
     {/* Company logo (only shown on parent) */}
     {!isChild && (
-      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-black/40 border border-white/10">
+      <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-white/10">
         <img
           src={exp.img}
           alt={exp.company}
@@ -53,35 +53,35 @@ const RoleCard = ({ exp, isChild = false }) => (
       <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
         <h3
           className={`font-bold ${isChild
-              ? "text-slate-200 text-sm sm:text-base"
-              : "text-white text-base sm:text-lg"
+              ? "text-slate-700 dark:text-slate-200 text-sm sm:text-base"
+              : "text-slate-900 dark:text-white text-base sm:text-lg"
             }`}
         >
           {exp.role}
         </h3>
-        <span className="text-xs text-violet-400 bg-violet-500/10 border border-violet-500/20 px-2 py-0.5 rounded-full whitespace-nowrap">
+        <span className="text-xs text-violet-600 dark:text-violet-400 bg-violet-100 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 px-2 py-0.5 rounded-full whitespace-nowrap">
           {getDuration(exp.startDate, exp.present ? null : exp.endDate)}
         </span>
       </div>
 
       {!isChild && (
-        <p className="text-violet-400 font-semibold text-sm mb-0.5">
+        <p className="text-violet-600 dark:text-violet-400 font-semibold text-sm mb-0.5">
           {exp.company}
         </p>
       )}
 
-      <p className="text-slate-500 text-xs mb-3">
+      <p className="text-slate-600 dark:text-slate-500 text-xs mb-3">
         {formatDate(exp.startDate)} –{" "}
         {exp.present ? "Present" : formatDate(exp.endDate)}
         {exp.present && (
-          <span className="ml-2 text-green-400 bg-green-500/10 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
+          <span className="ml-2 text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-500/10 border border-green-200 dark:border-green-500/20 px-2 py-0.5 rounded-full text-xs">
             Current
           </span>
         )}
       </p>
 
       {exp.desc && (
-        <p className="text-slate-400 text-sm leading-relaxed mb-4">
+        <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
           {exp.desc}
         </p>
       )}
@@ -91,7 +91,7 @@ const RoleCard = ({ exp, isChild = false }) => (
           {exp.skills.map((skill, si) => (
             <span
               key={si}
-              className="text-xs px-2.5 py-1 bg-white/5 border border-white/10 text-slate-300 rounded-lg hover:border-violet-500/40 hover:text-violet-300 transition-colors"
+              className="text-xs px-2.5 py-1 bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-600 dark:text-slate-300 rounded-lg hover:border-violet-400 dark:hover:border-violet-500/40 hover:text-violet-600 dark:hover:text-violet-300 transition-colors"
             >
               {skill}
             </span>
@@ -124,10 +124,10 @@ const Experience = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white mb-3">
             Work <span className="gradient-text">Experience</span>
           </h2>
-          <p className="text-slate-400 text-base">My professional journey so far</p>
+          <p className="text-slate-600 dark:text-slate-400 text-base">My professional journey so far</p>
           <div className="mt-4 w-16 h-1 bg-gradient-to-r from-violet-500 to-cyan-500 rounded-full mx-auto" />
         </motion.div>
 
@@ -163,7 +163,7 @@ const Experience = () => {
 
                     {/* ── Children (sub-roles / promotions) ── */}
                     {exp.children && exp.children.length > 0 && (
-                      <div className="mt-5 ml-4 sm:ml-16 border-l-2 border-violet-500/30 pl-4 flex flex-col gap-4">
+                      <div className="mt-5 ml-4 sm:ml-16 border-l-2 border-violet-300 dark:border-violet-500/30 pl-4 flex flex-col gap-4">
                         {exp.children.map((child, ci) => (
                           <motion.div
                             key={child._id || ci}
@@ -174,11 +174,11 @@ const Experience = () => {
                             className="relative"
                           >
                             {/* Horizontal connector */}
-                            <div className="absolute -left-4 top-4 w-3 h-px bg-violet-500/40" />
+                            <div className="absolute -left-4 top-4 w-3 h-px bg-violet-400 dark:bg-violet-500/40" />
                             {/* Small dot on the vertical line */}
-                            <div className="absolute -left-[18px] top-[13px] w-2 h-2 rounded-full bg-violet-400/60 border border-violet-300/40" />
+                            <div className="absolute -left-[18px] top-[13px] w-2 h-2 rounded-full bg-violet-300 dark:bg-violet-400/60 border border-violet-400 dark:border-violet-300/40" />
 
-                            <div className="bg-white/[0.03] border border-white/5 rounded-xl p-4">
+                            <div className="bg-slate-50 dark:bg-white/[0.03] border border-slate-200 dark:border-white/5 rounded-xl p-4">
                               <RoleCard exp={child} isChild={true} />
                             </div>
                           </motion.div>
@@ -195,7 +195,7 @@ const Experience = () => {
                 <Link
                   to="/experience"
                   onClick={() => window.scrollTo(0, 0)}
-                  className="px-8 py-3 bg-white/5 border border-violet-500/30 hover:bg-violet-500/10 hover:border-violet-500 text-violet-400 hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
+                  className="px-8 py-3 bg-slate-100 dark:bg-white/5 border border-violet-500/30 hover:bg-violet-100 dark:hover:bg-violet-500/10 hover:border-violet-500 text-violet-600 dark:text-violet-400 hover:text-slate-900 dark:hover:text-white font-semibold rounded-xl transition-all duration-300 shadow-lg"
                 >
                   Show All Experience
                 </Link>
