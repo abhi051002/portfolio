@@ -30,7 +30,7 @@ function App() {
   const [openModal, setOpenModal] = useState({ state: false, project: null });
 
   return (
-    <Router>
+    <Router basename="/portfolio">
       <MouseBackground />
       <div className="bg-transparent w-full overflow-x-hidden min-h-screen" style={{ position: "relative", zIndex: 1 }}>
         <Navbar />
